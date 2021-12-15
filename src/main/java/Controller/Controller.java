@@ -4,6 +4,7 @@ import View.View;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
@@ -34,7 +35,6 @@ public class Controller extends Application {
 
         view = new View();
         view.setFill(Color.BLACK);
-        view.getStylesheets().add("styling/menuButtons.css");
         Controller.stage.setScene(view);
         sizingAfterNewScene();
         setKeyInput();
@@ -76,9 +76,20 @@ public class Controller extends Application {
     }
 
     private void setKeyInput(){
-        for(InputController inputController : inputControllers){
-            inputController.setKeyInput(view);
-        }
+        view.setOnKeyPressed(event -> {
+            KeyCode key = event.getCode();
+
+            //Global keys
+            if(event.getCode() == KeyCode.ESCAPE){
+                Platform.exit();
+                System.exit(0);
+            }
+
+            //Specific controllers
+            for(InputController inputController : inputControllers){
+                if (inputController.isActive()) inputController.keyInput(key);
+            }
+        });
     }
 
 }
