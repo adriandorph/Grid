@@ -1,11 +1,14 @@
 package Controller;
 import Controller.Snake.SnakeInput;
-import View.View;
+import Model.GridAnimation;
+import Model.Matrix;
+import View.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -17,6 +20,7 @@ public class Controller extends Application {
     private static boolean fullScreen;
     public static double windowHeight;
     public static double windowWidth;
+    private GridAnimationEngine gridAnimationEngine;
 
     private View view;
 
@@ -33,12 +37,22 @@ public class Controller extends Application {
         setFullScreen();
         //setSize(720);
 
-        view = new View();
+
+        Grid grid = new Grid(windowWidth, windowHeight);
+        GridAnimation gridAnimation = new GridAnimation();
+        gridAnimationEngine = new GridAnimationEngine(grid, gridAnimation, 30);
+
+        StackPane gridPane = new StackPane();
+        gridPane.getChildren().add(grid);
+
+        view = new View(gridPane);
         view.setFill(Color.BLACK);
         Controller.stage.setScene(view);
         sizingAfterNewScene();
         setKeyInput();
         stage.show();
+
+        gridAnimationEngine.start();
     }
 
     public static void main(String[] args) {
@@ -83,6 +97,7 @@ public class Controller extends Application {
             if(event.getCode() == KeyCode.ESCAPE){
                 Platform.exit();
                 System.exit(0);
+                gridAnimationEngine.stop();
             }
 
             //Specific controllers
@@ -91,6 +106,8 @@ public class Controller extends Application {
             }
         });
     }
+
+
 
 }
 

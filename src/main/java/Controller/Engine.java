@@ -3,7 +3,7 @@ package Controller;
 import View.Renderable;
 
 public abstract class Engine<RenderObject> implements Runnable {
-    private boolean running;
+    private volatile boolean running;
     private final double secondsPerFrame;
     private final Renderable<RenderObject> renderable;
     private final Updatable<RenderObject> updatable;
@@ -50,11 +50,12 @@ public abstract class Engine<RenderObject> implements Runnable {
                 render = true;
                 //update
                 updatable.update(secondsPerFrame);//In seconds
-                stopCondition();
+                 if (stopCondition()) running = false;
 
                 if (frameTime >= 1){
                     frameTime = 0;
                     actualFPS = frames;
+                    System.out.println("FPS: "+actualFPS);
                     frames = 0;
                 }
             }
@@ -77,7 +78,7 @@ public abstract class Engine<RenderObject> implements Runnable {
         stopped();
     }
 
-    protected abstract void stopCondition();
+    protected abstract boolean stopCondition();
 
     public int getCurrentFPS(){
         return actualFPS;
