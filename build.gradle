@@ -1,6 +1,9 @@
 plugins {
-    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
 }
+
+apply plugin: 'application'
 
 group 'org.example'
 version '1.0-SNAPSHOT'
@@ -10,10 +13,56 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    // Use JUnit Jupiter API for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    // Use JUnit Jupiter Engine for testing.
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    // This dependency is used by the application.
+    implementation 'org.apache.commons:commons-compress:1.21'
 }
 
 test {
     useJUnitPlatform()
+}
+
+javafx {
+    version = "15.0.1"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+tasks.withType(JavaExec) {
+    jvmArgs = ['-Xms10m', '-Xmx8192m']
+    applicationDefaultJvmArgs = ['-Xms10m', '-Xmx8192m']
+}
+task runApp(type: JavaExec){
+    jvmArgs = ['-Xms10m', '-Xmx8192m']
+}
+
+task runExecutableJar(type: JavaExec) {
+    // Executable jars can have only _one_ jar on the classpath.
+    classpath = files(tasks.jar)
+
+    // arguments to pass to the application
+    jvmArgs = ['-Xms10m', '-Xmx8192m']
+}
+
+application {
+    mainClass = 'Launcher'
+}
+
+javadoc.options.encoding = 'UTF-8'
+compileJava.options.encoding = 'UTF-8'
+apply plugin: 'java'
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+//jar.enabled = false
+jar {
+
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
 }
