@@ -1,7 +1,9 @@
 package Controller;
-
-import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 
 public interface InputController {
-    void setKeyInput(Scene scene);
+    boolean isActive();
+    void activate();
+    void deactivate();
+    void keyInput(KeyCode key);
 }
