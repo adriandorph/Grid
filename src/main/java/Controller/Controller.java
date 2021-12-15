@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class Controller extends Application {
 
-    public static double factor = 1.0;   // 1.0 = 720p bruges til skalering.
+    public static double factor = 1.0;   // 1.0 = 720p used for scaling.
     public static Stage stage;
     private static boolean fullScreen;
     public static double windowHeight;
@@ -37,9 +37,7 @@ public class Controller extends Application {
         view.getStylesheets().add("styling/menuButtons.css");
         Controller.stage.setScene(view);
         sizingAfterNewScene();
-        for(InputController inputController : inputControllers){
-            inputController.setKeyInput(view);
-        }
+        setKeyInput();
         stage.show();
     }
 
@@ -78,7 +76,9 @@ public class Controller extends Application {
     }
 
     private void setKeyInput(){
-
+        for(InputController inputController : inputControllers){
+            inputController.setKeyInput(view);
+        }
     }
 
 }

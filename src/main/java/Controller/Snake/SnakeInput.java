@@ -1,7 +1,5 @@
 package Controller.Snake;
-
 import Controller.InputController;
-import Controller.Snake.DirectionController;
 import Model.Snake.Direction;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
