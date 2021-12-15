@@ -2,14 +2,14 @@ package Controller;
 
 import View.Renderable;
 
-public abstract class Engine implements Runnable {
+public abstract class Engine<RenderObject> implements Runnable {
     private boolean running;
-    private double secondsPerFrame;
-    private Renderable renderable;
-    private Updatable updatable;
+    private final double secondsPerFrame;
+    private final Renderable<RenderObject> renderable;
+    private final Updatable<RenderObject> updatable;
     private int actualFPS;
 
-    public Engine(Renderable renderable, Updatable updatable, int FPS){
+    public Engine(Renderable<RenderObject> renderable, Updatable<RenderObject> updatable, int FPS){
         this.renderable = renderable;
         this.updatable = updatable;
         this.secondsPerFrame = 1.0/FPS;
@@ -61,7 +61,7 @@ public abstract class Engine implements Runnable {
 
             if (render){
                 //render game
-                renderable.render(updatable);
+                renderable.render(updatable.getRenderObject());
                 frames++;
 
             } else { //Nothing to do, so wait a bit before running through the running loop again.
