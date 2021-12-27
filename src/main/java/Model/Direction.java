@@ -1,4 +1,4 @@
-package Model.Snake;
+package Model;
 
 public enum Direction {
     NORTH,

@@ -1,7 +1,7 @@
 package Controller;
+import Controller.Snake.SnakeEngine;
 import Controller.Snake.SnakeInput;
-import Model.GridAnimation;
-import Model.Matrix;
+import Model.Snake.SnakeGame;
 import View.*;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -21,6 +21,7 @@ public class Controller extends Application {
     public static double windowHeight;
     public static double windowWidth;
     private GridAnimationEngine gridAnimationEngine;
+    private SnakeEngine snakeEngine;
 
     private View view;
 
@@ -39,8 +40,11 @@ public class Controller extends Application {
 
 
         Grid grid = new Grid(windowWidth, windowHeight);
-        GridAnimation gridAnimation = new GridAnimation();
-        gridAnimationEngine = new GridAnimationEngine(grid, gridAnimation, 30);
+        //GridAnimation gridAnimation = new GridAnimation(windowHeight);
+        //gridAnimationEngine = new GridAnimationEngine(grid, gridAnimation, 30);
+        SnakeGame snakeGame = new SnakeGame(grid.getHeight());
+        snakeEngine = new SnakeEngine(grid, snakeGame, 30);
+
 
         StackPane gridPane = new StackPane();
         gridPane.getChildren().add(grid);
@@ -52,13 +56,13 @@ public class Controller extends Application {
         setKeyInput();
         stage.show();
 
-        gridAnimationEngine.start();
+        //gridAnimationEngine.start();
+        snakeEngine.start();
     }
 
     public static void main(String[] args) {
         launch();
     }
-
 
     private static void sizingAfterNewScene(){
         if (fullScreen){
@@ -90,6 +94,7 @@ public class Controller extends Application {
     }
 
     private void setKeyInput(){
+        inputControllers[0].activate();
         view.setOnKeyPressed(event -> {
             KeyCode key = event.getCode();
 
@@ -97,7 +102,8 @@ public class Controller extends Application {
             if(event.getCode() == KeyCode.ESCAPE){
                 Platform.exit();
                 System.exit(0);
-                gridAnimationEngine.stop();
+                //gridAnimationEngine.stop();
+                snakeEngine.stop();
             }
 
             //Specific controllers
@@ -106,8 +112,5 @@ public class Controller extends Application {
             }
         });
     }
-
-
-
 }
 
