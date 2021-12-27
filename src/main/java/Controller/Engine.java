@@ -5,9 +5,9 @@ import View.Renderable;
 public abstract class Engine<RenderObject> implements Runnable {
     private volatile boolean running;
     private final double secondsPerFrame;
-    private final Renderable<RenderObject> renderable;
-    private final Updatable<RenderObject> updatable;
-    private int actualFPS;
+    protected final Renderable<RenderObject> renderable;
+    protected final Updatable<RenderObject> updatable;
+    protected int actualFPS;
 
     public Engine(Renderable<RenderObject> renderable, Updatable<RenderObject> updatable, int FPS){
         this.renderable = renderable;
@@ -50,7 +50,7 @@ public abstract class Engine<RenderObject> implements Runnable {
                 render = true;
                 //update
                 updatable.update(secondsPerFrame);//In seconds
-                 if (stopCondition()) running = false;
+                 if (updatable.stopCondition()) running = false;
 
                 if (frameTime >= 1){
                     frameTime = 0;
@@ -77,8 +77,6 @@ public abstract class Engine<RenderObject> implements Runnable {
         System.out.println("Game ended");
         stopped();
     }
-
-    protected abstract boolean stopCondition();
 
     public int getCurrentFPS(){
         return actualFPS;

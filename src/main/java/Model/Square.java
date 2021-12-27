@@ -1,37 +1,43 @@
 package Model;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Square {
+    private double posX;
+    private double posY;
+    private double size;
     private double[] pointsX;
     private double[] pointsY;
     private Color color;
 
-    public Square(double size, Color color){
-        setSize(size);
+    public Square(double size, Color color, double posX, double posY){
+        this.size = size;
+        setPosition(posX, posY);
         this.color = color;
     }
 
     public void setSize(double size){
-        this.pointsX = new double[]{0,0,size,size};
-        this.pointsY = new double[]{0,size,size,0};
+        this.size = size;
+        setPosition();
     }
 
-    public double[] getPointsXWithPosition(double x){
-        return getPointsWithPosition(x, pointsX);
+    private void setPosition(){
+        this.pointsX = new double[]{posX, posX,        posX + size, posX + size};
+        this.pointsY = new double[]{posY, posY + size, posY + size, posY       };
     }
 
-    public double[] getPointsYWithPosition(double y){
-        return getPointsWithPosition(y, pointsY);
+    public void setPosition(double posX, double posY){
+        this.posX = posX;
+        this.posY = posY;
+        setPosition();
     }
 
-    private double[] getPointsWithPosition(double pos, double[] points){
-        double[] pointsWithPos = new double[points.length];
-        for(int i = 0; i<points.length; i++){
-            pointsWithPos[i] = points[i] + pos;
-        }
-        return pointsWithPos;
+    public double[] getPointsX(){
+        return pointsX;
+    }
+
+    public double[] getPointsY(){
+        return pointsY;
     }
 
     public Color getColor() {

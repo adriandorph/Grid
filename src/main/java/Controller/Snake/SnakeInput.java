@@ -1,11 +1,11 @@
 package Controller.Snake;
+import Controller.DirectionController;
 import Controller.InputController;
-import Model.Snake.Direction;
-import javafx.scene.Scene;
+import Model.Direction;
 import javafx.scene.input.KeyCode;
 
 public class SnakeInput implements InputController {
-    private static Direction direction;
+    public static Direction direction;
     private static boolean isActive = false;
 
     @Override
@@ -30,9 +30,4 @@ public class SnakeInput implements InputController {
             case RIGHT, D -> direction = DirectionController.getRightDirection(direction);
         }
     }
-
-    public Direction getDirection(){
-        return direction;
-    }
-
 }
