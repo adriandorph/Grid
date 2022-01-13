@@ -69,19 +69,19 @@ public class Matrix {
         if(y >= lengthY || y < 0) return null;
 
         switch (direction){
-            case NORTH -> {
+            case WEST -> {
                 if(x != 0) return new Position(x-1, y);
                 else return new Position(lengthX - 1, y);
             }
-            case SOUTH -> {
+            case EAST -> {
                 if(x != lengthX - 1) return new Position(x+1, y);
                 else return new Position(0, y);
             }
-            case EAST -> {
+            case NORTH -> {
                 if(y != 0) return new Position(x, y - 1);
                 else return new Position(x, lengthY - 1);
             }
-            case WEST -> {
+            case SOUTH -> {
                 if(y != lengthY -1) return new Position(x, y + 1);
                 else return new Position(x, 0);
             }

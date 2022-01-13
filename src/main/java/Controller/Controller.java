@@ -1,6 +1,7 @@
 package Controller;
 import Controller.Snake.SnakeEngine;
 import Controller.Snake.SnakeInput;
+import Model.Direction;
 import Model.Snake.SnakeGame;
 import View.*;
 import javafx.application.Application;
@@ -25,7 +26,7 @@ public class Controller extends Application {
 
     private View view;
 
-    private final InputController[] inputControllers = new InputController[]{new SnakeInput()};
+    private final InputController[] inputControllers = new InputController[]{new SnakeInput(Direction.NORTH)};
 
     @Override
     public void start(Stage stage) {

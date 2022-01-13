@@ -1,6 +1,5 @@
 package Model.Snake;
 
-import Controller.DirectionController;
 import Controller.Snake.SnakeInput;
 import Controller.Updatable;
 import Model.Direction;
@@ -9,7 +8,6 @@ import Model.Position;
 import View.RenderGrid;
 import javafx.scene.paint.Color;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class SnakeGame implements Updatable<RenderGrid> {
@@ -21,7 +19,9 @@ public class SnakeGame implements Updatable<RenderGrid> {
     private Position headPosition;
     private int width;
     private int height;
-    private RandomBites randomBites;
+    private RandomBits randomBits;
+    private SnakeInput snakeInput;
+    private Direction direction;
 
     //Color
     private final Color background = Color.rgb(0,0,0);
@@ -30,7 +30,7 @@ public class SnakeGame implements Updatable<RenderGrid> {
     private final Color bits = Color.rgb(255,255,0);
 
     public SnakeGame(double canvasHeight){
-        this(16, 9, canvasHeight);
+        this(32, 18, canvasHeight);
     }
 
     public SnakeGame(int width, int height, double canvasHeight){
@@ -42,10 +42,12 @@ public class SnakeGame implements Updatable<RenderGrid> {
         }
         squares = new Matrix(width, height, canvasHeight);
         squares.setAllColor(background);
-        SnakeInput.direction = Direction.NORTH;
+        direction = Direction.NORTH;
         headPosition = new Position(width / 2, height / 3);
-        snake = new LinkedList<>(List.of(squares.getNeighbour(headPosition.x, headPosition.y, DirectionController.getOpposite(SnakeInput.direction))));
-        randomBites = new RandomBites(width, height, 3, snake.toArray(Position[]::new), headPosition);
+        snake = new LinkedList<>();
+        //snake = new LinkedList<>(List.of(squares.getNeighbour(headPosition.x, headPosition.y, DirectionController.getOpposite(direction))));
+        randomBits = new RandomBits(width, height, 3, snake.toArray(Position[]::new), headPosition);
+        snakeInput = new SnakeInput(direction);
         renderGrid = tick();
     }
 
@@ -74,18 +76,21 @@ public class SnakeGame implements Updatable<RenderGrid> {
     }
 
     private RenderGrid tick(){
+        Direction newDirection = snakeInput.getDirection();
+        if(newDirection != null) direction = newDirection;
         Position lastPart = snake.peek();
+        if(lastPart == null) lastPart = headPosition;
         snake.add(new Position(headPosition.x, headPosition.y));
-        headPosition = squares.getNeighbour(headPosition.x, headPosition.y, SnakeInput.direction);
-        if(!randomBites.isSnakeEating(snake.toArray(Position[]::new), headPosition)) snake.poll();
+        headPosition = squares.getNeighbour(headPosition.x, headPosition.y, direction);
+        if(!randomBits.isSnakeEating(snake.toArray(Position[]::new), headPosition)) snake.poll();
 
         //Colors
         //Bits
-        for(Position position : randomBites.getBits()){
+        for(Position position : randomBits.getBits()){
             squares.setColor(position.x, position.y, bits);
         }
         //Snake
-        if(lastPart != null) squares.setColor(lastPart.x, lastPart.y, background);
+        squares.setColor(lastPart.x, lastPart.y, background);
         squares.setColor(headPosition.x, headPosition.y, headColor);
         for(Position position : snake)
         {

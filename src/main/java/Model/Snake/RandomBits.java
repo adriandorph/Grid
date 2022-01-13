@@ -2,12 +2,12 @@ package Model.Snake;
 
 import Model.Position;
 
-public class RandomBites {
+public class RandomBits {
     private Position[] bits;
     private final int height;
     private final int width;
 
-    public RandomBites(int width, int height, int bits, Position[] snake, Position head){
+    public RandomBits(int width, int height, int bits, Position[] snake, Position head){
         this.width = width;
         this.height = height;
         this.bits = new Position[bits];
