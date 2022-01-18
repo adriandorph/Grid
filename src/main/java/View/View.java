@@ -8,7 +8,7 @@ public class View extends Scene {
     public Grid grid;
     public View(StackPane pane){
         super(new Pane());
-        //getStylesheets().add("styling/menuButtons.css");
+        getStylesheets().add("styling/buttons.css");
         viewPane(pane);
     }
 

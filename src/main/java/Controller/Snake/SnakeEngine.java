@@ -1,5 +1,6 @@
 package Controller.Snake;
 
+import Controller.Controller;
 import Controller.Engine;
 import Model.Direction;
 import Model.Snake.SnakeGame;
@@ -20,18 +21,6 @@ public class SnakeEngine extends Engine<SnakeRender> {
     }
 
     @Override
-    public void pause(){
-        SnakeInput.deactivate();
-        paused = true;
-    }
-
-    @Override
-    public void unpause(){
-        SnakeInput.activate();
-        paused = false;
-    }
-
-    @Override
     public void stop(){
         running = false;
         SnakeInput.deactivate();
@@ -45,6 +34,6 @@ public class SnakeEngine extends Engine<SnakeRender> {
     @Override
     protected void stopped() {
         SnakeInput.reset(Direction.NORTH);
-        this.renderable.endScreen();
+        Controller.viewSnakeGameOver();
     }
 }

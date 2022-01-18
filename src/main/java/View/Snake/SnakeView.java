@@ -1,10 +1,7 @@
 package View.Snake;
 
-
 import View.Grid;
 import View.Renderable;
-import View.Snake.SnakeRender;
-import View.Snake.SnakeUI;
 
 public class SnakeView implements Renderable<SnakeRender> {
     Grid grid;
@@ -19,11 +16,5 @@ public class SnakeView implements Renderable<SnakeRender> {
     public void render(SnakeRender renderObject) {
         grid.render(renderObject.getRenderGrid());
         snakeUI.render(renderObject.getScore());
-    }
-
-    @Override
-    public void endScreen() {
-        grid.endScreen();
-        snakeUI.endScreen();
     }
 }

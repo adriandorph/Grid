@@ -9,17 +9,12 @@ public abstract class Engine<RenderObject> implements Runnable {
     protected final Renderable<RenderObject> renderable;
     protected final Updatable<RenderObject> updatable;
     protected int actualFPS;
-    protected EngineStopHandler stopHandler;
+    private boolean dispose = false;
 
     public Engine(Renderable<RenderObject> renderable, Updatable<RenderObject> updatable, int FPS){
         this.renderable = renderable;
         this.updatable = updatable;
         this.secondsPerFrame = 1.0/FPS;
-    }
-
-    public Engine(Renderable<RenderObject> renderable, Updatable<RenderObject> updatable, int FPS, EngineStopHandler stopHandler){
-        this(renderable, updatable, FPS);
-        this.stopHandler = stopHandler;
     }
 
     public void start(){
@@ -31,12 +26,9 @@ public abstract class Engine<RenderObject> implements Runnable {
         running = false;
     }
 
-    public void pause(){
-        paused = true;
-    }
-
-    public void unpause(){
-        paused = false;
+    public void dispose(){
+        dispose = true;
+        running = false;
     }
 
     protected abstract void stopped();
@@ -99,8 +91,8 @@ public abstract class Engine<RenderObject> implements Runnable {
                 }
             }
         }
-        System.out.println("Game ended");
-        stopped();
+        System.out.println("Engine stopped");
+        if(!dispose) stopped();
     }
 
     public int getCurrentFPS(){

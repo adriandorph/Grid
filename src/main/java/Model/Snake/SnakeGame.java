@@ -5,9 +5,12 @@ import Controller.Updatable;
 import Model.Direction;
 import Model.Matrix;
 import Model.Position;
+import Saves.SnakeSaveFileWriter;
 import View.RenderGrid;
 import View.Snake.SnakeRender;
 import javafx.scene.paint.Color;
+
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -23,6 +26,8 @@ public class SnakeGame implements Updatable<SnakeRender> {
     private RandomBits randomBits;
     private Direction direction;
     private int score;
+    private int highscore;
+    private int originalHighscore;
 
     //Color
     private final Color background = Color.rgb(0,0,0);
@@ -42,6 +47,8 @@ public class SnakeGame implements Updatable<SnakeRender> {
             e.printStackTrace();
         }
         this.score = 0;
+        this.highscore = SnakeSaveFileWriter.readHighscore();
+        this.originalHighscore = highscore;
         squares = new Matrix(width, height, canvasHeight);
         squares.setAllColor(background);
         direction = Direction.NORTH;
@@ -50,6 +57,18 @@ public class SnakeGame implements Updatable<SnakeRender> {
         randomBits = new RandomBits(width, height, 3, snake.toArray(Position[]::new), headPosition);
         SnakeInput.reset(Direction.NORTH);
         renderGrid = tick();
+    }
+
+    public Matrix getSquares() {
+        return squares;
+    }
+
+    public Position getHeadPosition() {
+        return headPosition;
+    }
+
+    public Queue<Position> getSnake() {
+        return snake;
     }
 
     @Override
@@ -76,7 +95,7 @@ public class SnakeGame implements Updatable<SnakeRender> {
         return false;
     }
 
-    private RenderGrid tick(){
+    private RenderGrid tick() {
         Direction newDirection = SnakeInput.getDirection();
         if(newDirection != null) direction = newDirection;
         Position lastPart = snake.peek();
@@ -99,6 +118,10 @@ public class SnakeGame implements Updatable<SnakeRender> {
             squares.setColor(position.x, position.y, body);
         }
 
+        if(score > highscore) {
+            SnakeSaveFileWriter.saveNewHighScore(score);
+            highscore = score;
+        }
 
         return new RenderGrid(squares);
     }
@@ -109,5 +132,9 @@ public class SnakeGame implements Updatable<SnakeRender> {
 
     public int getScore(){
         return score;
+    }
+
+    public boolean isNewHighScore(){
+        return score > originalHighscore;
     }
 }
