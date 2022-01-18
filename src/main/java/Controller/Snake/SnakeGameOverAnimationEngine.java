@@ -18,9 +18,9 @@ public class SnakeGameOverAnimationEngine extends Engine<RenderGrid> {
 
     @Override
     protected void stopped() {
-        //if(highscore) {
+        if(highscore) {
             Controller.viewNewHighscore(score);
-        //} else Controller.viewNewSnakeGame();
+        } else Controller.viewNewSnakeGame();
     }
 
     @Override
