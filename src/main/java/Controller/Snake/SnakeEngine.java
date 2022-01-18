@@ -1,10 +1,11 @@
 package Controller.Snake;
 
+import Controller.Controller;
 import Controller.Engine;
 import Model.Direction;
 import Model.Snake.SnakeGame;
-import View.SnakeRender;
-import View.SnakeView;
+import View.Snake.SnakeRender;
+import View.Snake.SnakeView;
 
 public class SnakeEngine extends Engine<SnakeRender> {
 
@@ -17,18 +18,6 @@ public class SnakeEngine extends Engine<SnakeRender> {
         SnakeInput.activate();
         Thread thread = new Thread(this); // Demands that this is Runnable
         thread.start();
-    }
-
-    @Override
-    public void pause(){
-        SnakeInput.deactivate();
-        paused = true;
-    }
-
-    @Override
-    public void unpause(){
-        SnakeInput.activate();
-        paused = false;
     }
 
     @Override
@@ -45,6 +34,6 @@ public class SnakeEngine extends Engine<SnakeRender> {
     @Override
     protected void stopped() {
         SnakeInput.reset(Direction.NORTH);
-        this.renderable.endScreen();
+        Controller.viewSnakeGameOver();
     }
 }

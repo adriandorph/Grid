@@ -25,9 +25,4 @@ public class Grid extends Canvas implements Renderable<RenderGrid> {
         }
         gc.restore();
     }
-
-    @Override
-    public void endScreen() {
-        setOpacity(.3);
-    }
 }

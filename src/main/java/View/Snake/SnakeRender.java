@@ -1,6 +1,7 @@
-package View;
+package View.Snake;
 
 import Model.Snake.SnakeGame;
+import View.RenderGrid;
 
 public class SnakeRender {
     private final RenderGrid renderGrid;

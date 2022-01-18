@@ -1,10 +1,16 @@
 package Controller;
 import Controller.Snake.SnakeEngine;
+import Controller.Snake.SnakeGameOverAnimationEngine;
 import Controller.Snake.SnakeInput;
-import Model.Direction;
-import Model.GridAnimation;
+import Model.Matrix;
 import Model.Snake.SnakeGame;
+import Model.Snake.SnakeGameOverAnimation;
+import Saves.SnakeSaveFileWriter;
 import View.*;
+import View.Snake.SnakeHighscoreCanvas;
+import View.Snake.SnakeHighscoreView;
+import View.Snake.SnakeUI;
+import View.Snake.SnakeView;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
@@ -15,7 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class Controller extends Application implements EngineStopHandler{
+public class Controller extends Application{
 
     public static double factor = 1.0;   // 1.0 = 720p used for scaling.
     public static Stage stage;
@@ -24,6 +30,8 @@ public class Controller extends Application implements EngineStopHandler{
     public static double windowWidth;
     private static GridAnimationEngine gridAnimationEngine;
     private static SnakeEngine snakeEngine;
+    private static SnakeGame snakeGame;
+    private static SnakeGameOverAnimationEngine snakeGameOverAnimationEngine;
 
     private static View view;
 
@@ -36,14 +44,9 @@ public class Controller extends Application implements EngineStopHandler{
         });
         Controller.stage = stage;
         setFullScreen();
-        //setSize(720);
-
+        //setSize(1080);
 
         Grid grid = new Grid(windowWidth, windowHeight);
-        GridAnimation gridAnimation = new GridAnimation(windowHeight);
-        gridAnimationEngine = new GridAnimationEngine(grid, gridAnimation, 30);
-        SnakeGame snakeGame = new SnakeGame(grid.getHeight());
-
 
         StackPane gridPane = new StackPane();
         gridPane.getChildren().add(grid);
@@ -51,6 +54,7 @@ public class Controller extends Application implements EngineStopHandler{
         view = new View(gridPane);
         view.setFill(Color.BLACK);
         Controller.stage.setScene(view);
+        Controller.stage.show();
         sizingAfterNewScene();
         setKeyInput();
         viewNewSnakeGame();
@@ -60,19 +64,38 @@ public class Controller extends Application implements EngineStopHandler{
         launch();
     }
 
-    private static void viewNewSnakeGame(){
-        if(snakeEngine != null) snakeEngine.stop();
+    public static void viewNewSnakeGame(){
+        if(snakeEngine != null) snakeEngine.dispose();
         Grid grid = new Grid(windowWidth, windowHeight);
-        SnakeUI snakeUI = new SnakeUI(windowWidth, windowHeight);
+        grid.render(new RenderGrid(new Matrix(16, 9, windowHeight)));
+        SnakeUI snakeUI = new SnakeUI(windowWidth, windowHeight, SnakeSaveFileWriter.readHighscore());
         SnakeView snakeView = new SnakeView(grid, snakeUI);
-        SnakeGame snakeGame = new SnakeGame(grid.getHeight());
+        snakeGame = new SnakeGame(grid.getHeight());
         snakeEngine = new SnakeEngine(snakeView, snakeGame, 30);
         StackPane pane = new StackPane();
         pane.getChildren().add(grid);
         pane.getChildren().add(snakeUI);
         view.setRoot(pane);
-        stage.show();
         snakeEngine.start();
+    }
+
+    public static void viewSnakeGameOver(){
+        if(snakeGameOverAnimationEngine != null) snakeGameOverAnimationEngine.stop();
+        Grid grid = new Grid(windowWidth, windowHeight);
+        SnakeGameOverAnimation snakeGameOverAnimation = new SnakeGameOverAnimation(snakeGame);
+        snakeGameOverAnimationEngine = new SnakeGameOverAnimationEngine(grid, snakeGameOverAnimation, 30);
+        StackPane pane = new StackPane();
+        pane.getChildren().add(grid);
+        view.setRoot(pane);
+        snakeGameOverAnimationEngine.start();
+    }
+
+    public static void viewNewHighscore(int highscore){
+        SnakeHighscoreCanvas hc = new SnakeHighscoreCanvas(windowWidth, windowHeight, highscore);
+        SnakeHighscoreView shv = new SnakeHighscoreView(hc);
+        StackPane pane = new StackPane();
+        pane.getChildren().add(shv);
+        view.setRoot(pane);
     }
 
     private static void sizingAfterNewScene(){
@@ -91,8 +114,8 @@ public class Controller extends Application implements EngineStopHandler{
         windowWidth = height * 16/9.0;
         windowHeight = height;
 
-        stage.setWidth(windowWidth);
-        stage.setHeight(height);
+        stage.setWidth(windowWidth + 10);
+        stage.setHeight(height+38);//+38 because javafx is stupid
     }
 
     public static void setFullScreen(){
@@ -115,6 +138,7 @@ public class Controller extends Application implements EngineStopHandler{
                     System.exit(0);
                     snakeEngine.stop();
                     gridAnimationEngine.stop();
+                    snakeGameOverAnimationEngine.stop();
                 }
                 case R -> {
                     viewNewSnakeGame();
@@ -125,11 +149,6 @@ public class Controller extends Application implements EngineStopHandler{
             //All controllers
             SnakeInput.keyInput(key);
         });
-    }
-
-    @Override
-    public void handleStop() {//Game has stopped
-
     }
 }
 
