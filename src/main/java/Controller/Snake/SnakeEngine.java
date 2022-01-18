@@ -1,16 +1,15 @@
 package Controller.Snake;
 
 import Controller.Engine;
-import Controller.EngineStopHandler;
 import Model.Direction;
 import Model.Snake.SnakeGame;
-import View.Grid;
-import View.RenderGrid;
+import View.SnakeRender;
+import View.SnakeView;
 
-public class SnakeEngine extends Engine<RenderGrid> {
+public class SnakeEngine extends Engine<SnakeRender> {
 
-    public SnakeEngine(Grid grid, SnakeGame snakeGame, int FPS, EngineStopHandler stopHandler) {
-        super(grid, snakeGame, FPS, stopHandler);
+    public SnakeEngine(SnakeView snakeView, SnakeGame snakeGame, int FPS) {
+        super(snakeView, snakeGame, FPS);
     }
 
     @Override
@@ -46,6 +45,6 @@ public class SnakeEngine extends Engine<RenderGrid> {
     @Override
     protected void stopped() {
         SnakeInput.reset(Direction.NORTH);
-        this.stopHandler.handleStop();
+        this.renderable.endScreen();
     }
 }

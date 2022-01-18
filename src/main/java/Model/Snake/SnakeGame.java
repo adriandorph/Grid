@@ -6,11 +6,12 @@ import Model.Direction;
 import Model.Matrix;
 import Model.Position;
 import View.RenderGrid;
+import View.SnakeRender;
 import javafx.scene.paint.Color;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class SnakeGame implements Updatable<RenderGrid> {
+public class SnakeGame implements Updatable<SnakeRender> {
     private RenderGrid renderGrid;
     private Matrix squares;
     private double seconds;
@@ -21,6 +22,7 @@ public class SnakeGame implements Updatable<RenderGrid> {
     private int height;
     private RandomBits randomBits;
     private Direction direction;
+    private int score;
 
     //Color
     private final Color background = Color.rgb(0,0,0);
@@ -39,6 +41,7 @@ public class SnakeGame implements Updatable<RenderGrid> {
             Exception e = new RuntimeException("Dimensions not allowed. Has to be 16:9");
             e.printStackTrace();
         }
+        this.score = 0;
         squares = new Matrix(width, height, canvasHeight);
         squares.setAllColor(background);
         direction = Direction.NORTH;
@@ -60,8 +63,8 @@ public class SnakeGame implements Updatable<RenderGrid> {
     }
 
     @Override
-    public RenderGrid getRenderObject() {
-        return renderGrid;
+    public SnakeRender getRenderObject() {
+        return new SnakeRender(this);
     }
 
     @Override
@@ -81,6 +84,7 @@ public class SnakeGame implements Updatable<RenderGrid> {
         snake.add(new Position(headPosition.x, headPosition.y));
         headPosition = squares.getNeighbour(headPosition.x, headPosition.y, direction);
         if(!randomBits.isSnakeEating(snake.toArray(Position[]::new), headPosition)) snake.poll();
+        else score++;
 
         //Colors
         //Bits
@@ -97,5 +101,13 @@ public class SnakeGame implements Updatable<RenderGrid> {
 
 
         return new RenderGrid(squares);
+    }
+
+    public RenderGrid getRenderGrid(){
+        return renderGrid;
+    }
+
+    public int getScore(){
+        return score;
     }
 }

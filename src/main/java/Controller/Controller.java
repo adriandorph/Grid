@@ -22,10 +22,10 @@ public class Controller extends Application implements EngineStopHandler{
     private static boolean fullScreen;
     public static double windowHeight;
     public static double windowWidth;
-    private GridAnimationEngine gridAnimationEngine;
-    private SnakeEngine snakeEngine;
+    private static GridAnimationEngine gridAnimationEngine;
+    private static SnakeEngine snakeEngine;
 
-    private View view;
+    private static View view;
 
     @Override
     public void start(Stage stage) {
@@ -43,7 +43,7 @@ public class Controller extends Application implements EngineStopHandler{
         GridAnimation gridAnimation = new GridAnimation(windowHeight);
         gridAnimationEngine = new GridAnimationEngine(grid, gridAnimation, 30);
         SnakeGame snakeGame = new SnakeGame(grid.getHeight());
-        snakeEngine = new SnakeEngine(grid, snakeGame, 30, this);
+        //snakeEngine = new SnakeEngine(grid, snakeGame, 30, this);
 
 
         StackPane gridPane = new StackPane();
@@ -54,13 +54,26 @@ public class Controller extends Application implements EngineStopHandler{
         Controller.stage.setScene(view);
         sizingAfterNewScene();
         setKeyInput();
-        stage.show();
-
-        snakeEngine.start();
+        viewNewSnakeGame();
     }
 
     public static void main(String[] args) {
         launch();
+    }
+
+    private static void viewNewSnakeGame(){
+        if(snakeEngine != null) snakeEngine.stop();
+        Grid grid = new Grid(windowWidth, windowHeight);
+        SnakeUI snakeUI = new SnakeUI(windowWidth, windowHeight);
+        SnakeView snakeView = new SnakeView(grid, snakeUI);
+        SnakeGame snakeGame = new SnakeGame(grid.getHeight());
+        snakeEngine = new SnakeEngine(snakeView, snakeGame, 30);
+        StackPane pane = new StackPane();
+        pane.getChildren().add(grid);
+        pane.getChildren().add(snakeUI);
+        view.setRoot(pane);
+        stage.show();
+        snakeEngine.start();
     }
 
     private static void sizingAfterNewScene(){
@@ -97,12 +110,18 @@ public class Controller extends Application implements EngineStopHandler{
             KeyCode key = event.getCode();
 
             //Global keys
-            if(event.getCode() == KeyCode.ESCAPE){
-                Platform.exit();
-                System.exit(0);
-                //gridAnimationEngine.stop();
-                snakeEngine.stop();
+            switch (event.getCode()){
+                case ESCAPE -> {
+                    Platform.exit();
+                    System.exit(0);
+                    snakeEngine.stop();
+                    gridAnimationEngine.stop();
+                }
+                case R -> {
+                    viewNewSnakeGame();
+                }
             }
+
 
             //All controllers
             SnakeInput.keyInput(key);
