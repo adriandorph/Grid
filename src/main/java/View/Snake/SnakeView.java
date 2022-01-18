@@ -1,5 +1,10 @@
-package View;
+package View.Snake;
 
+
+import View.Grid;
+import View.Renderable;
+import View.Snake.SnakeRender;
+import View.Snake.SnakeUI;
 
 public class SnakeView implements Renderable<SnakeRender> {
     Grid grid;

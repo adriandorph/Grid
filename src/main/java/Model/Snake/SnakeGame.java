@@ -6,7 +6,7 @@ import Model.Direction;
 import Model.Matrix;
 import Model.Position;
 import View.RenderGrid;
-import View.SnakeRender;
+import View.Snake.SnakeRender;
 import javafx.scene.paint.Color;
 import java.util.LinkedList;
 import java.util.Queue;

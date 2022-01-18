@@ -1,10 +1,11 @@
 package Controller;
 import Controller.Snake.SnakeEngine;
 import Controller.Snake.SnakeInput;
-import Model.Direction;
 import Model.GridAnimation;
 import Model.Snake.SnakeGame;
 import View.*;
+import View.Snake.SnakeUI;
+import View.Snake.SnakeView;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;

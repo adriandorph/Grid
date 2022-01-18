@@ -1,14 +1,15 @@
-package View;
+package View.Snake;
 
 
 import Controller.Controller;
+import View.Renderable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-public class SnakeUI extends Canvas implements Renderable<Integer>{
+public class SnakeUI extends Canvas implements Renderable<Integer> {
     private GraphicsContext gc;
 
     public SnakeUI(double width, double height){

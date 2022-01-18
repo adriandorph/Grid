@@ -3,8 +3,8 @@ package Controller.Snake;
 import Controller.Engine;
 import Model.Direction;
 import Model.Snake.SnakeGame;
-import View.SnakeRender;
-import View.SnakeView;
+import View.Snake.SnakeRender;
+import View.Snake.SnakeView;
 
 public class SnakeEngine extends Engine<SnakeRender> {
 
