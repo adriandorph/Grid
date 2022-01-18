@@ -1,18 +1,17 @@
 package Model.Snake;
 
-import Controller.DirectionController;
 import Controller.Snake.SnakeInput;
 import Controller.Updatable;
 import Model.Direction;
 import Model.Matrix;
 import Model.Position;
 import View.RenderGrid;
+import View.SnakeRender;
 import javafx.scene.paint.Color;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
-public class SnakeGame implements Updatable<RenderGrid> {
+public class SnakeGame implements Updatable<SnakeRender> {
     private RenderGrid renderGrid;
     private Matrix squares;
     private double seconds;
@@ -21,7 +20,9 @@ public class SnakeGame implements Updatable<RenderGrid> {
     private Position headPosition;
     private int width;
     private int height;
-    private RandomBites randomBites;
+    private RandomBits randomBits;
+    private Direction direction;
+    private int score;
 
     //Color
     private final Color background = Color.rgb(0,0,0);
@@ -30,7 +31,7 @@ public class SnakeGame implements Updatable<RenderGrid> {
     private final Color bits = Color.rgb(255,255,0);
 
     public SnakeGame(double canvasHeight){
-        this(16, 9, canvasHeight);
+        this(32, 18, canvasHeight);
     }
 
     public SnakeGame(int width, int height, double canvasHeight){
@@ -40,12 +41,14 @@ public class SnakeGame implements Updatable<RenderGrid> {
             Exception e = new RuntimeException("Dimensions not allowed. Has to be 16:9");
             e.printStackTrace();
         }
+        this.score = 0;
         squares = new Matrix(width, height, canvasHeight);
         squares.setAllColor(background);
-        SnakeInput.direction = Direction.NORTH;
+        direction = Direction.NORTH;
         headPosition = new Position(width / 2, height / 3);
-        snake = new LinkedList<>(List.of(squares.getNeighbour(headPosition.x, headPosition.y, DirectionController.getOpposite(SnakeInput.direction))));
-        randomBites = new RandomBites(width, height, 3, snake.toArray(Position[]::new), headPosition);
+        snake = new LinkedList<>();
+        randomBits = new RandomBits(width, height, 3, snake.toArray(Position[]::new), headPosition);
+        SnakeInput.reset(Direction.NORTH);
         renderGrid = tick();
     }
 
@@ -60,8 +63,8 @@ public class SnakeGame implements Updatable<RenderGrid> {
     }
 
     @Override
-    public RenderGrid getRenderObject() {
-        return renderGrid;
+    public SnakeRender getRenderObject() {
+        return new SnakeRender(this);
     }
 
     @Override
@@ -74,18 +77,22 @@ public class SnakeGame implements Updatable<RenderGrid> {
     }
 
     private RenderGrid tick(){
+        Direction newDirection = SnakeInput.getDirection();
+        if(newDirection != null) direction = newDirection;
         Position lastPart = snake.peek();
+        if(lastPart == null) lastPart = headPosition;
         snake.add(new Position(headPosition.x, headPosition.y));
-        headPosition = squares.getNeighbour(headPosition.x, headPosition.y, SnakeInput.direction);
-        if(!randomBites.isSnakeEating(snake.toArray(Position[]::new), headPosition)) snake.poll();
+        headPosition = squares.getNeighbour(headPosition.x, headPosition.y, direction);
+        if(!randomBits.isSnakeEating(snake.toArray(Position[]::new), headPosition)) snake.poll();
+        else score++;
 
         //Colors
         //Bits
-        for(Position position : randomBites.getBits()){
+        for(Position position : randomBits.getBits()){
             squares.setColor(position.x, position.y, bits);
         }
         //Snake
-        if(lastPart != null) squares.setColor(lastPart.x, lastPart.y, background);
+        squares.setColor(lastPart.x, lastPart.y, background);
         squares.setColor(headPosition.x, headPosition.y, headColor);
         for(Position position : snake)
         {
@@ -94,5 +101,13 @@ public class SnakeGame implements Updatable<RenderGrid> {
 
 
         return new RenderGrid(squares);
+    }
+
+    public RenderGrid getRenderGrid(){
+        return renderGrid;
+    }
+
+    public int getScore(){
+        return score;
     }
 }

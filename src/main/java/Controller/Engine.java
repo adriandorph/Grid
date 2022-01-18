@@ -3,16 +3,23 @@ package Controller;
 import View.Renderable;
 
 public abstract class Engine<RenderObject> implements Runnable {
-    private volatile boolean running;
+    protected volatile boolean running;
+    protected volatile boolean paused;
     private final double secondsPerFrame;
     protected final Renderable<RenderObject> renderable;
     protected final Updatable<RenderObject> updatable;
     protected int actualFPS;
+    protected EngineStopHandler stopHandler;
 
     public Engine(Renderable<RenderObject> renderable, Updatable<RenderObject> updatable, int FPS){
         this.renderable = renderable;
         this.updatable = updatable;
         this.secondsPerFrame = 1.0/FPS;
+    }
+
+    public Engine(Renderable<RenderObject> renderable, Updatable<RenderObject> updatable, int FPS, EngineStopHandler stopHandler){
+        this(renderable, updatable, FPS);
+        this.stopHandler = stopHandler;
     }
 
     public void start(){
@@ -24,12 +31,22 @@ public abstract class Engine<RenderObject> implements Runnable {
         running = false;
     }
 
+    public void pause(){
+        paused = true;
+    }
+
+    public void unpause(){
+        paused = false;
+    }
+
     protected abstract void stopped();
+    protected abstract boolean pauseCondition();
 
     @Override
     public void run(){
 
         running = true;
+        paused = false;
         double lastTime = System.nanoTime() / 1000000000.0; // 1 = 1 second
         double unprocessedTime = 0;
 
@@ -37,6 +54,14 @@ public abstract class Engine<RenderObject> implements Runnable {
         int frames = 0;
 
         while (running){
+            while(paused || pauseCondition()){
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                lastTime = System.nanoTime() / 1000000000.0;
+            }
             boolean render = false;
             double firstTime = System.nanoTime() / 1000000000.0;
             double passedTime = firstTime - lastTime;

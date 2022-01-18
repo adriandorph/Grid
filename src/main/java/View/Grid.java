@@ -13,6 +13,7 @@ public class Grid extends Canvas implements Renderable<RenderGrid> {
     @Override
     public void render(RenderGrid renderGrid) {
         gc.save();
+        gc.clearRect(0,0, getWidth(), getHeight());
         Matrix squares = renderGrid.getSquares();
         if((double)squares.getLengthX() / (double)squares.getLengthY() != getWidth()/getHeight()) throw new IllegalArgumentException("The squares do not fit in the canvas. Squares: "+(double)squares.getLengthX() / (double)squares.getLengthY()+ " Canvas: "+ getWidth()/getHeight());
 
@@ -23,5 +24,10 @@ public class Grid extends Canvas implements Renderable<RenderGrid> {
             }
         }
         gc.restore();
+    }
+
+    @Override
+    public void endScreen() {
+        setOpacity(.3);
     }
 }

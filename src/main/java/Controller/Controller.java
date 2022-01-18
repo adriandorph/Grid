@@ -1,6 +1,8 @@
 package Controller;
 import Controller.Snake.SnakeEngine;
 import Controller.Snake.SnakeInput;
+import Model.Direction;
+import Model.GridAnimation;
 import Model.Snake.SnakeGame;
 import View.*;
 import javafx.application.Application;
@@ -13,19 +15,17 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class Controller extends Application {
+public class Controller extends Application implements EngineStopHandler{
 
     public static double factor = 1.0;   // 1.0 = 720p used for scaling.
     public static Stage stage;
     private static boolean fullScreen;
     public static double windowHeight;
     public static double windowWidth;
-    private GridAnimationEngine gridAnimationEngine;
-    private SnakeEngine snakeEngine;
+    private static GridAnimationEngine gridAnimationEngine;
+    private static SnakeEngine snakeEngine;
 
-    private View view;
-
-    private final InputController[] inputControllers = new InputController[]{new SnakeInput()};
+    private static View view;
 
     @Override
     public void start(Stage stage) {
@@ -40,10 +40,9 @@ public class Controller extends Application {
 
 
         Grid grid = new Grid(windowWidth, windowHeight);
-        //GridAnimation gridAnimation = new GridAnimation(windowHeight);
-        //gridAnimationEngine = new GridAnimationEngine(grid, gridAnimation, 30);
+        GridAnimation gridAnimation = new GridAnimation(windowHeight);
+        gridAnimationEngine = new GridAnimationEngine(grid, gridAnimation, 30);
         SnakeGame snakeGame = new SnakeGame(grid.getHeight());
-        snakeEngine = new SnakeEngine(grid, snakeGame, 30);
 
 
         StackPane gridPane = new StackPane();
@@ -54,14 +53,26 @@ public class Controller extends Application {
         Controller.stage.setScene(view);
         sizingAfterNewScene();
         setKeyInput();
-        stage.show();
-
-        //gridAnimationEngine.start();
-        snakeEngine.start();
+        viewNewSnakeGame();
     }
 
     public static void main(String[] args) {
         launch();
+    }
+
+    private static void viewNewSnakeGame(){
+        if(snakeEngine != null) snakeEngine.stop();
+        Grid grid = new Grid(windowWidth, windowHeight);
+        SnakeUI snakeUI = new SnakeUI(windowWidth, windowHeight);
+        SnakeView snakeView = new SnakeView(grid, snakeUI);
+        SnakeGame snakeGame = new SnakeGame(grid.getHeight());
+        snakeEngine = new SnakeEngine(snakeView, snakeGame, 30);
+        StackPane pane = new StackPane();
+        pane.getChildren().add(grid);
+        pane.getChildren().add(snakeUI);
+        view.setRoot(pane);
+        stage.show();
+        snakeEngine.start();
     }
 
     private static void sizingAfterNewScene(){
@@ -94,23 +105,31 @@ public class Controller extends Application {
     }
 
     private void setKeyInput(){
-        inputControllers[0].activate();
         view.setOnKeyPressed(event -> {
             KeyCode key = event.getCode();
 
             //Global keys
-            if(event.getCode() == KeyCode.ESCAPE){
-                Platform.exit();
-                System.exit(0);
-                //gridAnimationEngine.stop();
-                snakeEngine.stop();
+            switch (event.getCode()){
+                case ESCAPE -> {
+                    Platform.exit();
+                    System.exit(0);
+                    snakeEngine.stop();
+                    gridAnimationEngine.stop();
+                }
+                case R -> {
+                    viewNewSnakeGame();
+                }
             }
 
-            //Specific controllers
-            for(InputController inputController : inputControllers){
-                if (inputController.isActive()) inputController.keyInput(key);
-            }
+
+            //All controllers
+            SnakeInput.keyInput(key);
         });
+    }
+
+    @Override
+    public void handleStop() {//Game has stopped
+
     }
 }
 

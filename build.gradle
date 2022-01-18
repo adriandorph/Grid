@@ -14,11 +14,11 @@ repositories {
 
 dependencies {
     // Use JUnit Jupiter API for testing.
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
     // Use JUnit Jupiter Engine for testing.
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     // This dependency is used by the application.
-    implementation 'org.apache.commons:commons-compress:1.21'
+    implementation 'org.apache.commons:commons-compress:1.20'
 }
 
 test {
@@ -59,7 +59,10 @@ tasks.withType(JavaCompile) {
 
 //jar.enabled = false
 jar {
-
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    manifest {
+        attributes 'Main-Class': 'Launcher'
+    }
     from {
         configurations.runtimeClasspath.collect {
             it.isDirectory() ? it : zipTree(it)
