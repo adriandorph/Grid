@@ -43,7 +43,6 @@ public class Controller extends Application implements EngineStopHandler{
         GridAnimation gridAnimation = new GridAnimation(windowHeight);
         gridAnimationEngine = new GridAnimationEngine(grid, gridAnimation, 30);
         SnakeGame snakeGame = new SnakeGame(grid.getHeight());
-        //snakeEngine = new SnakeEngine(grid, snakeGame, 30, this);
 
 
         StackPane gridPane = new StackPane();
