@@ -14,4 +14,9 @@ public class GridAnimationEngine extends Engine<RenderGrid>{
     protected void stopped() {
 
     }
+
+    @Override
+    protected boolean pauseCondition(){
+        return false;
+    }
 }

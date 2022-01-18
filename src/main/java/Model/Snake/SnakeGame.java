@@ -20,7 +20,6 @@ public class SnakeGame implements Updatable<RenderGrid> {
     private int width;
     private int height;
     private RandomBits randomBits;
-    private SnakeInput snakeInput;
     private Direction direction;
 
     //Color
@@ -45,9 +44,8 @@ public class SnakeGame implements Updatable<RenderGrid> {
         direction = Direction.NORTH;
         headPosition = new Position(width / 2, height / 3);
         snake = new LinkedList<>();
-        //snake = new LinkedList<>(List.of(squares.getNeighbour(headPosition.x, headPosition.y, DirectionController.getOpposite(direction))));
         randomBits = new RandomBits(width, height, 3, snake.toArray(Position[]::new), headPosition);
-        snakeInput = new SnakeInput(direction);
+        SnakeInput.reset(Direction.NORTH);
         renderGrid = tick();
     }
 
@@ -76,7 +74,7 @@ public class SnakeGame implements Updatable<RenderGrid> {
     }
 
     private RenderGrid tick(){
-        Direction newDirection = snakeInput.getDirection();
+        Direction newDirection = SnakeInput.getDirection();
         if(newDirection != null) direction = newDirection;
         Position lastPart = snake.peek();
         if(lastPart == null) lastPart = headPosition;

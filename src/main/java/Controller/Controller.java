@@ -2,6 +2,7 @@ package Controller;
 import Controller.Snake.SnakeEngine;
 import Controller.Snake.SnakeInput;
 import Model.Direction;
+import Model.GridAnimation;
 import Model.Snake.SnakeGame;
 import View.*;
 import javafx.application.Application;
@@ -14,7 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class Controller extends Application {
+public class Controller extends Application implements EngineStopHandler{
 
     public static double factor = 1.0;   // 1.0 = 720p used for scaling.
     public static Stage stage;
@@ -25,8 +26,6 @@ public class Controller extends Application {
     private SnakeEngine snakeEngine;
 
     private View view;
-
-    private final InputController[] inputControllers = new InputController[]{new SnakeInput(Direction.NORTH)};
 
     @Override
     public void start(Stage stage) {
@@ -41,10 +40,10 @@ public class Controller extends Application {
 
 
         Grid grid = new Grid(windowWidth, windowHeight);
-        //GridAnimation gridAnimation = new GridAnimation(windowHeight);
-        //gridAnimationEngine = new GridAnimationEngine(grid, gridAnimation, 30);
+        GridAnimation gridAnimation = new GridAnimation(windowHeight);
+        gridAnimationEngine = new GridAnimationEngine(grid, gridAnimation, 30);
         SnakeGame snakeGame = new SnakeGame(grid.getHeight());
-        snakeEngine = new SnakeEngine(grid, snakeGame, 30);
+        snakeEngine = new SnakeEngine(grid, snakeGame, 30, this);
 
 
         StackPane gridPane = new StackPane();
@@ -57,7 +56,6 @@ public class Controller extends Application {
         setKeyInput();
         stage.show();
 
-        //gridAnimationEngine.start();
         snakeEngine.start();
     }
 
@@ -95,7 +93,6 @@ public class Controller extends Application {
     }
 
     private void setKeyInput(){
-        inputControllers[0].activate();
         view.setOnKeyPressed(event -> {
             KeyCode key = event.getCode();
 
@@ -107,11 +104,14 @@ public class Controller extends Application {
                 snakeEngine.stop();
             }
 
-            //Specific controllers
-            for(InputController inputController : inputControllers){
-                if (inputController.isActive()) inputController.keyInput(key);
-            }
+            //All controllers
+            SnakeInput.keyInput(key);
         });
+    }
+
+    @Override
+    public void handleStop() {//Game has stopped
+
     }
 }
 
