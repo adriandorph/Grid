@@ -54,8 +54,8 @@ public class Controller extends Application{
         view = new View(gridPane);
         view.setFill(Color.BLACK);
         Controller.stage.setScene(view);
-        Controller.stage.show();
         sizingAfterNewScene();
+        Controller.stage.show();
         setKeyInput();
         viewNewSnakeGame();
     }
@@ -75,7 +75,12 @@ public class Controller extends Application{
         StackPane pane = new StackPane();
         pane.getChildren().add(grid);
         pane.getChildren().add(snakeUI);
-        view.setRoot(pane);
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+                view.setRoot(pane);
+                stage.show();
+            }
+        });
         snakeEngine.start();
     }
 
@@ -86,7 +91,12 @@ public class Controller extends Application{
         snakeGameOverAnimationEngine = new SnakeGameOverAnimationEngine(grid, snakeGameOverAnimation, 30);
         StackPane pane = new StackPane();
         pane.getChildren().add(grid);
-        view.setRoot(pane);
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+                view.setRoot(pane);
+                stage.show();
+            }
+        });
         snakeGameOverAnimationEngine.start();
     }
 
@@ -95,7 +105,12 @@ public class Controller extends Application{
         SnakeHighscoreView shv = new SnakeHighscoreView(hc);
         StackPane pane = new StackPane();
         pane.getChildren().add(shv);
-        view.setRoot(pane);
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+                view.setRoot(pane);
+                stage.show();
+            }
+        });
     }
 
     private static void sizingAfterNewScene(){
