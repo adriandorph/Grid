@@ -15,8 +15,6 @@ public class Grid extends Canvas implements Renderable<RenderGrid> {
         gc.save();
         gc.clearRect(0,0, getWidth(), getHeight());
         Matrix squares = renderGrid.getSquares();
-        if((double)squares.getLengthX() / (double)squares.getLengthY() != getWidth()/getHeight()) throw new IllegalArgumentException("The squares do not fit in the canvas. Squares: "+(double)squares.getLengthX() / (double)squares.getLengthY()+ " Canvas: "+ getWidth()/getHeight());
-
         for(int x = 0; x < squares.getLengthX(); x++){
             for(int y = 0; y < squares.getLengthY(); y++){
                 gc.setFill(squares.get(x,y).getColor());

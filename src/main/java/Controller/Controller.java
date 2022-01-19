@@ -44,7 +44,7 @@ public class Controller extends Application{
         });
         Controller.stage = stage;
         setFullScreen();
-        //setSize(1080);
+        //setSize(720);
 
         Grid grid = new Grid(windowWidth, windowHeight);
 
@@ -87,6 +87,7 @@ public class Controller extends Application{
     public static void viewSnakeGameOver(){
         if(snakeGameOverAnimationEngine != null) snakeGameOverAnimationEngine.stop();
         Grid grid = new Grid(windowWidth, windowHeight);
+        grid.render(new RenderGrid(new Matrix(16,9, 9)));
         SnakeGameOverAnimation snakeGameOverAnimation = new SnakeGameOverAnimation(snakeGame);
         snakeGameOverAnimationEngine = new SnakeGameOverAnimationEngine(grid, snakeGameOverAnimation, 30);
         StackPane pane = new StackPane();
