@@ -43,8 +43,8 @@ public class Controller extends Application{
             System.exit(0);
         });
         Controller.stage = stage;
-        setFullScreen();
-        //setSize(861);
+        if (screenHasFormat16_9()) setFullScreen();
+        else setSize(720);
 
         Grid grid = new Grid(windowWidth, windowHeight);
 
@@ -136,6 +136,14 @@ public class Controller extends Application{
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.setFullScreen(true);
         fullScreen = true;
+    }
+
+    public static boolean screenHasFormat16_9(){
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        double maxHeight = bounds.getHeight() + 40;
+        double maxWidth = bounds.getWidth();
+        return maxWidth / maxHeight == 16.0 / 9.0;
     }
 
     public static double maxHeight(){
