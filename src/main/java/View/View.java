@@ -5,7 +5,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 public class View extends Scene {
-    public Grid grid;
     public View(StackPane pane){
         super(new Pane());
         getStylesheets().add("styling/buttons.css");

@@ -10,15 +10,15 @@ import java.util.Queue;
 
 public class SnakeGameOverAnimation implements Updatable<RenderGrid> {
 
-    private Queue<Position> snake;
-    private Position head;
-    private Matrix squares;
+    private final Queue<Position> snake;
+    private final Position head;
+    private final Matrix squares;
     private RenderGrid renderGrid;
     private double seconds;
     private final double ticksPerSecond;
     private boolean hasFinished = false;
-    private boolean newHighscore;
-    private int score;
+    private final boolean newHighscore;
+    private final int score;
 
     //Color
     private final Color background = Color.rgb(0,0,0);

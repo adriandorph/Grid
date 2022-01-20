@@ -72,9 +72,7 @@ public class SnakeInput {
                         directions.add(finaldirection);
                     }
                 }
-                case P -> {//Pause toggle
-                    paused = !paused;
-                }
+                case P -> paused = !paused;//Pause toggle
             }
         }
     }

@@ -9,25 +9,21 @@ import Saves.SnakeSaveFileWriter;
 import View.RenderGrid;
 import View.Snake.SnakeRender;
 import javafx.scene.paint.Color;
-
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class SnakeGame implements Updatable<SnakeRender> {
     private RenderGrid renderGrid;
-    private Matrix squares;
+    private final Matrix squares;
     private double seconds;
-    private final int ticksPerSecond = 6;
-    private Queue<Position> snake;
+    private static final int ticksPerSecond = 6;
+    private final Queue<Position> snake;
     private Position headPosition;
-    private int width;
-    private int height;
-    private RandomBits randomBits;
+    private final RandomBits randomBits;
     private Direction direction;
     private int score;
     private int highscore;
-    private int originalHighscore;
+    private final int originalHighscore;
 
     //Color
     private final Color background = Color.rgb(0,0,0);
@@ -40,8 +36,6 @@ public class SnakeGame implements Updatable<SnakeRender> {
     }
 
     public SnakeGame(int width, int height, double canvasHeight){
-        this.width = width;
-        this.height = height;
         if ((double) width / height != 16.0 / 9) {
             Exception e = new RuntimeException("Dimensions not allowed. Has to be 16:9");
             e.printStackTrace();

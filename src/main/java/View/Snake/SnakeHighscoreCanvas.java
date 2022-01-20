@@ -9,7 +9,7 @@ import javafx.scene.text.TextAlignment;
 
 
 public class SnakeHighscoreCanvas extends Canvas {
-    private GraphicsContext gc;
+    private final GraphicsContext gc;
 
     public SnakeHighscoreCanvas(double width, double height, int highscore){
         super(width, height);

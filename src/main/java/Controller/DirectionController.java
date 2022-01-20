@@ -24,16 +24,6 @@ public class DirectionController {
         return null;
     }
 
-    public static boolean isOpposite(Direction direction1, Direction direction2){
-        switch (direction1){
-            case NORTH -> {if(direction2 == Direction.SOUTH) return true;}
-            case EAST -> {if(direction2 == Direction.WEST) return true;}
-            case SOUTH -> {if(direction2 == Direction.NORTH) return true;}
-            case WEST -> {if(direction2 == Direction.EAST) return true;}
-        }
-        return false;
-    }
-
     public static Direction getOpposite(Direction direction){
         switch (direction){
             case NORTH -> {return Direction.SOUTH;}

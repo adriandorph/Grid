@@ -29,9 +29,7 @@ public class SnakeSaveFileWriter {
             String score = ""+highscore;
 
             Files.write(Path.of(filepath.toString()), score.getBytes());
-        } catch (IOException e){
-
-        }
+        } catch (IOException ignored){}
 
     }
 

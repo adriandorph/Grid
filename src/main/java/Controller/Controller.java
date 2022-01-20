@@ -28,7 +28,6 @@ public class Controller extends Application{
     private static boolean fullScreen;
     public static double windowHeight;
     public static double windowWidth;
-    private static GridAnimationEngine gridAnimationEngine;
     private static SnakeEngine snakeEngine;
     private static SnakeGame snakeGame;
     private static SnakeGameOverAnimationEngine snakeGameOverAnimationEngine;
@@ -165,7 +164,6 @@ public class Controller extends Application{
                     Platform.exit();
                     System.exit(0);
                     snakeEngine.stop();
-                    gridAnimationEngine.stop();
                     snakeGameOverAnimationEngine.stop();
                 }
                 case R -> viewNewSnakeGame();

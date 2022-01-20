@@ -95,8 +95,4 @@ public abstract class Engine<RenderObject> implements Runnable {
         System.out.println("Engine stopped");
         if(!dispose) stopped();
     }
-
-    public int getCurrentFPS(){
-        return actualFPS;
-    }
 }
