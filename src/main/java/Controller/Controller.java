@@ -43,8 +43,8 @@ public class Controller extends Application{
             System.exit(0);
         });
         Controller.stage = stage;
-        //setFullScreen();
-        setSize(861);
+        setFullScreen();
+        //setSize(861);
 
         Grid grid = new Grid(windowWidth, windowHeight);
 
