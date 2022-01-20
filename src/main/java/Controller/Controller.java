@@ -43,8 +43,8 @@ public class Controller extends Application{
             System.exit(0);
         });
         Controller.stage = stage;
-        setFullScreen();
-        //setSize(720);
+        //setFullScreen();
+        setSize(861);
 
         Grid grid = new Grid(windowWidth, windowHeight);
 
@@ -75,11 +75,9 @@ public class Controller extends Application{
         StackPane pane = new StackPane();
         pane.getChildren().add(grid);
         pane.getChildren().add(snakeUI);
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-                view.setRoot(pane);
-                stage.show();
-            }
+        Platform.runLater(() -> {
+            view.setRoot(pane);
+            stage.show();
         });
         snakeEngine.start();
     }
@@ -92,11 +90,9 @@ public class Controller extends Application{
         snakeGameOverAnimationEngine = new SnakeGameOverAnimationEngine(grid, snakeGameOverAnimation, 30);
         StackPane pane = new StackPane();
         pane.getChildren().add(grid);
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-                view.setRoot(pane);
-                stage.show();
-            }
+        Platform.runLater(() -> {
+            view.setRoot(pane);
+            stage.show();
         });
         snakeGameOverAnimationEngine.start();
     }
@@ -106,11 +102,9 @@ public class Controller extends Application{
         SnakeHighscoreView shv = new SnakeHighscoreView(hc);
         StackPane pane = new StackPane();
         pane.getChildren().add(shv);
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-                view.setRoot(pane);
-                stage.show();
-            }
+        Platform.runLater(() -> {
+            view.setRoot(pane);
+            stage.show();
         });
     }
 
@@ -127,6 +121,9 @@ public class Controller extends Application{
         if (!fullScreen && (height < 720 || height > 2160)) throw new RuntimeException("The window size has to be within 720p - 2160p");
         stage.setFullScreen(false);
         factor = height / 720.0;
+        double maxHeight = maxHeight();
+        if(maxHeight < height) height = maxHeight;
+        if(height % 9 != 0) height = (int)(height / 9.0) * 9;
         windowWidth = height * 16/9.0;
         windowHeight = height;
 
@@ -135,12 +132,19 @@ public class Controller extends Application{
     }
 
     public static void setFullScreen(){
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
-        setSize(bounds.getHeight()+40);
+        setSize(maxHeight());
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.setFullScreen(true);
         fullScreen = true;
+    }
+
+    public static double maxHeight(){
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        double maxHeight = bounds.getHeight() + 40; // +40 because api stupid
+        double maxWidth = bounds.getWidth();
+        if(maxHeight * 16.0 / 9.0 > maxWidth) return maxWidth * 9.0 / 16.0;
+        else return maxHeight;
     }
 
     private void setKeyInput(){
@@ -156,9 +160,7 @@ public class Controller extends Application{
                     gridAnimationEngine.stop();
                     snakeGameOverAnimationEngine.stop();
                 }
-                case R -> {
-                    viewNewSnakeGame();
-                }
+                case R -> viewNewSnakeGame();
             }
 
 

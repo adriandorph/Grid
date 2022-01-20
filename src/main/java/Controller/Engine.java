@@ -1,6 +1,7 @@
 package Controller;
 
 import View.Renderable;
+import javafx.application.Platform;
 
 public abstract class Engine<RenderObject> implements Runnable {
     protected volatile boolean running;
@@ -79,7 +80,7 @@ public abstract class Engine<RenderObject> implements Runnable {
 
             if (render){
                 //render game
-                renderable.render(updatable.getRenderObject());
+                Platform.runLater(() -> renderable.render(updatable.getRenderObject()));
                 frames++;
 
             } else { //Nothing to do, so wait a bit before running through the running loop again.

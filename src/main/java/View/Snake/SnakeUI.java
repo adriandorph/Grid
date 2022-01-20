@@ -27,7 +27,8 @@ public class SnakeUI extends Canvas implements Renderable<Integer> {
         gc.setTextAlign(TextAlignment.LEFT);
         gc.setFont(new Font("Roboto", 30 * Controller.factor));
         gc.fillText(("Score: "+ score), 10 * Controller.factor,25 * Controller.factor);
-        gc.fillText(("Highscore: "+ highscore), getWidth() - 200 * Controller.factor,25 * Controller.factor);
+        gc.setTextAlign(TextAlignment.RIGHT);
+        gc.fillText(("Highscore: "+ highscore), getWidth() - 10 * Controller.factor,25 * Controller.factor);
         gc.restore();
     }
 }
