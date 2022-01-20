@@ -10,8 +10,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 public class SnakeUI extends Canvas implements Renderable<Integer> {
-    private GraphicsContext gc;
-    private int highscore;
+    private final GraphicsContext gc;
+    private final int highscore;
 
     public SnakeUI(double width, double height, int highscore){
         super(width, height);
