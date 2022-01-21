@@ -96,7 +96,7 @@ public class SnakeGame implements Updatable<SnakeRender> {
         if(lastPart == null) lastPart = headPosition;
         snake.add(new Position(headPosition.x, headPosition.y));
         headPosition = squares.getNeighbour(headPosition.x, headPosition.y, direction);
-        if(!randomBits.isSnakeEating(snake.toArray(Position[]::new), headPosition)) snake.poll();
+        if(!randomBits.checkAndHandleEating(snake.toArray(Position[]::new), headPosition)) snake.poll();
         else score++;
 
         //Colors

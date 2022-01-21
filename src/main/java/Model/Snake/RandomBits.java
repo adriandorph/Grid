@@ -2,6 +2,9 @@ package Model.Snake;
 
 import Model.Position;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class RandomBits {
     private Position[] bits;
     private final int height;
@@ -14,43 +17,72 @@ public class RandomBits {
         randomAll(snake, head);
     }
 
-    public void randomAll(Position[] snake, Position head){
+    private Position[] getAvailableSpace(Position[] bits, Position[] snake, Position head){
+        Position[] availableSpace = new Position[width * height - snake.length - bits.length - 1]; //-1 because of the snakes head
+        int index = 0;
+        for(int i = 0; index < availableSpace.length; i++){
+            Position curPos = new Position(i % width, i / width);
+            boolean available = true;
+            if(curPos.equals(head)){
+                available = false;
+            } else {
+                for (Position pos : snake) {
+                    if (curPos.equals(pos)) {
+                        available = false;
+                        break;
+                    }
+                }
+                if(available){
+                    for (Position pos : bits) {
+                        if (curPos.equals(pos)) {
+                            available = false;
+                            break;
+                        }
+                    }
+                }
+
+            }
+            if(available){
+                availableSpace[index] = curPos;
+                index++;
+            }
+        }
+        return availableSpace;
+    }
+
+    private void randomAll(Position[] snake, Position head){
         for(int i = 0; i < bits.length; i++){
-            bits[i] = randomPosition(bits, snake, head);
+            Position bit = randomPosition(bits, snake, head);
+            if(bit != null) bits[i] = bit;
+            else {
+                var shorterBits = new ArrayList<Position>();
+                for(Position pos: bits){
+                    if(pos != null) shorterBits.add(pos);
+                }
+                bits = shorterBits.toArray(Position[]::new);
+            }
         }
     }
 
     private Position randomPosition(Position[] bits, Position[] snake, Position head){
-        Position bit = new Position((int)(Math.random() * width), (int)(Math.random() * height));
-        while(!isPositionAvailable(bit, bits, snake, head)){
-            bit = new Position((int)(Math.random() * width), (int)(Math.random() * height));
-        }
-        return bit;
+        Position[] availableSpace = getAvailableSpace(bits, snake,head);
+        if(availableSpace.length == 0) return null;
+        return availableSpace[(int)(Math.random() * (availableSpace.length - 1))];
     }
 
-    public boolean isSnakeEating(Position[] snake,Position head){
-        boolean yesno = false;
-        Position[] updatedBits = new Position[bits.length];
-        for(int i = 0; i < bits.length; i++){
-            if (!bits[i].equals(head)) updatedBits[i] = bits[i];
+    public boolean checkAndHandleEating(Position[] snake, Position head){
+        boolean eating = false;
+        ArrayList<Position> updatedBits = new ArrayList<>();
+        for (Position position : bits) {
+            if (!position.equals(head)) updatedBits.add(position);
             else {
-                updatedBits[i] = randomPosition(bits, snake, head);
-                yesno = true;
+                Position bit = randomPosition(bits, snake, head);
+                if (bit != null) updatedBits.add(bit);
+                eating = true;
             }
         }
-        bits = updatedBits;
-        return yesno;
-    }
-
-    private boolean isPositionAvailable(Position bitePosition, Position[] bits, Position[] snake, Position head){
-        if(head.equals(bitePosition)) return false;
-        for(Position position : snake){
-            if(position.equals(bitePosition)) return false;
-        }
-        for(Position position : bits){
-            if (position != null && position.equals(bitePosition)) return false;
-        }
-        return true;
+        bits = updatedBits.toArray(Position[]::new);
+        return eating;
     }
 
     public Position[] getBits(){
