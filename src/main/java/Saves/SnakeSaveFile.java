@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Locale;
 
-public class SnakeSaveFileWriter {
+public class SnakeSaveFile {
 
     public static void saveNewHighScore(int highscore) {
         try{

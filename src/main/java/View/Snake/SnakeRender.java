@@ -19,4 +19,5 @@ public class SnakeRender {
     public int getScore() {
         return score;
     }
+
 }

@@ -5,7 +5,7 @@ import Controller.Updatable;
 import Model.Direction;
 import Model.Matrix;
 import Model.Position;
-import Saves.SnakeSaveFileWriter;
+import Saves.SnakeSaveFile;
 import View.RenderGrid;
 import View.Snake.SnakeRender;
 import javafx.scene.paint.Color;
@@ -16,6 +16,7 @@ public class SnakeGame implements Updatable<SnakeRender> {
     private RenderGrid renderGrid;
     private final Matrix squares;
     private double seconds;
+    private double beforeStartSeconds;
     private static final int ticksPerSecond = 6;
     private final Queue<Position> snake;
     private Position headPosition;
@@ -40,17 +41,18 @@ public class SnakeGame implements Updatable<SnakeRender> {
             Exception e = new RuntimeException("Dimensions not allowed. Has to be 16:9");
             e.printStackTrace();
         }
-        this.score = 0;
-        this.highscore = SnakeSaveFileWriter.readHighscore();
-        this.originalHighscore = highscore;
+        seconds = 0;
+        beforeStartSeconds = 0;
+        score = 0;
+        highscore = SnakeSaveFile.readHighscore();
+        originalHighscore = highscore;
         squares = new Matrix(width, height, canvasHeight);
         squares.setAllColor(background);
-        direction = Direction.NORTH;
-        headPosition = new Position(width / 2, height / 3);
+        direction = null;
+        headPosition = new Position(width / 2, height / 2);
         snake = new LinkedList<>();
         randomBits = new RandomBits(width, height, 3, snake.toArray(Position[]::new), headPosition);
-        SnakeInput.reset(Direction.NORTH);
-        renderGrid = tick();
+        renderGrid = beforeStartTick(beforeStartSeconds);
     }
 
     public Matrix getSquares() {
@@ -67,11 +69,14 @@ public class SnakeGame implements Updatable<SnakeRender> {
 
     @Override
     public void update(double seconds) {
-        this.seconds += seconds;
-        double tickTime = 1.0 / ticksPerSecond;
-        if(this.seconds >= tickTime){
-            this.seconds -= tickTime;
-            renderGrid = tick();
+        if(!hasStarted()) renderGrid = beforeStartTick(seconds);
+        else {
+            this.seconds += seconds;
+            double tickTime = 1.0 / ticksPerSecond;
+            if(this.seconds >= tickTime){
+                this.seconds -= tickTime;
+                renderGrid = tick();
+            }
         }
     }
 
@@ -90,6 +95,7 @@ public class SnakeGame implements Updatable<SnakeRender> {
     }
 
     private RenderGrid tick() {
+
         Direction newDirection = SnakeInput.getDirection();
         if(newDirection != null) direction = newDirection;
         Position lastPart = snake.peek();
@@ -113,10 +119,24 @@ public class SnakeGame implements Updatable<SnakeRender> {
         }
 
         if(score > highscore) {
-            SnakeSaveFileWriter.saveNewHighScore(score);
+            SnakeSaveFile.saveNewHighScore(score);
             highscore = score;
         }
 
+        return new RenderGrid(squares);
+    }
+
+    private RenderGrid beforeStartTick(double seconds){
+        direction = SnakeInput.getDirection();
+        beforeStartSeconds += seconds;
+        double red = headColor.getRed() * getOpacity();
+        double green = headColor.getGreen() * getOpacity();
+        double blue = headColor.getBlue() * getOpacity();
+        Color pulsingHeadColor = Color.color(red, green, blue);
+        squares.setColor(headPosition.x, headPosition.y, pulsingHeadColor);
+        for(Position pos: randomBits.getBits()){
+            squares.setColor(pos.x, pos.y, bits);
+        }
         return new RenderGrid(squares);
     }
 
@@ -130,5 +150,14 @@ public class SnakeGame implements Updatable<SnakeRender> {
 
     public boolean isNewHighScore(){
         return score > originalHighscore;
+    }
+
+    public boolean hasStarted(){
+        return direction != null;
+    }
+
+    public double getOpacity(){
+        if(hasStarted()) return 1.0;
+        else return (Math.cos(beforeStartSeconds * 10) + 1) / 8 * 3 + 0.25;
     }
 }

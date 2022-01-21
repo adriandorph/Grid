@@ -33,7 +33,7 @@ public class SnakeEngine extends Engine<SnakeRender> {
 
     @Override
     protected void stopped() {
-        SnakeInput.reset(Direction.NORTH);
+        SnakeInput.setDirection(Direction.NORTH);
 
         Controller.viewSnakeGameOver();
     }

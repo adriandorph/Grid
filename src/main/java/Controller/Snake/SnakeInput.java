@@ -7,12 +7,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class SnakeInput {
-    private static Direction finaldirection = Direction.NORTH;
+    private static Direction finaldirection = null;
     private static Queue<Direction> directions = new LinkedList<>();
     private static boolean isActive = false;
     private static boolean paused = false;
 
-    public static void reset(Direction direction){
+    public static void setDirection(Direction direction){
         directions = new LinkedList<>();
         finaldirection = direction;
     }
