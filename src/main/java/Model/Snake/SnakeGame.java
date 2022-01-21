@@ -8,6 +8,7 @@ import Model.Position;
 import Saves.SnakeSaveFile;
 import View.RenderGrid;
 import View.Snake.SnakeRender;
+import View.Snake.SnakeUIInfo;
 import javafx.scene.paint.Color;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -132,10 +133,21 @@ public class SnakeGame implements Updatable<SnakeRender> {
         double red = headColor.getRed() * getOpacity();
         double green = headColor.getGreen() * getOpacity();
         double blue = headColor.getBlue() * getOpacity();
-        Color pulsingHeadColor = Color.color(red, green, blue);
-        squares.setColor(headPosition.x, headPosition.y, pulsingHeadColor);
+        squares.setColor(headPosition.x, headPosition.y, Color.color(red, green, blue));
+
+        red = bits.getRed();
+        green = bits.getGreen();
+        blue = bits.getBlue();
+
+        if(shouldDisplayStartHelp()){
+            double opacity = 0.5;
+            red *= opacity;
+            green *= opacity;
+            blue *= opacity;
+
+        }
         for(Position pos: randomBits.getBits()){
-            squares.setColor(pos.x, pos.y, bits);
+            squares.setColor(pos.x, pos.y, Color.color(red, green, blue));
         }
         return new RenderGrid(squares);
     }
@@ -159,5 +171,13 @@ public class SnakeGame implements Updatable<SnakeRender> {
     public double getOpacity(){
         if(hasStarted()) return 1.0;
         else return (Math.cos(beforeStartSeconds * 10) + 1) / 8 * 3 + 0.25;
+    }
+
+    private boolean shouldDisplayStartHelp(){
+        return !hasStarted() && beforeStartSeconds > 5;
+    }
+
+    public SnakeUIInfo getSnakeUIInfo(){
+        return new SnakeUIInfo(score, originalHighscore, shouldDisplayStartHelp());
     }
 }

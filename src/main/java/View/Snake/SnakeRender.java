@@ -5,19 +5,19 @@ import View.RenderGrid;
 
 public class SnakeRender {
     private final RenderGrid renderGrid;
-    private final int score;
+    private final SnakeUIInfo snakeUIInfo;
 
     public SnakeRender(SnakeGame sg){
         this.renderGrid = sg.getRenderGrid();
-        this.score = sg.getScore();
+        this.snakeUIInfo = sg.getSnakeUIInfo();
     }
 
     public RenderGrid getRenderGrid() {
         return renderGrid;
     }
 
-    public int getScore() {
-        return score;
+    public SnakeUIInfo getSnakeUIInfo() {
+        return snakeUIInfo;
     }
 
 }

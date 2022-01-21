@@ -5,7 +5,6 @@ import Controller.Snake.SnakeInput;
 import Model.Matrix;
 import Model.Snake.SnakeGame;
 import Model.Snake.SnakeGameOverAnimation;
-import Saves.SnakeSaveFile;
 import View.*;
 import View.Snake.SnakeHighscoreCanvas;
 import View.Snake.SnakeHighscoreView;
@@ -67,7 +66,7 @@ public class Controller extends Application{
         if(snakeEngine != null) snakeEngine.dispose();
         Grid grid = new Grid(windowWidth, windowHeight);
         grid.render(new RenderGrid(new Matrix(16, 9, windowHeight)));
-        SnakeUI snakeUI = new SnakeUI(windowWidth, windowHeight, SnakeSaveFile.readHighscore());
+        SnakeUI snakeUI = new SnakeUI(windowWidth, windowHeight);
         SnakeView snakeView = new SnakeView(grid, snakeUI);
         snakeGame = new SnakeGame(grid.getHeight());
         snakeEngine = new SnakeEngine(snakeView, snakeGame, 30);

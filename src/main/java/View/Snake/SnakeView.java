@@ -15,6 +15,6 @@ public class SnakeView implements Renderable<SnakeRender> {
     @Override
     public void render(SnakeRender renderObject) {
         grid.render(renderObject.getRenderGrid());
-        snakeUI.render(renderObject.getScore());
+        snakeUI.render(renderObject.getSnakeUIInfo());
     }
 }
