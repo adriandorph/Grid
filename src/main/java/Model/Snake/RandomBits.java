@@ -17,7 +17,7 @@ public class RandomBits {
     }
 
     private Position[] getAvailableSpace(Position[] bits, Position[] snake, Position head){
-        Position[] availableSpace = new Position[width * height - snake.length - bits.length - 1]; //-1 because of the snakes head
+        Position[] availableSpace = new Position[width * height - snake.length - bits.length];
         int index = 0;
         for(int i = 0; index < availableSpace.length; i++){
             Position curPos = new Position(i % width, i / width);
