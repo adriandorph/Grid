@@ -3,7 +3,6 @@ package Model.Snake;
 import Model.Position;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class RandomBits {
     private Position[] bits;
