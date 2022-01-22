@@ -5,7 +5,7 @@ import Controller.Updatable;
 import Model.Direction;
 import Model.Matrix;
 import Model.Position;
-import Saves.SnakeSaveFile;
+import Saves.SnakeHighScoreFile;
 import View.RenderGrid;
 import View.Snake.SnakeRender;
 import View.Snake.SnakeUIInfo;
@@ -45,7 +45,7 @@ public class SnakeGame implements Updatable<SnakeRender> {
         seconds = 0;
         beforeStartSeconds = 0;
         score = 0;
-        highscore = SnakeSaveFile.readHighscore();
+        highscore = SnakeHighScoreFile.readHighscore();
         originalHighscore = highscore;
         squares = new Matrix(width, height, canvasHeight);
         squares.setAllColor(background);
@@ -120,7 +120,7 @@ public class SnakeGame implements Updatable<SnakeRender> {
         }
 
         if(score > highscore) {
-            SnakeSaveFile.saveNewHighScore(score);
+            SnakeHighScoreFile.saveNewHighScore(score);
             highscore = score;
         }
 

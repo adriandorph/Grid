@@ -41,7 +41,7 @@ public class SnakeMainMenuView extends StackPane {
         settings.setPrefHeight(Controller.windowHeight * 0.05);
         settings.setFont(new Font(Controller.factor * 30));
         settings.setStyle("-fx-font-size: "+Controller.factor * 30+"px");
-        settings.setOnAction(e -> Controller.viewNewSnakeGame());
+        settings.setOnAction(e -> Controller.viewSettingsMenu());
 
         //Exit button
         Button exit = new Button("Exit");

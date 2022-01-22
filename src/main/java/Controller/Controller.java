@@ -3,6 +3,7 @@ import Controller.Snake.*;
 import Model.Matrix;
 import Model.Snake.SnakeGame;
 import Model.Snake.SnakeGameOverAnimation;
+import Saves.Settings;
 import View.*;
 import View.Snake.*;
 import javafx.application.Application;
@@ -38,9 +39,8 @@ public class Controller extends Application{
             System.exit(0);
         });
         Controller.stage = stage;
-        //if (screenHasFormat16_9()) setFullScreen();
-        //else
-            setSize(720);
+        if (screenHasFormat16_9()) setFullScreen();
+        else setSize(720);
 
         grid = new Grid(windowWidth, windowHeight);
 
@@ -52,7 +52,8 @@ public class Controller extends Application{
         Controller.stage.setScene(view);
         sizingAfterNewScene();
         setKeyInput();
-        viewMainMenu();
+        if(Settings.getStartUpInGame()) viewNewSnakeGame();
+        else viewMainMenu();
     }
 
     public static void main(String[] args) {
@@ -65,6 +66,17 @@ public class Controller extends Application{
             SnakeMainMenuView smmv = new SnakeMainMenuView();
             StackPane pane = new StackPane();
             pane.getChildren().add(smmv);
+            view.setRoot(pane);
+            stage.show();
+        });
+    }
+
+    public static void viewSettingsMenu(){
+        InputController.SettingsInput();
+        Platform.runLater(() -> {
+            SettingsMenuView smv = new SettingsMenuView();
+            StackPane pane = new StackPane();
+            pane.getChildren().add(smv);
             view.setRoot(pane);
             stage.show();
         });
@@ -197,6 +209,7 @@ public class Controller extends Application{
             if(EscapeMenuInput.isActive())EscapeMenuInput.keyInput(key);
             else if(MainMenuInput.isActive()) MainMenuInput.keyInput(key);
             else if(SnakeInput.isActive()) SnakeInput.keyInput(key);
+            else if(SettingsInput.isActive()) SettingsInput.keyInput(key);
         });
     }
 }
