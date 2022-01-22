@@ -14,7 +14,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class Controller extends Application{
 
@@ -27,6 +26,7 @@ public class Controller extends Application{
     private static SnakeGame snakeGame;
     private static SnakeGameOverAnimationEngine snakeGameOverAnimationEngine;
     private static StackPane snakeGamePane;
+    private static Grid grid;
 
     private static View view;
 
@@ -38,10 +38,11 @@ public class Controller extends Application{
             System.exit(0);
         });
         Controller.stage = stage;
-        if (screenHasFormat16_9()) setFullScreen();
-        else setSize(720);
+        //if (screenHasFormat16_9()) setFullScreen();
+        //else
+            setSize(720);
 
-        Grid grid = new Grid(windowWidth, windowHeight);
+        grid = new Grid(windowWidth, windowHeight);
 
         StackPane gridPane = new StackPane();
         gridPane.getChildren().add(grid);
@@ -73,7 +74,7 @@ public class Controller extends Application{
         InputController.SnakeInput();
         SnakeInput.unpause();
         if(snakeEngine != null) snakeEngine.dispose();
-        Grid grid = new Grid(windowWidth, windowHeight);
+        grid = new Grid(windowWidth, windowHeight);
         grid.render(new RenderGrid(new Matrix(16, 9, windowHeight)));
         SnakeUI snakeUI = new SnakeUI(windowWidth, windowHeight);
         SnakeView snakeView = new SnakeView(grid, snakeUI);
@@ -111,17 +112,15 @@ public class Controller extends Application{
     public static void viewSnakeGameOver(){
         InputController.deactivateAll();
         if(snakeGameOverAnimationEngine != null) snakeGameOverAnimationEngine.dispose();
-        Grid grid = new Grid(windowWidth, windowHeight);
-        grid.render(new RenderGrid(new Matrix(16,9, 9)));
         SnakeGameOverAnimation snakeGameOverAnimation = new SnakeGameOverAnimation(snakeGame);
         snakeGameOverAnimationEngine = new SnakeGameOverAnimationEngine(grid, snakeGameOverAnimation, 30);
-        StackPane pane = new StackPane();
-        pane.getChildren().add(grid);
-        snakeGameOverAnimationEngine.start();
         Platform.runLater(() -> {
+            StackPane pane = new StackPane();
+            pane.getChildren().add(grid);
             view.setRoot(pane);
             stage.show();
         });
+        snakeGameOverAnimationEngine.start();
     }
 
     public static void viewNewHighscore(int highscore){
