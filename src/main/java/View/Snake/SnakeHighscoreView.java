@@ -26,7 +26,7 @@ public class SnakeHighscoreView extends StackPane {
         okbutton.setPrefHeight(Controller.windowHeight * 0.05);
         okbutton.setFont(new Font(Controller.factor * 30));
         okbutton.setStyle("-fx-font-size: "+Controller.factor * 30+"px");
-        okbutton.setOnAction(e -> Controller.viewNewSnakeGame());
+        okbutton.setOnAction(e -> Controller.viewMainMenu());
 
         getChildren().add(background);
         getChildren().add(hc);

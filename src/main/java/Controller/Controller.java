@@ -1,15 +1,10 @@
 package Controller;
-import Controller.Snake.SnakeEngine;
-import Controller.Snake.SnakeGameOverAnimationEngine;
-import Controller.Snake.SnakeInput;
+import Controller.Snake.*;
 import Model.Matrix;
 import Model.Snake.SnakeGame;
 import Model.Snake.SnakeGameOverAnimation;
 import View.*;
-import View.Snake.SnakeHighscoreCanvas;
-import View.Snake.SnakeHighscoreView;
-import View.Snake.SnakeUI;
-import View.Snake.SnakeView;
+import View.Snake.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
@@ -19,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Controller extends Application{
 
@@ -30,6 +26,7 @@ public class Controller extends Application{
     private static SnakeEngine snakeEngine;
     private static SnakeGame snakeGame;
     private static SnakeGameOverAnimationEngine snakeGameOverAnimationEngine;
+    private static StackPane snakeGamePane;
 
     private static View view;
 
@@ -53,16 +50,28 @@ public class Controller extends Application{
         view.setFill(Color.BLACK);
         Controller.stage.setScene(view);
         sizingAfterNewScene();
-        Controller.stage.show();
         setKeyInput();
-        viewNewSnakeGame();
+        viewMainMenu();
     }
 
     public static void main(String[] args) {
         launch();
     }
 
+    public static void viewMainMenu(){
+        InputController.MainMenuInput();
+        Platform.runLater(() -> {
+            SnakeMainMenuView smmv = new SnakeMainMenuView();
+            StackPane pane = new StackPane();
+            pane.getChildren().add(smmv);
+            view.setRoot(pane);
+            stage.show();
+        });
+    }
+
     public static void viewNewSnakeGame(){
+        InputController.SnakeInput();
+        SnakeInput.unpause();
         if(snakeEngine != null) snakeEngine.dispose();
         Grid grid = new Grid(windowWidth, windowHeight);
         grid.render(new RenderGrid(new Matrix(16, 9, windowHeight)));
@@ -70,29 +79,49 @@ public class Controller extends Application{
         SnakeView snakeView = new SnakeView(grid, snakeUI);
         snakeGame = new SnakeGame(grid.getHeight());
         snakeEngine = new SnakeEngine(snakeView, snakeGame, 30);
-        StackPane pane = new StackPane();
-        pane.getChildren().add(grid);
-        pane.getChildren().add(snakeUI);
+        snakeGamePane = new StackPane();
+        snakeGamePane.getChildren().add(grid);
+        snakeGamePane.getChildren().add(snakeUI);
         Platform.runLater(() -> {
-            view.setRoot(pane);
+            view.setRoot(snakeGamePane);
             stage.show();
         });
         snakeEngine.start();
     }
 
+    public static void viewExistingSnakeGame(){
+        InputController.SnakeInput();
+        Platform.runLater(() -> {
+            view.setRoot(snakeGamePane);
+            stage.show();
+        });
+    }
+
+    public static void viewEscapeMenu(){
+        InputController.EscapeMenuInput();
+        EscapeMenuView emv = new EscapeMenuView();
+        StackPane pane = new StackPane();
+        pane.getChildren().add(emv);
+        Platform.runLater(() -> {
+            view.setRoot(pane);
+            stage.show();
+        });
+    }
+
     public static void viewSnakeGameOver(){
-        if(snakeGameOverAnimationEngine != null) snakeGameOverAnimationEngine.stop();
+        InputController.deactivateAll();
+        if(snakeGameOverAnimationEngine != null) snakeGameOverAnimationEngine.dispose();
         Grid grid = new Grid(windowWidth, windowHeight);
         grid.render(new RenderGrid(new Matrix(16,9, 9)));
         SnakeGameOverAnimation snakeGameOverAnimation = new SnakeGameOverAnimation(snakeGame);
         snakeGameOverAnimationEngine = new SnakeGameOverAnimationEngine(grid, snakeGameOverAnimation, 30);
         StackPane pane = new StackPane();
         pane.getChildren().add(grid);
+        snakeGameOverAnimationEngine.start();
         Platform.runLater(() -> {
             view.setRoot(pane);
             stage.show();
         });
-        snakeGameOverAnimationEngine.start();
     }
 
     public static void viewNewHighscore(int highscore){
@@ -104,6 +133,14 @@ public class Controller extends Application{
             view.setRoot(pane);
             stage.show();
         });
+    }
+
+    public static void exit(){
+        Platform.exit();
+        System.exit(0);
+        snakeEngine.stop();
+        snakeGameOverAnimationEngine.stop();
+
     }
 
     private static void sizingAfterNewScene(){
@@ -157,20 +194,10 @@ public class Controller extends Application{
         view.setOnKeyPressed(event -> {
             KeyCode key = event.getCode();
 
-            //Global keys
-            switch (event.getCode()){
-                case ESCAPE -> {
-                    Platform.exit();
-                    System.exit(0);
-                    snakeEngine.stop();
-                    snakeGameOverAnimationEngine.stop();
-                }
-                case R -> viewNewSnakeGame();
-            }
-
-
-            //All controllers
-            SnakeInput.keyInput(key);
+            //All input controllers
+            if(EscapeMenuInput.isActive())EscapeMenuInput.keyInput(key);
+            else if(MainMenuInput.isActive()) MainMenuInput.keyInput(key);
+            else if(SnakeInput.isActive()) SnakeInput.keyInput(key);
         });
     }
 }

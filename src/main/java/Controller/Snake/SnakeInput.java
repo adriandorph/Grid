@@ -2,6 +2,7 @@ package Controller.Snake;
 import Controller.DirectionController;
 import Model.Direction;
 import javafx.scene.input.KeyCode;
+import Controller.Controller;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -31,6 +32,18 @@ public class SnakeInput {
 
     public static void deactivate() {
         isActive = false;
+    }
+
+    public static void pause(){
+        paused = true;
+    }
+
+    public static void unpause(){
+        paused = false;
+    }
+
+    public static void togglePause(){
+        paused = !paused;
     }
 
     public static boolean isPaused(){return paused;}
@@ -72,7 +85,12 @@ public class SnakeInput {
                         directions.add(finaldirection);
                     }
                 }
-                case P -> paused = !paused;//Pause toggle
+                case P -> togglePause();
+                case R -> Controller.viewNewSnakeGame();
+                case ESCAPE -> {
+                    pause();
+                    Controller.viewEscapeMenu();
+                }
             }
         }
     }

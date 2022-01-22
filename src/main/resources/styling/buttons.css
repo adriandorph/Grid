@@ -1,3 +1,7 @@
+.label{
+    -fx-text-fill: #00FF00;
+}
+
 .button{
     -fx-text-fill: #000000;
     -fx-background-color: #00FF00;
@@ -9,5 +13,5 @@
 }
 
 .button:pressed{
-    -fx-text-fill: #00AA00;
+    -fx-background-color: #00AA00;
 }

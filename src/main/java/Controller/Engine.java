@@ -5,7 +5,7 @@ import javafx.application.Platform;
 
 public abstract class Engine<RenderObject> implements Runnable {
     protected volatile boolean running;
-    protected volatile boolean paused;
+    protected volatile boolean stopPaused;
     private final double secondsPerFrame;
     protected final Renderable<RenderObject> renderable;
     protected final Updatable<RenderObject> updatable;
@@ -28,6 +28,7 @@ public abstract class Engine<RenderObject> implements Runnable {
     }
 
     public void dispose(){
+        stopPaused = true;
         dispose = true;
         running = false;
     }
@@ -39,7 +40,7 @@ public abstract class Engine<RenderObject> implements Runnable {
     public void run(){
 
         running = true;
-        paused = false;
+        stopPaused = false;
         double lastTime = System.nanoTime() / 1000000000.0; // 1 = 1 second
         double unprocessedTime = 0;
 
@@ -47,7 +48,7 @@ public abstract class Engine<RenderObject> implements Runnable {
         int frames = 0;
 
         while (running){
-            while(paused || pauseCondition()){
+            while(!stopPaused && pauseCondition()){
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
