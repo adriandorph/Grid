@@ -1,4 +1,5 @@
 package Controller;
+
 import Controller.Snake.*;
 import Model.Matrix;
 import Model.Snake.SnakeGame;
@@ -125,11 +126,10 @@ public class Controller extends Application{
         InputController.deactivateAll();
         if(snakeGameOverAnimationEngine != null) snakeGameOverAnimationEngine.dispose();
         SnakeGameOverAnimation snakeGameOverAnimation = new SnakeGameOverAnimation(snakeGame);
-        snakeGameOverAnimationEngine = new SnakeGameOverAnimationEngine(grid, snakeGameOverAnimation, 30);
+        SnakeGameOverView snakeGameOverView = new SnakeGameOverView(grid);
+        snakeGameOverAnimationEngine = new SnakeGameOverAnimationEngine(snakeGameOverView, snakeGameOverAnimation, 30);
         Platform.runLater(() -> {
-            StackPane pane = new StackPane();
-            pane.getChildren().add(grid);
-            view.setRoot(pane);
+            view.setRoot(snakeGameOverView);
             stage.show();
         });
         snakeGameOverAnimationEngine.start();

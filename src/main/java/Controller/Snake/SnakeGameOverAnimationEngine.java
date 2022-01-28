@@ -5,13 +5,15 @@ import Controller.Engine;
 import Model.Snake.SnakeGameOverAnimation;
 import View.Grid;
 import View.RenderGrid;
+import View.Snake.SnakeGameOverInfo;
+import View.Snake.SnakeGameOverView;
 
-public class SnakeGameOverAnimationEngine extends Engine<RenderGrid> {
+public class SnakeGameOverAnimationEngine extends Engine<SnakeGameOverInfo> {
     private final int score;
     private final boolean highscore;
 
-    public SnakeGameOverAnimationEngine(Grid renderable, SnakeGameOverAnimation updatable, int FPS) {
-        super(renderable, updatable, FPS);
+    public SnakeGameOverAnimationEngine(SnakeGameOverView snakeGameOverView, SnakeGameOverAnimation updatable, int FPS) {
+        super(snakeGameOverView, updatable, FPS);
         score = updatable.getScore();
         highscore = updatable.isNewHighscore();
     }

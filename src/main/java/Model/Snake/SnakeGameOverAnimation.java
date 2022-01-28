@@ -4,11 +4,12 @@ import Controller.Updatable;
 import Model.Matrix;
 import Model.Position;
 import View.RenderGrid;
+import View.Snake.SnakeGameOverInfo;
 import javafx.scene.paint.Color;
 
 import java.util.Queue;
 
-public class SnakeGameOverAnimation implements Updatable<RenderGrid> {
+public class SnakeGameOverAnimation implements Updatable<SnakeGameOverInfo> {
 
     private final Queue<Position> snake;
     private final Position head;
@@ -57,8 +58,8 @@ public class SnakeGameOverAnimation implements Updatable<RenderGrid> {
     }
 
     @Override
-    public RenderGrid getRenderObject() {
-        return renderGrid;
+    public SnakeGameOverInfo getRenderObject() {
+        return new SnakeGameOverInfo(score, renderGrid);
     }
 
     @Override
