@@ -21,7 +21,7 @@ public class SnakeGameOverScoreCanvas extends Canvas {
         gc.setFill(Color.LIME);
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setFont(new Font("Roboto", 100 * Controller.factor));
-        gc.fillText("Score: "+score, getWidth() / 2,getHeight() / 2 * Controller.factor);
+        gc.fillText("Score: "+score, getWidth() / 2,getHeight() / 2);
         gc.restore();
     }
 }

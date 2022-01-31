@@ -4,6 +4,7 @@ plugins {
 }
 
 apply plugin: 'application'
+apply plugin: 'java'
 
 group 'org.example'
 version '1.0-SNAPSHOT'
@@ -11,14 +12,23 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
+def getJavaFXPlatform() {
+    return javafx.platform
+}
+def javaFXPlatform = getJavaFXPlatform()
+def javaFXVersion = "15.0.1"
 
 dependencies {
     // Use JUnit Jupiter API for testing.
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     // Use JUnit Jupiter Engine for testing.
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     // This dependency is used by the application.
-    implementation 'org.apache.commons:commons-compress:1.20'
+    implementation 'org.apache.commons:commons-compress:1.21'
+    implementation "org.openjfx:javafx-base:${javaFXVersion}:${javaFXPlatform}"
+    implementation "org.openjfx:javafx-controls:${javaFXVersion}:${javaFXPlatform}"
+    implementation "org.openjfx:javafx-graphics:${javaFXVersion}:${javaFXPlatform}"
+    implementation "org.openjfx:javafx-fxml:${javaFXVersion}:${javaFXPlatform}"
 }
 
 test {
@@ -52,7 +62,7 @@ application {
 
 javadoc.options.encoding = 'UTF-8'
 compileJava.options.encoding = 'UTF-8'
-apply plugin: 'java'
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
