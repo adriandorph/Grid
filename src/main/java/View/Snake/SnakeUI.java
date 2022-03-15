@@ -1,6 +1,7 @@
 package View.Snake;
 
 import Controller.Controller;
+import Saves.Settings;
 import View.Renderable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,7 +27,7 @@ public class SnakeUI extends Canvas implements Renderable<SnakeUIInfo> {
     }
 
     private void drawScores(int score, int highscore){
-        gc.setFill(Color.LIME);
+        gc.setFill(Settings.getActiveColorScheme().getUI());
         gc.setTextAlign(TextAlignment.LEFT);
         gc.setFont(new Font("Roboto", 30 * Controller.factor));
         gc.fillText(("Score: "+ score), 10 * Controller.factor,25 * Controller.factor);

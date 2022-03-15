@@ -48,8 +48,11 @@ public class Controller extends Application{
         StackPane gridPane = new StackPane();
         gridPane.getChildren().add(grid);
 
+        //Color
+        //Settings.setActiveColorScheme(Settings.getColorSchemes().get(2));
+
         view = new View(gridPane);
-        view.setFill(Color.BLACK);
+        view.setFill(Settings.getActiveColorScheme().getBackground());
         Controller.stage.setScene(view);
         sizingAfterNewScene();
         setKeyInput();

@@ -3,6 +3,7 @@ package Model.Snake;
 import Controller.Updatable;
 import Model.Matrix;
 import Model.Position;
+import Saves.Settings;
 import View.RenderGrid;
 import View.Snake.SnakeGameOverInfo;
 import javafx.scene.paint.Color;
@@ -20,10 +21,6 @@ public class SnakeGameOverAnimation implements Updatable<SnakeGameOverInfo> {
     private boolean hasFinished = false;
     private final boolean newHighscore;
     private final int score;
-
-    //Color
-    private final Color background = Color.rgb(0,0,0);
-    private final Color headColor = Color.rgb(255, 0, 0);
 
     public SnakeGameOverAnimation(SnakeGame snakeGame){
         this.snake = snakeGame.getSnake();
@@ -52,8 +49,8 @@ public class SnakeGameOverAnimation implements Updatable<SnakeGameOverInfo> {
             return new RenderGrid(squares);
         }
 
-        squares.setColor(endOfSnake.x, endOfSnake.y, background);
-        squares.setColor(head.x, head.y, headColor);
+        squares.setColor(endOfSnake.x, endOfSnake.y, Settings.getActiveColorScheme().getBackground());
+        squares.setColor(head.x, head.y, Settings.getActiveColorScheme().getHead());
         return new RenderGrid(squares);
     }
 

@@ -1,6 +1,7 @@
 package View.Snake;
 
 import Controller.Controller;
+import Saves.Settings;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -15,7 +16,7 @@ public class SnakeHighscoreView extends StackPane {
         //Background
         Canvas background = new Canvas(Controller.windowWidth, Controller.windowHeight);
         GraphicsContext gc = background.getGraphicsContext2D();
-        gc.setFill(Color.BLACK);
+        gc.setFill(Settings.getActiveColorScheme().getBackground());
         gc.fillRect(0,0, Controller.windowWidth, Controller.windowHeight);
         gc.restore();
 
