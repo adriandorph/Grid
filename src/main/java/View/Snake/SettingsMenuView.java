@@ -1,6 +1,7 @@
 package View.Snake;
 
 import Controller.Controller;
+import Model.Snake.ColorScheme;
 import Saves.Settings;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -24,13 +25,18 @@ public class SettingsMenuView extends StackPane {
         gc.fillText("Settings", background.getWidth() / 2,90 * Controller.factor);
 
         //startUpInGame
-        gc.setFill(Settings.getActiveColorScheme().getInfo());
+        gc.setFill(Settings.getActiveColorScheme().getUI());
         gc.setTextAlign(TextAlignment.LEFT);
         gc.setFont(new Font("Roboto", 35 * Controller.factor));
         gc.fillText("Startup in-game", 300 * Controller.factor,200 * Controller.factor);
 
         CheckBox startUpInGameBox = new CheckBox();
-        startUpInGameBox.setStyle("-fx-font-size: "+ 30 * Controller.factor +"px;"); //The font sets the size of the checkbox, because setPrefSize does not work
+        boolean tooDark = Settings.getActiveColorScheme().getUI().getBrightness() <= 0.1;
+        startUpInGameBox.setStyle(
+                "-fx-font-size: "+Controller.factor * 30+"px;" +
+                        "-fx-background-color:" + (tooDark? "#262626": ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI())) +";"+
+                        "-fx-border-color: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI())+ ";"
+        ); //The font s ets the size of the checkbox, because setPrefSize does not work
         startUpInGameBox.setOnAction(e -> Settings.saveStartUpInGame(startUpInGameBox.isSelected()));
         startUpInGameBox.setSelected(Settings.getStartUpInGame());
         startUpInGameBox.setTranslateY(Controller.factor * -170);

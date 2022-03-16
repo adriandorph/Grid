@@ -1,6 +1,6 @@
 package Saves;
 
-import Model.Snake.ColorSheme;
+import Model.Snake.ColorScheme;
 import Model.Snake.SerializableColorScheme;
 import javafx.scene.paint.Color;
 
@@ -13,15 +13,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Settings {
-    private static List<ColorSheme> colorShemes = readColorSchemes();
-    private static ColorSheme activeColorScheme = readActiveColorScheme();
+    private static List<ColorScheme> colorSchemes = generateDefaultColorSchemes();
+    private static List<ColorScheme> customColorSchemes = readColorSchemes();
+    private static ColorScheme activeColorScheme = readActiveColorScheme();
 
-    public static void setActiveColorScheme(ColorSheme colorScheme) {
+    public static void setActiveColorScheme(ColorScheme colorScheme) {
         Settings.activeColorScheme = colorScheme;
         saveActiveColorScheme();
     }
 
-    public static ColorSheme getActiveColorScheme(){
+    public static ColorScheme getActiveColorScheme(){
         return Settings.activeColorScheme;
     }
 
@@ -34,76 +35,82 @@ public class Settings {
 
             oos.writeObject(new SerializableColorScheme(activeColorScheme));
             oos.close();
+            bos.close();
+            fos.close();
         } catch (IOException e) {
             System.out.println("Could Not Create Binary File");
-            e.getMessage();
-            e.printStackTrace();
         }
     }
 
-    private static ColorSheme readActiveColorScheme(){
+    private static ColorScheme readActiveColorScheme(){
         try{
             Path path = FilePath.getFilePath("activeColorScheme");
             FileInputStream fis = new FileInputStream(String.valueOf(path));
             BufferedInputStream bis = new BufferedInputStream(fis);
             ObjectInputStream objis = new ObjectInputStream(bis);
-            ColorSheme activeColorSheme = ((SerializableColorScheme) objis.readObject()).toColorScheme();
-            if (activeColorSheme == null) throw new IOException("No active ColorScheme");
+            ColorScheme activeColorScheme = ((SerializableColorScheme) objis.readObject()).toColorScheme();
+            if (activeColorScheme == null) throw new IOException("No active ColorScheme");
             objis.close();
             bis.close();
             fis.close();
-            return activeColorSheme;
+            return activeColorScheme;
 
         } catch (IOException | ClassNotFoundException e){
-            e.getMessage();
-            e.printStackTrace();
-            var activeColorSheme = getColorSchemes().get(0);
-            Settings.setActiveColorScheme(activeColorSheme);
-            return activeColorSheme;
+            var activeColorScheme = getColorSchemes().get(0);
+            Settings.setActiveColorScheme(activeColorScheme);
+            return activeColorScheme;
         }
     }
 
-    public static List<ColorSheme> generateDefaultColorSchemes(){
-        return new ArrayList<>(List.of(new ColorSheme[]{
-                new ColorSheme("Green",
+    public static List<ColorScheme> generateDefaultColorSchemes(){
+        return new ArrayList<>(List.of(new ColorScheme[]{
+                new ColorScheme("Classic",
                         Color.rgb(0,255,0),
-                        Color.rgb(0,0,0),
+                        Color.rgb(255,255,255),
                         Color.rgb(255,0,0),
                         Color.rgb(255,255,255),
                         Color.rgb(255,255,0),
                         Color.rgb(255,255,255)
                 ),
-                new ColorSheme("Blue",
-                        Color.rgb(0,100,255),
-                        Color.rgb(0,0,0),
-                        Color.rgb(0,0,255),
-                        Color.rgb(255,255,255),
-                        Color.rgb(255,255,0),
-                        Color.rgb(255,255,255)
+                new ColorScheme("Blue",
+                        Color.rgb(0,0,0),  //UI
+                        Color.rgb(255,255,255),//Background
+                        Color.rgb(0,200,255),    //Head
+                        Color.rgb(255,0,255),//Tail
+                        Color.rgb(255,255,0),  //Bits
+                        Color.rgb(0,0,0) //Info
                 ),
-                new ColorSheme("Red",
-                        Color.rgb(255,0,0),
-                        Color.rgb(0,0,0),
-                        Color.rgb(255,0,0),
-                        Color.rgb(255,255,255),
-                        Color.rgb(255,255,0),
-                        Color.rgb(255,255,255)
+                new ColorScheme("Green",
+                        Color.rgb(255,255,255),  //UI
+                        Color.rgb(0,150,0),      //Background
+                        Color.rgb(255,255,255),  //Head
+                        Color.rgb(200,200,200),  //Tail
+                        Color.rgb(255,255,0),    //Bits
+                        Color.rgb(255, 255,255)  //Info
                 ),
         }));
     }
 
-    public static void addColorScheme(ColorSheme colorSheme){
-        colorShemes.add(colorSheme);
+    public static void addColorScheme(ColorScheme colorScheme){
+        colorSchemes.add(colorScheme);
         saveColorSchemes();
     }
 
-    public static void setColorShemes(List<ColorSheme> colorShemes){
-        Settings.colorShemes = colorShemes;
+    public static void setColorSchemes(List<ColorScheme> colorSchemes){
+        Settings.colorSchemes = colorSchemes;
         saveColorSchemes();
     }
 
-    public static List<ColorSheme> getColorSchemes(){
-        return colorShemes;
+    public static List<ColorScheme> getColorSchemes(){
+        List<ColorScheme> allColorSchemes = new LinkedList<>();
+        allColorSchemes.addAll(colorSchemes);
+        allColorSchemes.addAll(customColorSchemes);
+        return allColorSchemes;
+    }
+
+    public static ColorScheme getColorScheme(int index){
+        if (index < colorSchemes.size()) return colorSchemes.get(index);
+        else return customColorSchemes.get(index - customColorSchemes.size());
     }
 
     public static void saveColorSchemes(){
@@ -114,39 +121,39 @@ public class Settings {
             ObjectOutputStream oos = new ObjectOutputStream(bos);
 
             List<SerializableColorScheme> serializableColorSchemes = new LinkedList<>();
-            for (ColorSheme colorSheme: colorShemes){
-                serializableColorSchemes.add(new SerializableColorScheme(colorSheme));
+            for (ColorScheme colorScheme : colorSchemes){
+                serializableColorSchemes.add(new SerializableColorScheme(colorScheme));
             }
 
             oos.writeObject(serializableColorSchemes);
             oos.close();
+            bos.close();
+            fos.close();
         } catch (IOException e) {
             System.out.println("Could Not Create Binary File");
-            e.printStackTrace();
         }
     }
 
-    private static List<ColorSheme> readColorSchemes(){
+    private static List<ColorScheme> readColorSchemes(){
         try{
             Path path = FilePath.getFilePath("colorSchemes");
             FileInputStream fis = new FileInputStream(String.valueOf(path));
             BufferedInputStream bis = new BufferedInputStream(fis);
             ObjectInputStream objis = new ObjectInputStream(bis);
-            List<ColorSheme> colorShemes = new LinkedList<>();
+            List<ColorScheme> colorSchemes = new LinkedList<>();
             for (SerializableColorScheme scs: ((List<SerializableColorScheme>) objis.readObject())){
-                colorShemes.add(scs.toColorScheme());
+                colorSchemes.add(scs.toColorScheme());
             }
 
-            if (colorShemes.isEmpty()) throw new IOException("No ColorSchemes");
+            if (colorSchemes.isEmpty()) throw new IOException("No ColorSchemes");
             objis.close();
             bis.close();
             fis.close();
-            return colorShemes;
+            return colorSchemes;
 
         } catch (IOException | ClassNotFoundException e){
-            e.printStackTrace();
             var colorSchemes = generateDefaultColorSchemes();
-            Settings.setColorShemes(colorSchemes);
+            Settings.setColorSchemes(colorSchemes);
             return colorSchemes;
         }
     }

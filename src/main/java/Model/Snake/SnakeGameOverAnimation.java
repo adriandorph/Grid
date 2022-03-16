@@ -6,7 +6,6 @@ import Model.Position;
 import Saves.Settings;
 import View.RenderGrid;
 import View.Snake.SnakeGameOverInfo;
-import javafx.scene.paint.Color;
 
 import java.util.Queue;
 

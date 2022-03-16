@@ -18,10 +18,11 @@
 
 
 .check-box .box{
-    -fx-background-color: #00FF00;
-    -fx-border-color: #00FF00;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
     -fx-border-radius: 0px;
 }
+
 .check-box .box:hover{
     -fx-cursor: hand;
     -fx-border-color: white;
@@ -32,7 +33,7 @@
 }
 
 .imagebutton{
-    -fx-background-color: black;
+    -fx-background-color: transparent;
 }
 
 .imagebutton:hover {
@@ -41,5 +42,5 @@
 
 .imagebutton:pressed{
     -fx-opacity: 0.5;
-    -fx-background-color: black;
+    -fx-background-color: transparent;
 }

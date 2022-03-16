@@ -36,7 +36,7 @@ public class SnakeUI extends Canvas implements Renderable<SnakeUIInfo> {
     }
 
     private void drawStartHelp(){
-        gc.setFill(Color.WHITE);
+        gc.setFill(Settings.getActiveColorScheme().getInfo());
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setFont(new Font("Roboto", 60 * Controller.factor));
         gc.fillText("Press an arrow key to start", Controller.windowWidth / 2, Controller.windowHeight / 3);

@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 import java.io.Serializable;
 
-public class ColorSheme implements Serializable {
+public class ColorScheme implements Serializable {
     private String name;
     private Color UI;
     private Color background;
@@ -13,7 +13,7 @@ public class ColorSheme implements Serializable {
     private Color bits;
     private Color info;
 
-    public ColorSheme(String name, Color UI, Color background, Color head, Color tail, Color bits, Color info) {
+    public ColorScheme(String name, Color UI, Color background, Color head, Color tail, Color bits, Color info) {
         this.name = name;
         this.UI = UI;
         this.background = background;
@@ -21,6 +21,14 @@ public class ColorSheme implements Serializable {
         this.tail = tail;
         this.bits = bits;
         this.info = info;
+    }
+
+    public static String toCssHexCode(Color color){
+        return String.format( "#%02X%02X%02X",
+                (int)( color.getRed() * 255 ),
+                (int)( color.getGreen() * 255),
+                (int)( color.getBlue() * 255 )
+        );
     }
 
     public String getName() {

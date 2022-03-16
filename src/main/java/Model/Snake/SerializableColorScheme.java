@@ -13,18 +13,18 @@ public class SerializableColorScheme implements Serializable {
     private final double[] bits;
     private final double[] info;
 
-    public SerializableColorScheme(ColorSheme colorSheme) {
-        this.name = colorSheme.getName();
-        this.UI = new double[] {colorSheme.getUI().getRed(), colorSheme.getUI().getGreen(), colorSheme.getUI().getBlue()};
-        this.background = new double[] {colorSheme.getBackground().getRed(), colorSheme.getBackground().getGreen(), colorSheme.getBackground().getBlue()};
-        this.head = new double[] {colorSheme.getHead().getRed(), colorSheme.getHead().getGreen(), colorSheme.getHead().getBlue()};
-        this.tail = new double[] {colorSheme.getTail().getRed(), colorSheme.getTail().getGreen(), colorSheme.getTail().getBlue()};
-        this.bits = new double[] {colorSheme.getBits().getRed(), colorSheme.getBits().getGreen(), colorSheme.getBits().getBlue()};
-        this.info = new double[] {colorSheme.getInfo().getRed(), colorSheme.getInfo().getGreen(), colorSheme.getInfo().getBlue()};
+    public SerializableColorScheme(ColorScheme colorScheme) {
+        this.name = colorScheme.getName();
+        this.UI = new double[] {colorScheme.getUI().getRed(), colorScheme.getUI().getGreen(), colorScheme.getUI().getBlue()};
+        this.background = new double[] {colorScheme.getBackground().getRed(), colorScheme.getBackground().getGreen(), colorScheme.getBackground().getBlue()};
+        this.head = new double[] {colorScheme.getHead().getRed(), colorScheme.getHead().getGreen(), colorScheme.getHead().getBlue()};
+        this.tail = new double[] {colorScheme.getTail().getRed(), colorScheme.getTail().getGreen(), colorScheme.getTail().getBlue()};
+        this.bits = new double[] {colorScheme.getBits().getRed(), colorScheme.getBits().getGreen(), colorScheme.getBits().getBlue()};
+        this.info = new double[] {colorScheme.getInfo().getRed(), colorScheme.getInfo().getGreen(), colorScheme.getInfo().getBlue()};
     }
 
-    public ColorSheme toColorScheme(){
-        return new ColorSheme(name,
+    public ColorScheme toColorScheme(){
+        return new ColorScheme(name,
                 Color.color(UI[0],UI[1],UI[2]),
                 Color.color(background[0], background[1], background[2]),
                 Color.color(head[0], head[1], head[2]),

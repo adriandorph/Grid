@@ -1,6 +1,7 @@
 package View.Snake;
 
 import Controller.Controller;
+import Model.Snake.ColorScheme;
 import Saves.Settings;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -32,7 +33,11 @@ public class SnakeMainMenuView extends StackPane {
         play.setPrefWidth(Controller.windowWidth * 0.2);
         play.setPrefHeight(Controller.windowHeight * 0.05);
         play.setFont(new Font(Controller.factor * 30));
-        play.setStyle("-fx-font-size: "+Controller.factor * 30+"px");
+        play.setStyle(
+                "-fx-font-size: "+Controller.factor * 30+"px;" +
+                "-fx-text-fill: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";"+
+                "-fx-background-color:" + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI()) +";"
+        );
         play.setOnAction(e -> Controller.viewNewSnakeGame());
 
         //Settings button
@@ -41,7 +46,11 @@ public class SnakeMainMenuView extends StackPane {
         settings.setPrefWidth(Controller.windowWidth * 0.2);
         settings.setPrefHeight(Controller.windowHeight * 0.05);
         settings.setFont(new Font(Controller.factor * 30));
-        settings.setStyle("-fx-font-size: "+Controller.factor * 30+"px");
+        settings.setStyle(
+                "-fx-font-size: "+Controller.factor * 30+"px;" +
+                        "-fx-text-fill: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";"+
+                        "-fx-background-color:" + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI()) +";"
+        );
         settings.setOnAction(e -> Controller.viewSettingsMenu());
 
         //Exit button
@@ -50,7 +59,11 @@ public class SnakeMainMenuView extends StackPane {
         exit.setPrefWidth(Controller.windowWidth * 0.2);
         exit.setPrefHeight(Controller.windowHeight * 0.05);
         exit.setFont(new Font(Controller.factor * 30));
-        exit.setStyle("-fx-font-size: "+Controller.factor * 30+"px");
+        exit.setStyle(
+                "-fx-font-size: "+Controller.factor * 30+"px;" +
+                        "-fx-text-fill: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";"+
+                        "-fx-background-color:" + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI()) +";"
+        );
         exit.setOnAction(e -> Controller.exit());
 
         //Insert all
