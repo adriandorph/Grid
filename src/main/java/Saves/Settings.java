@@ -64,6 +64,13 @@ public class Settings {
 
     public static List<ColorScheme> generateDefaultColorSchemes(){
         return new ArrayList<>(List.of(new ColorScheme[]{
+                //UI
+                //Background
+                //Head
+                //Tail
+                //Bits
+                //Info
+
                 new ColorScheme("Classic",
                         Color.rgb(0,255,0),
                         Color.rgb(0,0,0),
@@ -73,12 +80,12 @@ public class Settings {
                         Color.rgb(255,255,255)
                 ),
                 new ColorScheme("Blue",
-                        Color.rgb(0,0,0),  //UI
-                        Color.rgb(255,255,255),//Background
-                        Color.rgb(0,200,255),    //Head
-                        Color.rgb(255,0,255),//Tail
-                        Color.rgb(255,255,0),  //Bits
-                        Color.rgb(0,0,0) //Info
+                        Color.rgb(0,225,255),  //UI
+                        Color.rgb(0,0,0),//Background
+                        Color.rgb(0,225,255),    //Head
+                        Color.rgb(255,255,255),//Tail
+                        Color.rgb(0,255,0),  //Bits
+                        Color.rgb(255,255,255) //Info
                 ),
                 new ColorScheme("Green",
                         Color.rgb(255,255,255),  //UI
@@ -88,6 +95,14 @@ public class Settings {
                         Color.rgb(255,255,0),    //Bits
                         Color.rgb(255, 255,255)  //Info
                 ),
+                new ColorScheme("White",
+                        Color.rgb(0,0,0),//UI
+                        Color.rgb(255,255,255),//Background
+                        Color.rgb(0,255,0),//Head
+                        Color.rgb(0,100,0),//Tail
+                        Color.rgb(255,0,255),//Bits
+                        Color.rgb(0,0,0)//Info
+                        )
         }));
     }
 

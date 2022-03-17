@@ -33,10 +33,10 @@ public class SettingsMenuView extends StackPane {
         gc.fillText("Startup in-game", 300 * Controller.factor,200 * Controller.factor);
 
         CheckBox startUpInGameBox = new CheckBox();
-        boolean tooDark = Settings.getActiveColorScheme().getUI().getBrightness() <= 0.1;
+        boolean tooDark = Settings.getActiveColorScheme().getUI().getBrightness() <= 0.2;
         startUpInGameBox.setStyle(
                 "-fx-font-size: "+Controller.factor * 30+"px;" +
-                        "-fx-background-color:" + (tooDark? "#262626": ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI())) +";"+
+                        "-fx-background-color:" + (tooDark? "#505050": ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI())) +";"+
                         "-fx-border-color: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI())+ ";"
         ); //The font s ets the size of the checkbox, because setPrefSize does not work
         startUpInGameBox.setOnAction(e -> Settings.saveStartUpInGame(startUpInGameBox.isSelected()));
