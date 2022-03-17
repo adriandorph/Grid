@@ -5,10 +5,12 @@ import Model.Snake.ColorScheme;
 import Saves.Settings;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.image.ImageView;
 
 public class SettingsMenuView extends StackPane {
     public SettingsMenuView(){
@@ -43,7 +45,7 @@ public class SettingsMenuView extends StackPane {
         startUpInGameBox.setTranslateX(Controller.factor * 300);
 
         //BackArrowButton
-        ImageButton backButton = new ImageButton("icons/backArrow.png");
+        ImageButton backButton = new ImageButton(ArrowCanvas.getArrowCanvas((int)(80 * Controller.factor), (int)(50 * Controller.factor)));
         backButton.setPrefWidth(Controller.windowWidth * 0.075);
         backButton.setPrefHeight(Controller.windowHeight * 0.05);
         backButton.setTranslateX(Controller.factor * - 450);

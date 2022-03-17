@@ -1,6 +1,7 @@
 package View.Snake;
 
 import Controller.Controller;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,6 +17,11 @@ public class ImageButton extends Button {
         imageView.setFitWidth(0.05 * Controller.windowHeight);
         setGraphic(imageView);
         getStyleClass().add("imagebutton");
+    }
 
+    public ImageButton(Canvas canvas){
+        super();
+        setGraphic(canvas);
+        getStyleClass().add("imagebutton");
     }
 }
