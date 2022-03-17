@@ -72,36 +72,36 @@ public class Settings {
                 //Info
 
                 new ColorScheme("Classic",
-                        Color.rgb(0,255,0),
-                        Color.rgb(0,0,0),
-                        Color.rgb(255,0,0),
-                        Color.rgb(255,255,255),
-                        Color.rgb(255,255,0),
-                        Color.rgb(255,255,255)
+                        Color.rgb(0,255,0),     //UI
+                        Color.rgb(0,0,0),       //Background
+                        Color.rgb(255,0,0),     //Head
+                        Color.rgb(255,255,255), //Tail
+                        Color.rgb(255,255,0),   //Bits
+                        Color.rgb(255,255,255)  //Info
                 ),
                 new ColorScheme("Blue",
-                        Color.rgb(0,225,255),  //UI
-                        Color.rgb(0,0,0),//Background
-                        Color.rgb(0,225,255),    //Head
-                        Color.rgb(255,255,255),//Tail
-                        Color.rgb(0,255,0),  //Bits
-                        Color.rgb(255,255,255) //Info
+                        Color.rgb(0,225,255),   //UI
+                        Color.rgb(0,0,0),       //Background
+                        Color.rgb(0,225,255),   //Head
+                        Color.rgb(255,255,255), //Tail
+                        Color.rgb(0,255,0),     //Bits
+                        Color.rgb(255,255,255)  //Info
                 ),
                 new ColorScheme("Green",
-                        Color.rgb(255,255,255),  //UI
-                        Color.rgb(0,150,0),      //Background
-                        Color.rgb(255,255,255),  //Head
-                        Color.rgb(200,200,200),  //Tail
-                        Color.rgb(255,255,0),    //Bits
-                        Color.rgb(255, 255,255)  //Info
+                        Color.rgb(255,255,255), //UI
+                        Color.rgb(0,150,0),     //Background
+                        Color.rgb(255,255,255), //Head
+                        Color.rgb(200,200,200), //Tail
+                        Color.rgb(255,255,0),   //Bits
+                        Color.rgb(255, 255,255) //Info
                 ),
                 new ColorScheme("White",
-                        Color.rgb(0,0,0),//UI
-                        Color.rgb(255,255,255),//Background
-                        Color.rgb(0,255,0),//Head
-                        Color.rgb(0,100,0),//Tail
-                        Color.rgb(255,0,255),//Bits
-                        Color.rgb(0,0,0)//Info
+                        Color.rgb(0,0,0),       //UI
+                        Color.rgb(255,255,255), //Background
+                        Color.rgb(0,255,0),     //Head
+                        Color.rgb(0,100,0),     //Tail
+                        Color.rgb(255,0,255),   //Bits
+                        Color.rgb(0,0,0)        //Info
                         )
         }));
     }

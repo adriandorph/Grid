@@ -54,7 +54,7 @@ public class Controller extends Application{
         gridPane.getChildren().add(grid);
 
         //Color
-        Settings.setActiveColorScheme(Settings.getColorScheme(1));
+        Settings.setActiveColorScheme(Settings.getColorScheme(2));
 
         view = new View(gridPane);
         view.setFill(Settings.getActiveColorScheme().getBackground());
