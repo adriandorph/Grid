@@ -197,6 +197,26 @@ public class Settings {
         }
     }
 
+    public static String getNewColorSchemeName(){
+        String prefix = "new colorscheme";
+        String newColorSchemeName = prefix;
+        boolean available = false;
+        int count = 0;
+        while (!available){
+            available = true;
+            for (ColorScheme cs: customColorSchemes){
+                if (count > 0) newColorSchemeName = prefix + " " + count;
+                if (cs.getName().equals(newColorSchemeName)) {
+                    available = false;
+                    break;
+                }
+            }
+            count++;
+        }
+        return newColorSchemeName;
+
+    }
+
 
     public static void saveStartUpInGame(boolean startUpInGame) {
         try{

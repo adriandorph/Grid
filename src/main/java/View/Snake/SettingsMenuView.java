@@ -96,7 +96,7 @@ public class SettingsMenuView extends StackPane {
                         "-fx-background-color:" + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI()) +";"
         );
         createNewColorSchemeButton.setOnAction(createNewColoScheme -> {
-            ColorScheme newColorScheme = new ColorScheme(Settings.getActiveColorScheme(), "new colorscheme");
+            ColorScheme newColorScheme = new ColorScheme(Settings.getActiveColorScheme(), Settings.getNewColorSchemeName());
             Settings.addColorScheme(newColorScheme);
             Settings.setActiveColorScheme(newColorScheme);
             repaint();
