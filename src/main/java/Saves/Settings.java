@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Settings {
-    private static List<ColorScheme> colorSchemes = generateDefaultColorSchemes();
+    private static final List<ColorScheme> colorSchemes = generateDefaultColorSchemes();
     private static List<ColorScheme> customColorSchemes = readColorSchemes();
     private static ColorScheme activeColorScheme = readActiveColorScheme();
 
@@ -25,6 +25,7 @@ public class Settings {
     public static ColorScheme getActiveColorScheme(){
         return Settings.activeColorScheme;
     }
+
 
     public static void saveActiveColorScheme(){
         try {
@@ -42,7 +43,7 @@ public class Settings {
         }
     }
 
-    private static ColorScheme readActiveColorScheme(){
+    public static ColorScheme readActiveColorScheme(){
         try{
             Path path = FilePath.getFilePath("activeColorScheme");
             FileInputStream fis = new FileInputStream(String.valueOf(path));
@@ -106,14 +107,32 @@ public class Settings {
         }));
     }
 
+    /**
+     * Adds colorScheme to customColorSchemes and saves the changes
+     * @param colorScheme - Color scheme to be added
+     */
     public static void addColorScheme(ColorScheme colorScheme){
-        colorSchemes.add(colorScheme);
+        customColorSchemes.add(colorScheme);
         saveColorSchemes();
     }
 
     public static void setColorSchemes(List<ColorScheme> colorSchemes){
-        Settings.colorSchemes = colorSchemes;
+        Settings.customColorSchemes = colorSchemes;
         saveColorSchemes();
+    }
+
+    public static void deleteColorScheme(String name){
+        List<ColorScheme> updatedCustomColorSchemes = new LinkedList<>();
+        boolean couldNotDelete = true;
+        for (ColorScheme cs: customColorSchemes){
+            if (!cs.getName().equals(name)){
+                updatedCustomColorSchemes.add(cs);
+            } else {
+                couldNotDelete = false;
+            }
+        }
+        if (couldNotDelete) throw new RuntimeException("Could not find colorscheme: "+ name);
+        setColorSchemes(updatedCustomColorSchemes);
     }
 
     public static List<ColorScheme> getColorSchemes(){
@@ -143,7 +162,7 @@ public class Settings {
             ObjectOutputStream oos = new ObjectOutputStream(bos);
 
             List<SerializableColorScheme> serializableColorSchemes = new LinkedList<>();
-            for (ColorScheme colorScheme : colorSchemes){
+            for (ColorScheme colorScheme : customColorSchemes){
                 serializableColorSchemes.add(new SerializableColorScheme(colorScheme));
             }
 
@@ -162,21 +181,19 @@ public class Settings {
             FileInputStream fis = new FileInputStream(String.valueOf(path));
             BufferedInputStream bis = new BufferedInputStream(fis);
             ObjectInputStream objis = new ObjectInputStream(bis);
-            List<ColorScheme> colorSchemes = new LinkedList<>();
+            List<ColorScheme> customColorSchemes = new LinkedList<>();
             for (SerializableColorScheme scs: ((List<SerializableColorScheme>) objis.readObject())){
-                colorSchemes.add(scs.toColorScheme());
+                customColorSchemes.add(scs.toColorScheme());
             }
 
-            if (colorSchemes.isEmpty()) throw new IOException("No ColorSchemes");
+            if (customColorSchemes.isEmpty()) throw new IOException("No ColorSchemes");
             objis.close();
             bis.close();
             fis.close();
-            return colorSchemes;
+            return customColorSchemes;
 
         } catch (IOException | ClassNotFoundException e){
-            var colorSchemes = generateDefaultColorSchemes();
-            Settings.setColorSchemes(colorSchemes);
-            return colorSchemes;
+            return new LinkedList<>();
         }
     }
 

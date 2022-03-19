@@ -2,6 +2,7 @@ package Model.Snake;
 
 import Controller.Snake.SnakeInput;
 import Controller.Updatable;
+import Model.ColorFunctions;
 import Model.Direction;
 import Model.Matrix;
 import Model.Position;
@@ -125,24 +126,10 @@ public class SnakeGame implements Updatable<SnakeRender> {
     private RenderGrid beforeStartTick(double seconds){
         direction = SnakeInput.getDirection();
         beforeStartSeconds += seconds;
-        double red = (Settings.getActiveColorScheme().getHead().getRed() - Settings.getActiveColorScheme().getBackground().getRed()) * getOpacity() + Settings.getActiveColorScheme().getBackground().getRed();
-        double green = (Settings.getActiveColorScheme().getHead().getGreen() - Settings.getActiveColorScheme().getBackground().getGreen()) * getOpacity() + Settings.getActiveColorScheme().getBackground().getGreen();
-        double blue = (Settings.getActiveColorScheme().getHead().getBlue() - Settings.getActiveColorScheme().getBackground().getBlue()) * getOpacity() + Settings.getActiveColorScheme().getBackground().getBlue();
-        squares.setColor(headPosition.x, headPosition.y, Color.color(red, green, blue));
+        squares.setColor(headPosition.x, headPosition.y, ColorFunctions.opacityOnBackground(Settings.getActiveColorScheme().getHead(), Settings.getActiveColorScheme().getBackground(), getOpacity()));
 
-        red = Settings.getActiveColorScheme().getBits().getRed();
-        green = Settings.getActiveColorScheme().getBits().getGreen();
-        blue = Settings.getActiveColorScheme().getBits().getBlue();
-
-        if(shouldDisplayStartHelp()){
-            double opacity = 0.5;
-            red = (Settings.getActiveColorScheme().getBits().getRed() - Settings.getActiveColorScheme().getBackground().getRed()) * opacity + Settings.getActiveColorScheme().getBackground().getRed();
-            green = (Settings.getActiveColorScheme().getBits().getGreen() - Settings.getActiveColorScheme().getBackground().getGreen()) * opacity + Settings.getActiveColorScheme().getBackground().getGreen();
-            blue = (Settings.getActiveColorScheme().getBits().getBlue() - Settings.getActiveColorScheme().getBackground().getBlue()) * opacity + Settings.getActiveColorScheme().getBackground().getBlue();
-
-        }
         for(Position pos: randomBits.getBits()){
-            squares.setColor(pos.x, pos.y, Color.color(red, green, blue));
+            squares.setColor(pos.x, pos.y, shouldDisplayStartHelp()? ColorFunctions.opacityOnBackground(Settings.getActiveColorScheme().getBits(), Settings.getActiveColorScheme().getBackground(), 0.5): Settings.getActiveColorScheme().getBits());
         }
         return new RenderGrid(squares);
     }

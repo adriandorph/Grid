@@ -48,11 +48,10 @@ public class Controller extends Application{
 
         grid = new Grid(windowWidth, windowHeight);
 
+        Settings.setActiveColorScheme(Settings.readActiveColorScheme());
+
         StackPane gridPane = new StackPane();
         gridPane.getChildren().add(grid);
-
-        //Color
-        Settings.setActiveColorScheme(Settings.getColorScheme(2));
 
         view = new View(gridPane);
         view.setFill(Settings.getActiveColorScheme().getBackground());

@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class ColorScheme implements Serializable {
     private String name;
+    private boolean customizable;
     private Color UI;
     private Color background;
     private Color head;
@@ -13,14 +14,38 @@ public class ColorScheme implements Serializable {
     private Color bits;
     private Color info;
 
-    public ColorScheme(String name, Color UI, Color background, Color head, Color tail, Color bits, Color info) {
+    public ColorScheme(String name, boolean customizable, Color UI, Color background, Color head, Color tail, Color bits, Color info){
         this.name = name;
+        this.customizable = customizable;
         this.UI = UI;
         this.background = background;
         this.head = head;
         this.tail = tail;
         this.bits = bits;
         this.info = info;
+    }
+
+    /**
+     * Creates a colorScheme that is not customizable
+     * @param name
+     * @param UI
+     * @param background
+     * @param head
+     * @param tail
+     * @param bits
+     * @param info
+     */
+    public ColorScheme(String name, Color UI, Color background, Color head, Color tail, Color bits, Color info) {
+        this(name, false, UI, background, head, tail, bits, info);
+    }
+
+    /**
+     * Creates a new colorScheme that is customizable
+     * @param colorScheme - the colorScheme that is copied
+     * @param name - the name of the new customizable colorScheme
+     */
+    public ColorScheme(ColorScheme colorScheme, String name){
+        this(name, true, colorScheme.getUI(),  colorScheme.getBackground(), colorScheme.getHead(), colorScheme.getTail(), colorScheme.getBits(), colorScheme.getInfo());
     }
 
     public static String toCssHexCode(Color color){
@@ -35,59 +60,66 @@ public class ColorScheme implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    private Color autoInfoColor(){//Possible problem if background is grey
-        return background.invert();
+    public boolean isCustomizable(){
+        return customizable;
     }
 
     public Color getUI() {
         return UI;
     }
 
-    public void setUI(Color UI) {
-        this.UI = UI;
-    }
-
     public Color getBackground() {
         return background;
-    }
-
-    public void setBackground(Color background) {
-        this.background = background;
     }
 
     public Color getHead() {
         return head;
     }
 
-    public void setHead(Color head) {
-        this.head = head;
-    }
-
     public Color getTail() {
         return tail;
-    }
-
-    public void setTail(Color tail) {
-        this.tail = tail;
     }
 
     public Color getBits() {
         return bits;
     }
 
-    public void setBits(Color bits) {
-        this.bits = bits;
-    }
-
     public Color getInfo() {
         return info;
     }
 
+    public void setName(String name) {
+        if (customizable) this.name = name;
+        else throw new RuntimeException("The colorscheme is not customizable");
+    }
+
+    public void setUI(Color UI) {
+        if(customizable) this.UI = UI;
+        else throw new RuntimeException("The colorscheme is not customizable");
+    }
+
+    public void setBackground(Color background) {
+        if(customizable) this.background = background;
+        else throw new RuntimeException("The colorscheme is not customizable");
+    }
+
+    public void setHead(Color head) {
+        if(customizable) this.head = head;
+        else throw new RuntimeException("The colorscheme is not customizable");
+    }
+
+    public void setTail(Color tail) {
+        if(customizable) this.tail = tail;
+        else throw new RuntimeException("The colorscheme is not customizable");
+    }
+
+    public void setBits(Color bits) {
+        if(customizable) this.bits = bits;
+        else throw new RuntimeException("The colorscheme is not customizable");
+    }
+
     public void setInfo(Color info) {
-        this.info = info;
+        if(customizable) this.info = info;
+        else throw new RuntimeException("The colorscheme is not customizable");
     }
 }

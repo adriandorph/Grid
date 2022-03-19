@@ -1,11 +1,13 @@
 package View.Snake;
 
 import Controller.Controller;
+import Model.ColorFunctions;
 import Model.Snake.ColorScheme;
 import Saves.Settings;
 import javafx.collections.ObservableList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.StackPane;
@@ -73,16 +75,52 @@ public class SettingsMenuView extends StackPane {
         }
         colorSchemesDropDown.setValue(Settings.getActiveColorScheme().getName());
         colorSchemesDropDown.setStyle("-fx-font-size: "+ 25 * factor+"px;");
+        colorSchemesDropDown.setPrefWidth(factor * 250);
         colorSchemesDropDown.setTranslateY(factor * -95);
-        colorSchemesDropDown.setTranslateX(factor * 240);
+        colorSchemesDropDown.setTranslateX(factor * 200);
         colorSchemesDropDown.setOnAction(updateColorScheme -> {
             Settings.setActiveColorScheme(Settings.getColorScheme(colorSchemesDropDown.getValue()));
             repaint();
         });
 
         //Create new colorscheme
+        Button createNewColorSchemeButton = new Button("new colorscheme");
+        createNewColorSchemeButton.setTranslateY(factor * - 20);
+        createNewColorSchemeButton.setTranslateX(factor * 212.5);
+        createNewColorSchemeButton.setPrefWidth(factor * 225);
+        createNewColorSchemeButton.setPrefHeight(windowHeight * 0.05);
+        createNewColorSchemeButton.setFont(new Font(factor * 30));
+        createNewColorSchemeButton.setStyle(
+                "-fx-font-size: "+ factor * 25+"px;" +
+                        "-fx-text-fill: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";"+
+                        "-fx-background-color:" + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI()) +";"
+        );
+        createNewColorSchemeButton.setOnAction(createNewColoScheme -> {
+            ColorScheme newColorScheme = new ColorScheme(Settings.getActiveColorScheme(), "new colorscheme");
+            Settings.addColorScheme(newColorScheme);
+            Settings.setActiveColorScheme(newColorScheme);
+            repaint();
+        });
 
         //Delete colorscheme
+        Button deleteColorScheme = new Button("delete colorscheme");
+        if (Settings.getActiveColorScheme().isCustomizable()){
+            deleteColorScheme.setTranslateY(factor * - 20);
+            deleteColorScheme.setTranslateX(factor * - 50);
+            deleteColorScheme.setPrefWidth(factor * 250);
+            deleteColorScheme.setPrefHeight(windowHeight * 0.05);
+            deleteColorScheme.setFont(new Font(factor * 30));
+            deleteColorScheme.setStyle(
+                    "-fx-font-size: "+ factor * 25+"px;" +
+                            "-fx-text-fill: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";"+
+                            "-fx-background-color:" + ColorScheme.toCssHexCode(ColorFunctions.opacityOnBackground(Settings.getActiveColorScheme().getUI(), Settings.getActiveColorScheme().getBackground(), 0.5)) +";"
+            );
+            deleteColorScheme.setOnAction( deleteActiveColorScheme -> {
+                Settings.deleteColorScheme(Settings.getActiveColorScheme().getName());
+                Settings.setActiveColorScheme(Settings.getColorScheme(0));
+                repaint();
+            });
+        }
 
         //Insert all
         gc.restore();
@@ -91,5 +129,7 @@ public class SettingsMenuView extends StackPane {
         getChildren().add(backButton);
         getChildren().add(startUpInGameBox);
         getChildren().add(colorSchemesDropDown);
+        getChildren().add(createNewColorSchemeButton);
+        if (Settings.getActiveColorScheme().isCustomizable()) getChildren().add(deleteColorScheme);
     }
 }

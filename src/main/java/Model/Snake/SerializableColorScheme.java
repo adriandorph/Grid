@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class SerializableColorScheme implements Serializable {
     private final String name;
+    private final boolean customizable;
     private final double[] UI;
     private final double[] background;
     private final double[] head;
@@ -15,6 +16,7 @@ public class SerializableColorScheme implements Serializable {
 
     public SerializableColorScheme(ColorScheme colorScheme) {
         this.name = colorScheme.getName();
+        this.customizable = colorScheme.isCustomizable();
         this.UI = new double[] {colorScheme.getUI().getRed(), colorScheme.getUI().getGreen(), colorScheme.getUI().getBlue()};
         this.background = new double[] {colorScheme.getBackground().getRed(), colorScheme.getBackground().getGreen(), colorScheme.getBackground().getBlue()};
         this.head = new double[] {colorScheme.getHead().getRed(), colorScheme.getHead().getGreen(), colorScheme.getHead().getBlue()};
@@ -25,6 +27,7 @@ public class SerializableColorScheme implements Serializable {
 
     public ColorScheme toColorScheme(){
         return new ColorScheme(name,
+                customizable,
                 Color.color(UI[0],UI[1],UI[2]),
                 Color.color(background[0], background[1], background[2]),
                 Color.color(head[0], head[1], head[2]),
