@@ -75,9 +75,9 @@ public class SettingsMenuView extends StackPane {
         }
         colorSchemesDropDown.setValue(Settings.getActiveColorScheme().getName());
         colorSchemesDropDown.setStyle("-fx-font-size: "+ 25 * factor+"px;");
-        colorSchemesDropDown.setPrefWidth(factor * 250);
+        colorSchemesDropDown.setPrefWidth(factor * 300);
         colorSchemesDropDown.setTranslateY(factor * -95);
-        colorSchemesDropDown.setTranslateX(factor * 200);
+        colorSchemesDropDown.setTranslateX(factor * 175);
         colorSchemesDropDown.setOnAction(updateColorScheme -> {
             Settings.setActiveColorScheme(Settings.getColorScheme(colorSchemesDropDown.getValue()));
             repaint();
