@@ -128,6 +128,13 @@ public class Settings {
         else return customColorSchemes.get(index - customColorSchemes.size());
     }
 
+    public static ColorScheme getColorScheme(String name){
+        for (ColorScheme cs: getColorSchemes()){
+            if (cs.getName().equals(name)) return cs;
+        }
+        throw new RuntimeException("Could not find color scheme: " + name);
+    }
+
     public static void saveColorSchemes(){
         try {
             Path path = FilePath.getFilePath("colorSchemes");

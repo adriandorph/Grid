@@ -13,7 +13,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -29,7 +28,6 @@ public class Controller extends Application{
     private static SnakeGameOverAnimationEngine snakeGameOverAnimationEngine;
     private static StackPane snakeGamePane;
     private static Grid grid;
-
     private static View view;
 
 
