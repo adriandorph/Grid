@@ -145,13 +145,12 @@ public class SettingsMenuView extends StackPane {
                 colorScheme.setName(name);//How and why the hell are you supposed to use getters and setter if private fields still can be changed outside the class
                 Settings.setActiveColorScheme(Settings.readActiveColorScheme()); // This is needed because Settings.activeColorScheme also changes when colorScheme is changed
                 Settings.updateActiveColorScheme(colorScheme);
-                int caretPos = colorSchemeName.getCaretPosition();
                 repaint();
                 colorSchemeName.requestFocus();
-                if (newValue.length() > oldValue.length()) caretPos++;
-                else caretPos--;
-                colorSchemeName.positionCaret(caretPos);
-
+                colorSchemeName.end();
+            });
+            colorSchemeName.setOnMouseClicked(caretAtEnd -> {
+                colorSchemeName.end();
             });
 
 
