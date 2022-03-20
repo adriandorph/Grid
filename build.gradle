@@ -12,11 +12,9 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
-def getJavaFXPlatform() {
-    return javafx.platform
-}
-def javaFXPlatform = getJavaFXPlatform()
-def javaFXVersion = "15.0.1"
+
+def javaFXPlatform = javafx.platform
+def javaFXVersion = '17.0.2'
 
 dependencies {
     // Use JUnit Jupiter API for testing.
@@ -36,7 +34,7 @@ test {
 }
 
 javafx {
-    version = "15.0.1"
+    version = "17"
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 

@@ -2,9 +2,11 @@ package Model.Snake;
 
 import Controller.Snake.SnakeInput;
 import Controller.Updatable;
+import Model.ColorFunctions;
 import Model.Direction;
 import Model.Matrix;
 import Model.Position;
+import Saves.Settings;
 import Saves.SnakeHighScoreFile;
 import View.RenderGrid;
 import View.Snake.SnakeRender;
@@ -27,12 +29,6 @@ public class SnakeGame implements Updatable<SnakeRender> {
     private int highscore;
     private final int originalHighscore;
 
-    //Color
-    private final Color background = Color.rgb(0,0,0);
-    private final Color headColor = Color.rgb(255, 0, 0);
-    private final Color body = Color.rgb(255, 255, 255);
-    private final Color bits = Color.rgb(255,255,0);
-
     public SnakeGame(double canvasHeight){
         this(32, 18, canvasHeight);
     }
@@ -48,7 +44,7 @@ public class SnakeGame implements Updatable<SnakeRender> {
         highscore = SnakeHighScoreFile.readHighscore();
         originalHighscore = highscore;
         squares = new Matrix(width, height, canvasHeight);
-        squares.setAllColor(background);
+        squares.setAllColor(Settings.getActiveColorScheme().getBackground());
         direction = null;
         headPosition = new Position(width / 2, height / 2);
         snake = new LinkedList<>();
@@ -109,14 +105,14 @@ public class SnakeGame implements Updatable<SnakeRender> {
         //Colors
         //Bits
         for(Position position : randomBits.getBits()){
-            squares.setColor(position.x, position.y, bits);
+            squares.setColor(position.x, position.y, Settings.getActiveColorScheme().getBits());
         }
         //Snake
-        squares.setColor(lastPart.x, lastPart.y, background);
-        squares.setColor(headPosition.x, headPosition.y, headColor);
+        squares.setColor(lastPart.x, lastPart.y, Settings.getActiveColorScheme().getBackground());
+        squares.setColor(headPosition.x, headPosition.y, Settings.getActiveColorScheme().getHead());
         for(Position position : snake)
         {
-            squares.setColor(position.x, position.y, body);
+            squares.setColor(position.x, position.y, Settings.getActiveColorScheme().getTail());
         }
 
         if(score > highscore) {
@@ -130,24 +126,10 @@ public class SnakeGame implements Updatable<SnakeRender> {
     private RenderGrid beforeStartTick(double seconds){
         direction = SnakeInput.getDirection();
         beforeStartSeconds += seconds;
-        double red = headColor.getRed() * getOpacity();
-        double green = headColor.getGreen() * getOpacity();
-        double blue = headColor.getBlue() * getOpacity();
-        squares.setColor(headPosition.x, headPosition.y, Color.color(red, green, blue));
+        squares.setColor(headPosition.x, headPosition.y, ColorFunctions.opacityOnBackground(Settings.getActiveColorScheme().getHead(), Settings.getActiveColorScheme().getBackground(), getOpacity()));
 
-        red = bits.getRed();
-        green = bits.getGreen();
-        blue = bits.getBlue();
-
-        if(shouldDisplayStartHelp()){
-            double opacity = 0.5;
-            red *= opacity;
-            green *= opacity;
-            blue *= opacity;
-
-        }
         for(Position pos: randomBits.getBits()){
-            squares.setColor(pos.x, pos.y, Color.color(red, green, blue));
+            squares.setColor(pos.x, pos.y, shouldDisplayStartHelp()? ColorFunctions.opacityOnBackground(Settings.getActiveColorScheme().getBits(), Settings.getActiveColorScheme().getBackground(), 0.5): Settings.getActiveColorScheme().getBits());
         }
         return new RenderGrid(squares);
     }

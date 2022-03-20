@@ -13,7 +13,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -29,8 +28,12 @@ public class Controller extends Application{
     private static SnakeGameOverAnimationEngine snakeGameOverAnimationEngine;
     private static StackPane snakeGamePane;
     private static Grid grid;
-
     private static View view;
+
+
+    public static void main(String[] args) {
+        launch();
+    }
 
     @Override
     public void start(Stage stage) {
@@ -49,16 +52,12 @@ public class Controller extends Application{
         gridPane.getChildren().add(grid);
 
         view = new View(gridPane);
-        view.setFill(Color.BLACK);
+        view.setFill(Settings.getActiveColorScheme().getBackground());
         Controller.stage.setScene(view);
         sizingAfterNewScene();
         setKeyInput();
         if(Settings.getStartUpInGame()) viewNewSnakeGame();
         else viewMainMenu();
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 
     public static void viewMainMenu(){

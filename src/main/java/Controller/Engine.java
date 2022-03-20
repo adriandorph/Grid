@@ -74,7 +74,6 @@ public abstract class Engine<RenderObject> implements Runnable {
                 if (frameTime >= 1){
                     frameTime = 0;
                     actualFPS = frames;
-                    System.out.println("FPS: "+actualFPS);
                     frames = 0;
                 }
             }
@@ -93,7 +92,6 @@ public abstract class Engine<RenderObject> implements Runnable {
                 }
             }
         }
-        System.out.println("Engine stopped");
         if(!dispose) stopped();
     }
 }

@@ -16,7 +16,6 @@ public class SnakeHighScoreFile {
 
             Files.write(path, score.getBytes());
         } catch (IOException ignored){}
-
     }
 
     public static int readHighscore() {

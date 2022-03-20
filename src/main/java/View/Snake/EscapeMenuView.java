@@ -2,6 +2,8 @@ package View.Snake;
 
 import Controller.Controller;
 import Controller.Snake.SnakeInput;
+import Model.Snake.ColorScheme;
+import Saves.Settings;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -14,7 +16,7 @@ public class EscapeMenuView extends StackPane {
         //Background
         Canvas background = new Canvas(Controller.windowWidth, Controller.windowHeight);
         GraphicsContext gc = background.getGraphicsContext2D();
-        gc.setFill(Color.BLACK);
+        gc.setFill(Settings.getActiveColorScheme().getBackground());
         gc.fillRect(0,0, Controller.windowWidth, Controller.windowHeight);
 
         //Continue button
@@ -23,7 +25,11 @@ public class EscapeMenuView extends StackPane {
         continuebutton.setPrefWidth(Controller.windowWidth * 0.2);
         continuebutton.setPrefHeight(Controller.windowHeight * 0.05);
         continuebutton.setFont(new Font(Controller.factor * 30));
-        continuebutton.setStyle("-fx-font-size: "+Controller.factor * 30+"px");
+        continuebutton.setStyle(
+                "-fx-font-size: "+Controller.factor * 30+"px;" +
+                        "-fx-text-fill: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";"+
+                        "-fx-background-color:" + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI()) +";"
+        );
         continuebutton.setOnAction(e -> {
             Controller.viewExistingSnakeGame();
             SnakeInput.unpause();
@@ -35,7 +41,11 @@ public class EscapeMenuView extends StackPane {
         exit.setPrefWidth(Controller.windowWidth * 0.2);
         exit.setPrefHeight(Controller.windowHeight * 0.05);
         exit.setFont(new Font(Controller.factor * 30));
-        exit.setStyle("-fx-font-size: "+Controller.factor * 30+"px");
+        exit.setStyle(
+                "-fx-font-size: "+Controller.factor * 30+"px;" +
+                        "-fx-text-fill: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";"+
+                        "-fx-background-color:" + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI()) +";"
+        );
         exit.setOnAction(e -> Controller.viewMainMenu());
 
         //Insert all
