@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class ColorScheme implements Serializable {
     private String name;
-    private boolean customizable;
+    private final boolean customizable;
     private Color UI;
     private Color background;
     private Color head;
