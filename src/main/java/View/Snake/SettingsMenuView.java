@@ -69,7 +69,13 @@ public class SettingsMenuView extends StackPane {
         ComboBox<ColorScheme> colorSchemesDropDown = new ComboBox<>();
         ObservableList<ColorScheme> colorSchemesList = colorSchemesDropDown.getItems();
         colorSchemesList.addAll(Settings.getColorSchemes());
-        colorSchemesDropDown.getSelectionModel().select(Settings.getActiveColorScheme());
+        colorSchemesDropDown.getSelectionModel().select(0);
+        for(int i = 0; i<colorSchemesList.size(); i++){
+            if (colorSchemesList.get(i).equals(Settings.getActiveColorScheme())){
+                colorSchemesDropDown.getSelectionModel().select(i);
+                break;
+            }
+        }
         colorSchemesDropDown.setStyle("-fx-font-size: " + 20 * factor + "px;");
         colorSchemesDropDown.setPrefWidth(factor * 300);
         colorSchemesDropDown.setTranslateY(factor * -145);

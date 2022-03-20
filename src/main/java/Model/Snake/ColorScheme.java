@@ -14,6 +14,8 @@ public class ColorScheme implements Serializable {
     private Color bits;
     private Color info;
 
+
+
     public ColorScheme(String name, boolean customizable, Color UI, Color background, Color head, Color tail, Color bits, Color info){
         this.name = name;
         this.customizable = customizable;
@@ -47,6 +49,8 @@ public class ColorScheme implements Serializable {
     public ColorScheme(ColorScheme colorScheme, String name){
         this(name, true, colorScheme.getUI(),  colorScheme.getBackground(), colorScheme.getHead(), colorScheme.getTail(), colorScheme.getBits(), colorScheme.getInfo());
     }
+
+
 
     public static String toCssHexCode(Color color){
         return String.format( "#%02X%02X%02X",
@@ -130,17 +134,14 @@ public class ColorScheme implements Serializable {
 
     @Override
     public boolean equals(Object o){
-        assert o != null;
-        assert o instanceof ColorScheme;
-        ColorScheme other = (ColorScheme) o;
-        return  other != null
-                && this.name.equals(other.name)
+        if (!(o instanceof ColorScheme other)) return false;
+        return this.name.equals(other.name)
                 && this.customizable == other.customizable
-                && this.UI == other.UI
-                && this.background == other.background
-                && this.head == other.head
-                && this.tail == other.tail
-                && this.bits == other.bits
-                && this.info == other.info;
+                && this.UI.equals(other.UI)
+                && this.background.equals(other.background)
+                && this.head.equals(other.head)
+                && this.tail.equals(other.tail)
+                && this.bits.equals(other.bits)
+                && this.info.equals(other.info);
     }
 }
