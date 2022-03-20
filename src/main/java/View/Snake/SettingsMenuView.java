@@ -69,7 +69,7 @@ public class SettingsMenuView extends StackPane {
         ComboBox<ColorScheme> colorSchemesDropDown = new ComboBox<>();
         ObservableList<ColorScheme> colorSchemesList = colorSchemesDropDown.getItems();
         colorSchemesList.addAll(Settings.getColorSchemes());
-        colorSchemesDropDown.setValue(Settings.getActiveColorScheme());
+        colorSchemesDropDown.getSelectionModel().select(Settings.getActiveColorScheme());
         colorSchemesDropDown.setStyle("-fx-font-size: " + 20 * factor + "px;");
         colorSchemesDropDown.setPrefWidth(factor * 300);
         colorSchemesDropDown.setTranslateY(factor * -145);
@@ -80,10 +80,10 @@ public class SettingsMenuView extends StackPane {
         });
 
         //Create new colorscheme
-        Button createNewColorSchemeButton = new Button("new color scheme");
+        Button createNewColorSchemeButton = new Button("New color scheme");
         createNewColorSchemeButton.setTranslateY(factor * -85);
-        createNewColorSchemeButton.setTranslateX(factor * 212.5);
-        createNewColorSchemeButton.setPrefWidth(factor * 225);
+        createNewColorSchemeButton.setTranslateX(factor * 200);
+        createNewColorSchemeButton.setPrefWidth(factor * 250);
         createNewColorSchemeButton.setPrefHeight(windowHeight * 0.05);
         createNewColorSchemeButton.setFont(new Font(factor * 30));
         createNewColorSchemeButton.setStyle(
@@ -102,9 +102,9 @@ public class SettingsMenuView extends StackPane {
         StackPane customizeColorscheme = new StackPane();
         if (Settings.getActiveColorScheme().isCustomizable()) {
             //DeleteButton
-            Button deleteColorScheme = new Button("delete color scheme");
+            Button deleteColorScheme = new Button("Delete color scheme");
             deleteColorScheme.setTranslateY(factor * -85);
-            deleteColorScheme.setTranslateX(factor * -50);
+            deleteColorScheme.setTranslateX(factor * -75);
             deleteColorScheme.setPrefWidth(factor * 250);
             deleteColorScheme.setPrefHeight(windowHeight * 0.05);
             deleteColorScheme.setFont(new Font(factor * 30));
@@ -122,7 +122,7 @@ public class SettingsMenuView extends StackPane {
             gc.setFill(Settings.getActiveColorScheme().getUI());
             gc.setTextAlign(TextAlignment.LEFT);
             gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("color scheme name", 300 * factor, 350 * factor);
+            gc.fillText("Color scheme name", 300 * factor, 350 * factor);
 
             colorSchemeName = new TextField(Settings.getActiveColorScheme().getName());
             colorSchemeName.setStyle("-fx-font-size: " + factor * 20 + "px;");
@@ -154,7 +154,7 @@ public class SettingsMenuView extends StackPane {
             gc.setFill(Settings.getActiveColorScheme().getUI());
             gc.setTextAlign(TextAlignment.LEFT);
             gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("ui color", 300 * factor, 400 * factor);
+            gc.fillText("UI color", 300 * factor, 400 * factor);
 
             ColorPicker UIPicker = new ColorPicker(Settings.getActiveColorScheme().getUI());
             UIPicker.setTranslateX(factor * 230);
@@ -171,7 +171,7 @@ public class SettingsMenuView extends StackPane {
             gc.setFill(Settings.getActiveColorScheme().getUI());
             gc.setTextAlign(TextAlignment.LEFT);
             gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("background color", 300 * factor, 450 * factor);
+            gc.fillText("Background color", 300 * factor, 450 * factor);
 
             ColorPicker backgroundPicker = new ColorPicker(Settings.getActiveColorScheme().getBackground());
             backgroundPicker.setTranslateX(factor * 230);
@@ -188,7 +188,7 @@ public class SettingsMenuView extends StackPane {
             gc.setFill(Settings.getActiveColorScheme().getUI());
             gc.setTextAlign(TextAlignment.LEFT);
             gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("snake head color", 300 * factor, 500 * factor);
+            gc.fillText("Snake head color", 300 * factor, 500 * factor);
 
             ColorPicker headPicker = new ColorPicker(Settings.getActiveColorScheme().getHead());
             headPicker.setTranslateX(factor * 230);
@@ -205,7 +205,7 @@ public class SettingsMenuView extends StackPane {
             gc.setFill(Settings.getActiveColorScheme().getUI());
             gc.setTextAlign(TextAlignment.LEFT);
             gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("snake tail color", 300 * factor, 550 * factor);
+            gc.fillText("Snake tail color", 300 * factor, 550 * factor);
 
             ColorPicker tailPicker = new ColorPicker(Settings.getActiveColorScheme().getTail());
             tailPicker.setTranslateX(factor * 230);
@@ -222,7 +222,7 @@ public class SettingsMenuView extends StackPane {
             gc.setFill(Settings.getActiveColorScheme().getUI());
             gc.setTextAlign(TextAlignment.LEFT);
             gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("food bit color", 300 * factor, 600 * factor);
+            gc.fillText("Food color", 300 * factor, 600 * factor);
 
             ColorPicker bitsPicker = new ColorPicker(Settings.getActiveColorScheme().getBits());
             bitsPicker.setTranslateX(factor * 230);
@@ -239,7 +239,7 @@ public class SettingsMenuView extends StackPane {
             gc.setFill(Settings.getActiveColorScheme().getUI());
             gc.setTextAlign(TextAlignment.LEFT);
             gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("info text color", 300 * factor, 650 * factor);
+            gc.fillText("Info text color", 300 * factor, 650 * factor);
 
             ColorPicker infoPicker = new ColorPicker(Settings.getActiveColorScheme().getInfo());
             infoPicker.setTranslateX(factor * 230);

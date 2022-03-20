@@ -127,4 +127,20 @@ public class ColorScheme implements Serializable {
     public String toString(){
         return name;
     }
+
+    @Override
+    public boolean equals(Object o){
+        assert o != null;
+        assert o instanceof ColorScheme;
+        ColorScheme other = (ColorScheme) o;
+        return  other != null
+                && this.name.equals(other.name)
+                && this.customizable == other.customizable
+                && this.UI == other.UI
+                && this.background == other.background
+                && this.head == other.head
+                && this.tail == other.tail
+                && this.bits == other.bits
+                && this.info == other.info;
+    }
 }
