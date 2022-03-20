@@ -38,7 +38,7 @@ public class Settings {
             bos.close();
             fos.close();
         } catch (IOException e) {
-            System.out.println("Could Not Create Binary File");
+            System.out.println(e.getMessage());
         }
     }
 
@@ -120,30 +120,15 @@ public class Settings {
         saveColorSchemes();
     }
 
-    public static void updateActiveColorScheme(ColorScheme colorScheme){
-        for (int index = 0; index<customColorSchemes.size(); index++){
-            System.out.println(customColorSchemes.get(index).getName() + " " + Settings.getActiveColorScheme().getName());
-            if (customColorSchemes.get(index).getName().equals(Settings.getActiveColorScheme().getName())){
-                customColorSchemes.set(index, colorScheme);
-                break;
-            }
-        }
+    public static void updateActiveColorScheme(ColorScheme colorScheme, int index){//TODO: change to index
+        customColorSchemes.set(index - colorSchemes.size(), colorScheme);
         Settings.saveColorSchemes();
-        Settings.setActiveColorScheme(Settings.getColorScheme(colorScheme.getName()));
+        Settings.setActiveColorScheme(colorScheme);
     }
 
-    public static void deleteColorScheme(String name){
-        List<ColorScheme> updatedCustomColorSchemes = new LinkedList<>();
-        boolean couldNotDelete = true;
-        for (ColorScheme cs: customColorSchemes){
-            if (!cs.getName().equals(name)){
-                updatedCustomColorSchemes.add(cs);
-            } else {
-                couldNotDelete = false;
-            }
-        }
-        if (couldNotDelete) throw new RuntimeException("Could not find colorscheme: "+ name);
-        setColorSchemes(updatedCustomColorSchemes);
+    public static void deleteColorScheme(int index){
+        customColorSchemes.remove(index - colorSchemes.size());
+        setColorSchemes(customColorSchemes);
     }
 
     public static List<ColorScheme> getColorSchemes(){
@@ -155,14 +140,7 @@ public class Settings {
 
     public static ColorScheme getColorScheme(int index){
         if (index < colorSchemes.size()) return colorSchemes.get(index);
-        else return customColorSchemes.get(index - customColorSchemes.size());
-    }
-
-    public static ColorScheme getColorScheme(String name){
-        for (ColorScheme cs: getColorSchemes()){
-            if (cs.getName().equals(name)) return cs;
-        }
-        throw new RuntimeException("Could not find color scheme: " + name);
+        else return customColorSchemes.get(index - colorSchemes.size());
     }
 
     public static void saveColorSchemes(){
@@ -182,7 +160,7 @@ public class Settings {
             bos.close();
             fos.close();
         } catch (IOException e) {
-            System.out.println("Could Not Create Binary File");
+            System.out.println(e.getMessage());
         }
     }
 

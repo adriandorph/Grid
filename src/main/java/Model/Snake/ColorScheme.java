@@ -122,4 +122,9 @@ public class ColorScheme implements Serializable {
         if(customizable) this.info = info;
         else throw new RuntimeException("The colorscheme is not customizable");
     }
+
+    @Override
+    public String toString(){
+        return name;
+    }
 }

@@ -66,20 +66,16 @@ public class SettingsMenuView extends StackPane {
         gc.setFont(new Font("Roboto", 35 * factor));
         gc.fillText("Color Scheme", 300 * factor, 225 * factor);
 
-        ComboBox<String> colorSchemesDropDown = new ComboBox<>();
-        ObservableList<String> colorSchemesList = colorSchemesDropDown.getItems();
-        for (ColorScheme cs : Settings.getColorSchemes()) {
-            System.out.println(cs.getName());
-            colorSchemesList.add(cs.getName());
-        }
-        System.out.println();
-        colorSchemesDropDown.setValue(Settings.getActiveColorScheme().getName());
+        ComboBox<ColorScheme> colorSchemesDropDown = new ComboBox<>();
+        ObservableList<ColorScheme> colorSchemesList = colorSchemesDropDown.getItems();
+        colorSchemesList.addAll(Settings.getColorSchemes());
+        colorSchemesDropDown.setValue(Settings.getActiveColorScheme());
         colorSchemesDropDown.setStyle("-fx-font-size: " + 20 * factor + "px;");
         colorSchemesDropDown.setPrefWidth(factor * 300);
         colorSchemesDropDown.setTranslateY(factor * -145);
         colorSchemesDropDown.setTranslateX(factor * 175);
         colorSchemesDropDown.setOnAction(updateColorScheme -> {
-            Settings.setActiveColorScheme(Settings.getColorScheme(colorSchemesDropDown.getValue()));
+            Settings.setActiveColorScheme(Settings.getColorScheme(colorSchemesDropDown.getSelectionModel().getSelectedIndex()));
             repaint();
         });
 
@@ -118,7 +114,7 @@ public class SettingsMenuView extends StackPane {
                             "-fx-background-color:" + ColorScheme.toCssHexCode(ColorFunctions.opacityOnBackground(Settings.getActiveColorScheme().getUI(), Settings.getActiveColorScheme().getBackground(), 0.5)) + ";"
             );
             deleteColorScheme.setOnAction(deleteActiveColorScheme -> {
-                Settings.deleteColorScheme(Settings.getActiveColorScheme().getName());
+                Settings.deleteColorScheme(colorSchemesDropDown.getSelectionModel().getSelectedIndex());
                 Settings.setActiveColorScheme(Settings.getColorScheme(0));
                 repaint();
             });
@@ -144,7 +140,7 @@ public class SettingsMenuView extends StackPane {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
                 colorScheme.setName(name);//How and why the hell are you supposed to use getters and setter if private fields still can be changed outside the class
                 Settings.setActiveColorScheme(Settings.readActiveColorScheme()); // This is needed because Settings.activeColorScheme also changes when colorScheme is changed
-                Settings.updateActiveColorScheme(colorScheme);
+                Settings.updateActiveColorScheme(colorScheme, colorSchemesDropDown.getSelectionModel().getSelectedIndex());
                 repaint();
                 colorSchemeName.requestFocus();
                 colorSchemeName.end();
@@ -167,7 +163,7 @@ public class SettingsMenuView extends StackPane {
             UIPicker.setOnAction(updateUIColor -> {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
                 colorScheme.setUI(UIPicker.getValue());
-                Settings.updateActiveColorScheme(colorScheme);
+                Settings.updateActiveColorScheme(colorScheme, colorSchemesDropDown.getSelectionModel().getSelectedIndex());
                 repaint();
             });
 
@@ -184,7 +180,7 @@ public class SettingsMenuView extends StackPane {
             backgroundPicker.setOnAction(updateBackgroundColor -> {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
                 colorScheme.setBackground(backgroundPicker.getValue());
-                Settings.updateActiveColorScheme(colorScheme);
+                Settings.updateActiveColorScheme(colorScheme, colorSchemesDropDown.getSelectionModel().getSelectedIndex());
                 repaint();
             });
 
@@ -201,7 +197,7 @@ public class SettingsMenuView extends StackPane {
             headPicker.setOnAction(updateHeadColor -> {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
                 colorScheme.setHead(headPicker.getValue());
-                Settings.updateActiveColorScheme(colorScheme);
+                Settings.updateActiveColorScheme(colorScheme, colorSchemesDropDown.getSelectionModel().getSelectedIndex());
                 repaint();
             });
 
@@ -218,7 +214,7 @@ public class SettingsMenuView extends StackPane {
             tailPicker.setOnAction(updateTailColor -> {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
                 colorScheme.setTail(tailPicker.getValue());
-                Settings.updateActiveColorScheme(colorScheme);
+                Settings.updateActiveColorScheme(colorScheme, colorSchemesDropDown.getSelectionModel().getSelectedIndex());
                 repaint();
             });
 
@@ -235,7 +231,7 @@ public class SettingsMenuView extends StackPane {
             bitsPicker.setOnAction(updateBitsColor -> {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
                 colorScheme.setBits(bitsPicker.getValue());
-                Settings.updateActiveColorScheme(colorScheme);
+                Settings.updateActiveColorScheme(colorScheme, colorSchemesDropDown.getSelectionModel().getSelectedIndex());
                 repaint();
             });
 
@@ -252,7 +248,7 @@ public class SettingsMenuView extends StackPane {
             infoPicker.setOnAction(updateInfoColor -> {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
                 colorScheme.setInfo(infoPicker.getValue());
-                Settings.updateActiveColorScheme(colorScheme);
+                Settings.updateActiveColorScheme(colorScheme, colorSchemesDropDown.getSelectionModel().getSelectedIndex());
                 repaint();
             });
 
