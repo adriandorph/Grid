@@ -79,15 +79,15 @@ public class Settings {
                         Color.rgb(255,255,0),   //Bits
                         Color.rgb(255,255,255)  //Info
                 ),
-                new ColorScheme("Blue",
-                        Color.rgb(0,225,255),   //UI
+                new ColorScheme("Miami Vice",
+                        Color.hsb(180,1.0,1.0),   //UI
                         Color.rgb(0,0,0),       //Background
-                        Color.rgb(0,225,255),   //Head
-                        Color.rgb(255,255,255), //Tail
-                        Color.rgb(0,255,0),     //Bits
-                        Color.rgb(255,255,255)  //Info
+                        Color.hsb(180,1.0,1.0),   //Head
+                        Color.rgb(255,255,145), //Tail
+                        Color.rgb(255,0,255),     //Bits
+                        Color.rgb(255,0,255)  //Info
                 ),
-                new ColorScheme("Green",
+                new ColorScheme("Pitch",
                         Color.rgb(255,255,255), //UI
                         Color.rgb(0,150,0),     //Background
                         Color.rgb(255,255,255), //Head
@@ -95,12 +95,12 @@ public class Settings {
                         Color.rgb(255,255,0),   //Bits
                         Color.rgb(255, 255,255) //Info
                 ),
-                new ColorScheme("White",
+                new ColorScheme("Black on white",
                         Color.rgb(0,0,0),       //UI
                         Color.rgb(255,255,255), //Background
-                        Color.rgb(0,255,0),     //Head
-                        Color.rgb(0,100,0),     //Tail
-                        Color.rgb(255,0,255),   //Bits
+                        Color.rgb(0,0,0),     //Head
+                        Color.rgb(100,100,100),     //Tail
+                        Color.rgb(50,50,50),   //Bits
                         Color.rgb(0,0,0)        //Info
                         )
         }));
