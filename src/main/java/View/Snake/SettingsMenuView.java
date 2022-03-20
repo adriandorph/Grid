@@ -46,7 +46,7 @@ public class SettingsMenuView extends StackPane {
         gc.setFill(Settings.getActiveColorScheme().getUI());
         gc.setTextAlign(TextAlignment.LEFT);
         gc.setFont(new Font("Roboto", 35 * factor));
-        gc.fillText("Startup in-game", 300 * factor, 200 * factor);
+        gc.fillText("Startup in-game", 300 * factor, 175 * factor);
 
         CheckBox startUpInGameBox = new CheckBox();
         boolean tooDark = Settings.getActiveColorScheme().getUI().getBrightness() <= 0.2;
@@ -57,14 +57,14 @@ public class SettingsMenuView extends StackPane {
         ); //The font sets the size of the checkbox, because setPrefSize does not work
         startUpInGameBox.setOnAction(e -> Settings.saveStartUpInGame(startUpInGameBox.isSelected()));
         startUpInGameBox.setSelected(Settings.getStartUpInGame());
-        startUpInGameBox.setTranslateY(factor * -170);
+        startUpInGameBox.setTranslateY(factor * -195);
         startUpInGameBox.setTranslateX(factor * 300);
 
         //Color scheme picker
         gc.setFill(Settings.getActiveColorScheme().getUI());
         gc.setTextAlign(TextAlignment.LEFT);
         gc.setFont(new Font("Roboto", 35 * factor));
-        gc.fillText("Color Scheme", 300 * factor, 275 * factor);
+        gc.fillText("Color Scheme", 300 * factor, 225 * factor);
 
         ComboBox<String> colorSchemesDropDown = new ComboBox<>();
         ObservableList<String> colorSchemesList = colorSchemesDropDown.getItems();
@@ -74,9 +74,9 @@ public class SettingsMenuView extends StackPane {
         }
         System.out.println();
         colorSchemesDropDown.setValue(Settings.getActiveColorScheme().getName());
-        colorSchemesDropDown.setStyle("-fx-font-size: " + 25 * factor + "px;");
+        colorSchemesDropDown.setStyle("-fx-font-size: " + 20 * factor + "px;");
         colorSchemesDropDown.setPrefWidth(factor * 300);
-        colorSchemesDropDown.setTranslateY(factor * -95);
+        colorSchemesDropDown.setTranslateY(factor * -145);
         colorSchemesDropDown.setTranslateX(factor * 175);
         colorSchemesDropDown.setOnAction(updateColorScheme -> {
             Settings.setActiveColorScheme(Settings.getColorScheme(colorSchemesDropDown.getValue()));
@@ -85,7 +85,7 @@ public class SettingsMenuView extends StackPane {
 
         //Create new colorscheme
         Button createNewColorSchemeButton = new Button("new color scheme");
-        createNewColorSchemeButton.setTranslateY(factor * -20);
+        createNewColorSchemeButton.setTranslateY(factor * -85);
         createNewColorSchemeButton.setTranslateX(factor * 212.5);
         createNewColorSchemeButton.setPrefWidth(factor * 225);
         createNewColorSchemeButton.setPrefHeight(windowHeight * 0.05);
@@ -107,7 +107,7 @@ public class SettingsMenuView extends StackPane {
         if (Settings.getActiveColorScheme().isCustomizable()) {
             //DeleteButton
             Button deleteColorScheme = new Button("delete color scheme");
-            deleteColorScheme.setTranslateY(factor * -20);
+            deleteColorScheme.setTranslateY(factor * -85);
             deleteColorScheme.setTranslateX(factor * -50);
             deleteColorScheme.setPrefWidth(factor * 250);
             deleteColorScheme.setPrefHeight(windowHeight * 0.05);
@@ -126,15 +126,15 @@ public class SettingsMenuView extends StackPane {
             gc.setFill(Settings.getActiveColorScheme().getUI());
             gc.setTextAlign(TextAlignment.LEFT);
             gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("color scheme name", 300 * factor, 425 * factor);
+            gc.fillText("color scheme name", 300 * factor, 350 * factor);
 
             colorSchemeName = new TextField(Settings.getActiveColorScheme().getName());
             colorSchemeName.setStyle("-fx-font-size: " + factor * 20 + "px;");
             colorSchemeName.setMaxWidth(factor * 200);
             colorSchemeName.setPrefWidth(factor * 200);
             colorSchemeName.setPrefHeight(factor * 30);
-            colorSchemeName.setTranslateX(factor * 230);
-            colorSchemeName.setTranslateY(factor * 80);
+            colorSchemeName.setTranslateX(factor * 225);
+            colorSchemeName.setTranslateY(factor * -20);
             colorSchemeName.textProperty().addListener((ignored, oldValue, newValue) -> {
                 String name = newValue;
                 if (name.length() > 18) {
@@ -159,11 +159,11 @@ public class SettingsMenuView extends StackPane {
             gc.setFill(Settings.getActiveColorScheme().getUI());
             gc.setTextAlign(TextAlignment.LEFT);
             gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("ui color", 300 * factor, 500 * factor);
+            gc.fillText("ui color", 300 * factor, 400 * factor);
 
             ColorPicker UIPicker = new ColorPicker(Settings.getActiveColorScheme().getUI());
             UIPicker.setTranslateX(factor * 230);
-            UIPicker.setTranslateY(factor * 130);
+            UIPicker.setTranslateY(factor * 30);
             UIPicker.setStyle("-fx-font-size: " + factor * 20 + "px;");
             UIPicker.setOnAction(updateUIColor -> {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
@@ -173,10 +173,98 @@ public class SettingsMenuView extends StackPane {
             });
 
             //Background
+            gc.setFill(Settings.getActiveColorScheme().getUI());
+            gc.setTextAlign(TextAlignment.LEFT);
+            gc.setFont(new Font("Roboto", 35 * factor));
+            gc.fillText("background color", 300 * factor, 450 * factor);
+
+            ColorPicker backgroundPicker = new ColorPicker(Settings.getActiveColorScheme().getBackground());
+            backgroundPicker.setTranslateX(factor * 230);
+            backgroundPicker.setTranslateY(factor * 80);
+            backgroundPicker.setStyle("-fx-font-size: " + factor * 20 + "px;");
+            backgroundPicker.setOnAction(updateBackgroundColor -> {
+                ColorScheme colorScheme = Settings.getActiveColorScheme();
+                colorScheme.setBackground(backgroundPicker.getValue());
+                Settings.updateActiveColorScheme(colorScheme);
+                repaint();
+            });
+
+            //Head
+            gc.setFill(Settings.getActiveColorScheme().getUI());
+            gc.setTextAlign(TextAlignment.LEFT);
+            gc.setFont(new Font("Roboto", 35 * factor));
+            gc.fillText("snake head color", 300 * factor, 500 * factor);
+
+            ColorPicker headPicker = new ColorPicker(Settings.getActiveColorScheme().getHead());
+            headPicker.setTranslateX(factor * 230);
+            headPicker.setTranslateY(factor * 130);
+            headPicker.setStyle("-fx-font-size: " + factor * 20 + "px;");
+            headPicker.setOnAction(updateHeadColor -> {
+                ColorScheme colorScheme = Settings.getActiveColorScheme();
+                colorScheme.setHead(headPicker.getValue());
+                Settings.updateActiveColorScheme(colorScheme);
+                repaint();
+            });
+
+            //Tail
+            gc.setFill(Settings.getActiveColorScheme().getUI());
+            gc.setTextAlign(TextAlignment.LEFT);
+            gc.setFont(new Font("Roboto", 35 * factor));
+            gc.fillText("snake tail color", 300 * factor, 550 * factor);
+
+            ColorPicker tailPicker = new ColorPicker(Settings.getActiveColorScheme().getTail());
+            tailPicker.setTranslateX(factor * 230);
+            tailPicker.setTranslateY(factor * 180);
+            tailPicker.setStyle("-fx-font-size: " + factor * 20 + "px;");
+            tailPicker.setOnAction(updateTailColor -> {
+                ColorScheme colorScheme = Settings.getActiveColorScheme();
+                colorScheme.setTail(tailPicker.getValue());
+                Settings.updateActiveColorScheme(colorScheme);
+                repaint();
+            });
+
+            //Bits
+            gc.setFill(Settings.getActiveColorScheme().getUI());
+            gc.setTextAlign(TextAlignment.LEFT);
+            gc.setFont(new Font("Roboto", 35 * factor));
+            gc.fillText("food bit color", 300 * factor, 600 * factor);
+
+            ColorPicker bitsPicker = new ColorPicker(Settings.getActiveColorScheme().getBits());
+            bitsPicker.setTranslateX(factor * 230);
+            bitsPicker.setTranslateY(factor * 230);
+            bitsPicker.setStyle("-fx-font-size: " + factor * 20 + "px;");
+            bitsPicker.setOnAction(updateBitsColor -> {
+                ColorScheme colorScheme = Settings.getActiveColorScheme();
+                colorScheme.setBits(bitsPicker.getValue());
+                Settings.updateActiveColorScheme(colorScheme);
+                repaint();
+            });
+
+            //Info
+            gc.setFill(Settings.getActiveColorScheme().getUI());
+            gc.setTextAlign(TextAlignment.LEFT);
+            gc.setFont(new Font("Roboto", 35 * factor));
+            gc.fillText("info text color", 300 * factor, 650 * factor);
+
+            ColorPicker infoPicker = new ColorPicker(Settings.getActiveColorScheme().getInfo());
+            infoPicker.setTranslateX(factor * 230);
+            infoPicker.setTranslateY(factor * 280);
+            infoPicker.setStyle("-fx-font-size: " + factor * 20 + "px;");
+            infoPicker.setOnAction(updateInfoColor -> {
+                ColorScheme colorScheme = Settings.getActiveColorScheme();
+                colorScheme.setInfo(infoPicker.getValue());
+                Settings.updateActiveColorScheme(colorScheme);
+                repaint();
+            });
 
             customizeColorscheme.getChildren().add(deleteColorScheme);
             customizeColorscheme.getChildren().add(colorSchemeName);
             customizeColorscheme.getChildren().add(UIPicker);
+            customizeColorscheme.getChildren().add(backgroundPicker);
+            customizeColorscheme.getChildren().add(headPicker);
+            customizeColorscheme.getChildren().add(tailPicker);
+            customizeColorscheme.getChildren().add(bitsPicker);
+            customizeColorscheme.getChildren().add(infoPicker);
         }
 
         //Insert all
