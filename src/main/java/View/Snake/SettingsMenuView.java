@@ -7,9 +7,7 @@ import Saves.Settings;
 import javafx.collections.ObservableList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -19,43 +17,43 @@ import static Controller.Controller.windowHeight;
 import static Controller.Controller.windowWidth;
 
 public class SettingsMenuView extends StackPane {
+    TextField colorSchemeName;
     public SettingsMenuView(){
         repaint();
-        //Background
     }
 
-    public void repaint(){
+    public void repaint() {
         Canvas background = new Canvas(windowWidth, windowHeight);
         GraphicsContext gc = background.getGraphicsContext2D();
         gc.setFill(Settings.getActiveColorScheme().getBackground());
-        gc.fillRect(0,0, windowWidth, windowHeight);
+        gc.fillRect(0, 0, windowWidth, windowHeight);
 
         //Settings text
         gc.setFill(Settings.getActiveColorScheme().getUI());
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setFont(new Font("Roboto", 80 * factor));
-        gc.fillText("Settings", background.getWidth() / 2,90 * factor);
+        gc.fillText("Settings", background.getWidth() / 2, 90 * factor);
 
         //BackArrowButton
-        ImageButton backButton = new ImageButton(ArrowCanvas.getArrowCanvas((int)(80 * factor), (int)(50 * factor)));
+        ImageButton backButton = new ImageButton(ArrowCanvas.getArrowCanvas((int) (80 * factor), (int) (50 * factor)));
         backButton.setPrefWidth(windowWidth * 0.075);
         backButton.setPrefHeight(windowHeight * 0.05);
-        backButton.setTranslateX(factor * - 450);
-        backButton.setTranslateY(factor * - 300);
+        backButton.setTranslateX(factor * -450);
+        backButton.setTranslateY(factor * -300);
         backButton.setOnAction(e -> Controller.viewMainMenu());
 
         //startUpInGame
         gc.setFill(Settings.getActiveColorScheme().getUI());
         gc.setTextAlign(TextAlignment.LEFT);
         gc.setFont(new Font("Roboto", 35 * factor));
-        gc.fillText("Startup in-game", 300 * factor,200 * factor);
+        gc.fillText("Startup in-game", 300 * factor, 200 * factor);
 
         CheckBox startUpInGameBox = new CheckBox();
         boolean tooDark = Settings.getActiveColorScheme().getUI().getBrightness() <= 0.2;
         startUpInGameBox.setStyle(
-                "-fx-font-size: "+factor * 30+"px;" +
-                        "-fx-background-color:" + (tooDark? "#505050": ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI())) +";"+
-                        "-fx-border-color: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI())+ ";"
+                "-fx-font-size: " + factor * 30 + "px;" +
+                        "-fx-background-color:" + (tooDark ? "#505050" : ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI())) + ";" +
+                        "-fx-border-color: " + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI()) + ";"
         ); //The font sets the size of the checkbox, because setPrefSize does not work
         startUpInGameBox.setOnAction(e -> Settings.saveStartUpInGame(startUpInGameBox.isSelected()));
         startUpInGameBox.setSelected(Settings.getStartUpInGame());
@@ -66,15 +64,17 @@ public class SettingsMenuView extends StackPane {
         gc.setFill(Settings.getActiveColorScheme().getUI());
         gc.setTextAlign(TextAlignment.LEFT);
         gc.setFont(new Font("Roboto", 35 * factor));
-        gc.fillText("Color Scheme", 300 * factor,275 * factor);
+        gc.fillText("Color Scheme", 300 * factor, 275 * factor);
 
         ComboBox<String> colorSchemesDropDown = new ComboBox<>();
         ObservableList<String> colorSchemesList = colorSchemesDropDown.getItems();
-        for (ColorScheme cs: Settings.getColorSchemes()){
+        for (ColorScheme cs : Settings.getColorSchemes()) {
+            System.out.println(cs.getName());
             colorSchemesList.add(cs.getName());
         }
+        System.out.println();
         colorSchemesDropDown.setValue(Settings.getActiveColorScheme().getName());
-        colorSchemesDropDown.setStyle("-fx-font-size: "+ 25 * factor+"px;");
+        colorSchemesDropDown.setStyle("-fx-font-size: " + 25 * factor + "px;");
         colorSchemesDropDown.setPrefWidth(factor * 300);
         colorSchemesDropDown.setTranslateY(factor * -95);
         colorSchemesDropDown.setTranslateX(factor * 175);
@@ -84,16 +84,16 @@ public class SettingsMenuView extends StackPane {
         });
 
         //Create new colorscheme
-        Button createNewColorSchemeButton = new Button("new colorscheme");
-        createNewColorSchemeButton.setTranslateY(factor * - 20);
+        Button createNewColorSchemeButton = new Button("new color scheme");
+        createNewColorSchemeButton.setTranslateY(factor * -20);
         createNewColorSchemeButton.setTranslateX(factor * 212.5);
         createNewColorSchemeButton.setPrefWidth(factor * 225);
         createNewColorSchemeButton.setPrefHeight(windowHeight * 0.05);
         createNewColorSchemeButton.setFont(new Font(factor * 30));
         createNewColorSchemeButton.setStyle(
-                "-fx-font-size: "+ factor * 25+"px;" +
-                        "-fx-text-fill: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";"+
-                        "-fx-background-color:" + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI()) +";"
+                "-fx-font-size: " + factor * 25 + "px;" +
+                        "-fx-text-fill: " + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";" +
+                        "-fx-background-color:" + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI()) + ";"
         );
         createNewColorSchemeButton.setOnAction(createNewColoScheme -> {
             ColorScheme newColorScheme = new ColorScheme(Settings.getActiveColorScheme(), Settings.getNewColorSchemeName());
@@ -103,33 +103,90 @@ public class SettingsMenuView extends StackPane {
         });
 
         //Delete colorscheme
-        Button deleteColorScheme = new Button("delete colorscheme");
-        if (Settings.getActiveColorScheme().isCustomizable()){
-            deleteColorScheme.setTranslateY(factor * - 20);
-            deleteColorScheme.setTranslateX(factor * - 50);
+        StackPane customizeColorscheme = new StackPane();
+        if (Settings.getActiveColorScheme().isCustomizable()) {
+            //DeleteButton
+            Button deleteColorScheme = new Button("delete color scheme");
+            deleteColorScheme.setTranslateY(factor * -20);
+            deleteColorScheme.setTranslateX(factor * -50);
             deleteColorScheme.setPrefWidth(factor * 250);
             deleteColorScheme.setPrefHeight(windowHeight * 0.05);
             deleteColorScheme.setFont(new Font(factor * 30));
             deleteColorScheme.setStyle(
-                    "-fx-font-size: "+ factor * 25+"px;" +
-                            "-fx-text-fill: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";"+
-                            "-fx-background-color:" + ColorScheme.toCssHexCode(ColorFunctions.opacityOnBackground(Settings.getActiveColorScheme().getUI(), Settings.getActiveColorScheme().getBackground(), 0.5)) +";"
+                    "-fx-font-size: " + factor * 25 + "px;" +
+                            "-fx-text-fill: " + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";" +
+                            "-fx-background-color:" + ColorScheme.toCssHexCode(ColorFunctions.opacityOnBackground(Settings.getActiveColorScheme().getUI(), Settings.getActiveColorScheme().getBackground(), 0.5)) + ";"
             );
-            deleteColorScheme.setOnAction( deleteActiveColorScheme -> {
+            deleteColorScheme.setOnAction(deleteActiveColorScheme -> {
                 Settings.deleteColorScheme(Settings.getActiveColorScheme().getName());
                 Settings.setActiveColorScheme(Settings.getColorScheme(0));
                 repaint();
             });
+            //Color scheme name
+            gc.setFill(Settings.getActiveColorScheme().getUI());
+            gc.setTextAlign(TextAlignment.LEFT);
+            gc.setFont(new Font("Roboto", 35 * factor));
+            gc.fillText("color scheme name", 300 * factor, 425 * factor);
+
+            colorSchemeName = new TextField(Settings.getActiveColorScheme().getName());
+            colorSchemeName.setStyle("-fx-font-size: " + factor * 20 + "px;");
+            colorSchemeName.setMaxWidth(factor * 200);
+            colorSchemeName.setPrefWidth(factor * 200);
+            colorSchemeName.setPrefHeight(factor * 30);
+            colorSchemeName.setTranslateX(factor * 230);
+            colorSchemeName.setTranslateY(factor * 80);
+            colorSchemeName.textProperty().addListener((ignored, oldValue, newValue) -> {
+                String name = newValue;
+                if (name.length() > 18) {
+                    name = oldValue;
+                    colorSchemeName.setText(name);
+                }
+                ColorScheme colorScheme = Settings.getActiveColorScheme();
+                colorScheme.setName(name);//How and why the hell are you supposed to use getters and setter if private fields still can be changed outside the class
+                Settings.setActiveColorScheme(Settings.readActiveColorScheme()); // This is needed because Settings.activeColorScheme also changes when colorScheme is changed
+                Settings.updateActiveColorScheme(colorScheme);
+                int caretPos = colorSchemeName.getCaretPosition();
+                repaint();
+                colorSchemeName.requestFocus();
+                if (newValue.length() > oldValue.length()) caretPos++;
+                else caretPos--;
+                colorSchemeName.positionCaret(caretPos);
+
+            });
+
+
+            //UI
+            gc.setFill(Settings.getActiveColorScheme().getUI());
+            gc.setTextAlign(TextAlignment.LEFT);
+            gc.setFont(new Font("Roboto", 35 * factor));
+            gc.fillText("ui color", 300 * factor, 500 * factor);
+
+            ColorPicker UIPicker = new ColorPicker(Settings.getActiveColorScheme().getUI());
+            UIPicker.setTranslateX(factor * 230);
+            UIPicker.setTranslateY(factor * 130);
+            UIPicker.setStyle("-fx-font-size: " + factor * 20 + "px;");
+            UIPicker.setOnAction(updateUIColor -> {
+                ColorScheme colorScheme = Settings.getActiveColorScheme();
+                colorScheme.setUI(UIPicker.getValue());
+                Settings.updateActiveColorScheme(colorScheme);
+                repaint();
+            });
+
+            //Background
+
+            customizeColorscheme.getChildren().add(deleteColorScheme);
+            customizeColorscheme.getChildren().add(colorSchemeName);
+            customizeColorscheme.getChildren().add(UIPicker);
         }
 
         //Insert all
         gc.restore();
         getChildren().clear();
         getChildren().add(background);
+        if (Settings.getActiveColorScheme().isCustomizable()) getChildren().add(customizeColorscheme);
         getChildren().add(backButton);
         getChildren().add(startUpInGameBox);
         getChildren().add(colorSchemesDropDown);
         getChildren().add(createNewColorSchemeButton);
-        if (Settings.getActiveColorScheme().isCustomizable()) getChildren().add(deleteColorScheme);
     }
 }

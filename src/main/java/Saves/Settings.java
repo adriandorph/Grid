@@ -26,7 +26,6 @@ public class Settings {
         return Settings.activeColorScheme;
     }
 
-
     public static void saveActiveColorScheme(){
         try {
             Path path = FilePath.getFilePath("activeColorScheme");
@@ -119,6 +118,18 @@ public class Settings {
     public static void setColorSchemes(List<ColorScheme> colorSchemes){
         Settings.customColorSchemes = colorSchemes;
         saveColorSchemes();
+    }
+
+    public static void updateActiveColorScheme(ColorScheme colorScheme){
+        for (int index = 0; index<customColorSchemes.size(); index++){
+            System.out.println(customColorSchemes.get(index).getName() + " " + Settings.getActiveColorScheme().getName());
+            if (customColorSchemes.get(index).getName().equals(Settings.getActiveColorScheme().getName())){
+                customColorSchemes.set(index, colorScheme);
+                break;
+            }
+        }
+        Settings.saveColorSchemes();
+        Settings.setActiveColorScheme(Settings.getColorScheme(colorScheme.getName()));
     }
 
     public static void deleteColorScheme(String name){
