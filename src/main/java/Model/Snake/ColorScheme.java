@@ -134,7 +134,8 @@ public class ColorScheme implements Serializable {
 
     @Override
     public boolean equals(Object o){
-        if (!(o instanceof ColorScheme other)) return false;
+        if (!(o instanceof ColorScheme)) return false;
+        ColorScheme other = (ColorScheme) o;
         return this.name.equals(other.name)
                 && this.customizable == other.customizable
                 && this.UI.equals(other.UI)

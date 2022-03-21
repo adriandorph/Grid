@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
@@ -93,7 +94,7 @@ public class SettingsMenuView extends StackPane {
         createNewColorSchemeButton.setPrefHeight(windowHeight * 0.05);
         createNewColorSchemeButton.setFont(new Font(factor * 30));
         createNewColorSchemeButton.setStyle(
-                "-fx-font-size: " + factor * 25 + "px;" +
+                "-fx-font-size: " + factor * 20 + "px;" +
                         "-fx-text-fill: " + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";" +
                         "-fx-background-color:" + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI()) + ";"
         );
@@ -115,7 +116,7 @@ public class SettingsMenuView extends StackPane {
             deleteColorScheme.setPrefHeight(windowHeight * 0.05);
             deleteColorScheme.setFont(new Font(factor * 30));
             deleteColorScheme.setStyle(
-                    "-fx-font-size: " + factor * 25 + "px;" +
+                    "-fx-font-size: " + factor * 20 + "px;" +
                             "-fx-text-fill: " + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";" +
                             "-fx-background-color:" + ColorScheme.toCssHexCode(ColorFunctions.opacityOnBackground(Settings.getActiveColorScheme().getUI(), Settings.getActiveColorScheme().getBackground(), 0.5)) + ";"
             );
@@ -165,7 +166,9 @@ public class SettingsMenuView extends StackPane {
             ColorPicker UIPicker = new ColorPicker(Settings.getActiveColorScheme().getUI());
             UIPicker.setTranslateX(factor * 230);
             UIPicker.setTranslateY(factor * 30);
-            UIPicker.setStyle("-fx-font-size: " + factor * 20 + "px;");
+            UIPicker.setStyle("-fx-font-size: " + factor * 20 + "px; -fx-color-rect-width: " + 20 * factor + "px; -fx-color-rect-height: " + 20 * factor + "px;");
+            UIPicker.setPrefWidth(187.5 * factor);
+            UIPicker.setPrefHeight(40 * factor);
             UIPicker.setOnAction(updateUIColor -> {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
                 colorScheme.setUI(UIPicker.getValue());
@@ -182,7 +185,9 @@ public class SettingsMenuView extends StackPane {
             ColorPicker backgroundPicker = new ColorPicker(Settings.getActiveColorScheme().getBackground());
             backgroundPicker.setTranslateX(factor * 230);
             backgroundPicker.setTranslateY(factor * 80);
-            backgroundPicker.setStyle("-fx-font-size: " + factor * 20 + "px;");
+            backgroundPicker.setStyle("-fx-font-size: " + factor * 20 + "px; -fx-color-rect-width: " + 20 * factor + "px; -fx-color-rect-height: " + 20 * factor + "px;");
+            backgroundPicker.setPrefWidth(187.5 * factor);
+            backgroundPicker.setPrefHeight(40 * factor);
             backgroundPicker.setOnAction(updateBackgroundColor -> {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
                 colorScheme.setBackground(backgroundPicker.getValue());
@@ -199,7 +204,9 @@ public class SettingsMenuView extends StackPane {
             ColorPicker headPicker = new ColorPicker(Settings.getActiveColorScheme().getHead());
             headPicker.setTranslateX(factor * 230);
             headPicker.setTranslateY(factor * 130);
-            headPicker.setStyle("-fx-font-size: " + factor * 20 + "px;");
+            headPicker.setStyle("-fx-font-size: " + factor * 20 + "px; -fx-color-rect-width: " + 20 * factor + "px; -fx-color-rect-height: " + 20 * factor + "px;");
+            headPicker.setPrefWidth(187.5 * factor);
+            headPicker.setPrefHeight(40 * factor);
             headPicker.setOnAction(updateHeadColor -> {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
                 colorScheme.setHead(headPicker.getValue());
@@ -216,7 +223,9 @@ public class SettingsMenuView extends StackPane {
             ColorPicker tailPicker = new ColorPicker(Settings.getActiveColorScheme().getTail());
             tailPicker.setTranslateX(factor * 230);
             tailPicker.setTranslateY(factor * 180);
-            tailPicker.setStyle("-fx-font-size: " + factor * 20 + "px;");
+            tailPicker.setStyle("-fx-font-size: " + factor * 20 + "px; -fx-color-rect-width: " + 20 * factor + "px; -fx-color-rect-height: " + 20 * factor + "px;");
+            tailPicker.setPrefWidth(187.5 * factor);
+            tailPicker.setPrefHeight(40 * factor);
             tailPicker.setOnAction(updateTailColor -> {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
                 colorScheme.setTail(tailPicker.getValue());
@@ -233,7 +242,9 @@ public class SettingsMenuView extends StackPane {
             ColorPicker bitsPicker = new ColorPicker(Settings.getActiveColorScheme().getBits());
             bitsPicker.setTranslateX(factor * 230);
             bitsPicker.setTranslateY(factor * 230);
-            bitsPicker.setStyle("-fx-font-size: " + factor * 20 + "px;");
+            bitsPicker.setStyle("-fx-font-size: " + factor * 20 + "px; -fx-color-rect-width: " + 20 * factor + "px; -fx-color-rect-height: " + 20 * factor + "px;");
+            bitsPicker.setPrefWidth(187.5 * factor);
+            bitsPicker.setPrefHeight(40 * factor);
             bitsPicker.setOnAction(updateBitsColor -> {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
                 colorScheme.setBits(bitsPicker.getValue());
@@ -250,7 +261,9 @@ public class SettingsMenuView extends StackPane {
             ColorPicker infoPicker = new ColorPicker(Settings.getActiveColorScheme().getInfo());
             infoPicker.setTranslateX(factor * 230);
             infoPicker.setTranslateY(factor * 280);
-            infoPicker.setStyle("-fx-font-size: " + factor * 20 + "px;");
+            infoPicker.setStyle("-fx-font-size: " + factor * 20 + "px; -fx-color-rect-width: " + 20 * factor + "px; -fx-color-rect-height: " + 20 * factor + "px;");
+            infoPicker.setPrefWidth(187.5 * factor);
+            infoPicker.setPrefHeight(40 * factor);
             infoPicker.setOnAction(updateInfoColor -> {
                 ColorScheme colorScheme = Settings.getActiveColorScheme();
                 colorScheme.setInfo(infoPicker.getValue());
