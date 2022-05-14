@@ -2,7 +2,9 @@ package View.Snake.Settings;
 
 import Controller.Controller;
 import Model.Snake.ColorScheme;
+import Model.Snake.KeyBinding;
 import Saves.Settings.ColorSettings;
+import Saves.Settings.KeyBindingSettings;
 import Saves.Settings.StartUpSettings;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -12,16 +14,14 @@ import javafx.scene.text.TextAlignment;
 import static Controller.Controller.factor;
 import static Controller.Controller.windowHeight;
 
-public class SettingsMenuView extends SettingsTabView {
+public class SettingsMenuView extends SettingsPageView {
     public SettingsMenuView(){
         super("Settings");
         repaint();
     }
 
-    @Override
     public void repaint() {
-        super.repaint();
-        super.backButton.setOnAction(e -> Controller.viewMainMenu());
+        super.repaint(backButtonAction -> Controller.viewMainMenu());
 
         //startUpInGame
         super.gc.setFill(ColorSettings.getActiveColorScheme().getUI());
@@ -86,12 +86,12 @@ public class SettingsMenuView extends SettingsTabView {
         super.gc.setFont(new Font("Roboto", 35 * factor));
         super.gc.fillText("Key Bindings", 300 * factor, 345 * factor);
 
-        ComboBox<ColorScheme> keyBindingsDropDown = new ComboBox<>();
-        ObservableList<ColorScheme> keyBindingsList = keyBindingsDropDown.getItems();
-        keyBindingsList.addAll(ColorSettings.getColorSchemes());
+        ComboBox<KeyBinding> keyBindingsDropDown = new ComboBox<>();
+        ObservableList<KeyBinding> keyBindingsList = keyBindingsDropDown.getItems();
+        keyBindingsList.addAll(KeyBindingSettings.getKeyBindings());
         keyBindingsDropDown.getSelectionModel().select(0);
         for(int i = 0; i<keyBindingsList.size(); i++){
-            if (keyBindingsList.get(i).equals(ColorSettings.getActiveColorScheme())){
+            if (keyBindingsList.get(i).equals(KeyBindingSettings.getActiveKeyBinding())){
                 keyBindingsDropDown.getSelectionModel().select(i);
                 break;
             }
@@ -100,8 +100,8 @@ public class SettingsMenuView extends SettingsTabView {
         keyBindingsDropDown.setPrefWidth(factor * 300);
         keyBindingsDropDown.setTranslateY(factor * -25);
         keyBindingsDropDown.setTranslateX(factor * 175);
-        keyBindingsDropDown.setOnAction(updateColorScheme -> {
-            ColorSettings.setActiveColorScheme(ColorSettings.getColorScheme(keyBindingsDropDown.getSelectionModel().getSelectedIndex()));
+        keyBindingsDropDown.setOnAction(updateKeyBinding -> {
+            KeyBindingSettings.setActiveKeyBinding(KeyBindingSettings.getKeyBinding(keyBindingsDropDown.getSelectionModel().getSelectedIndex()));
             repaint();
         });
 
@@ -117,7 +117,7 @@ public class SettingsMenuView extends SettingsTabView {
                         "-fx-text-fill: " + ColorScheme.toCssHexCode(ColorSettings.getActiveColorScheme().getBackground()) + ";" +
                         "-fx-background-color:" + ColorScheme.toCssHexCode(ColorSettings.getActiveColorScheme().getUI()) + ";"
         );
-        editKeyBindingsButton.setOnAction(createNewColoScheme -> Controller.viewEditColorSchemesMenu());
+        editKeyBindingsButton.setOnAction(createNewColoScheme -> Controller.viewEditKeyBindingsMenu());
 
         //Insert all
         super.gc.restore();

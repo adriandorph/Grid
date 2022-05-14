@@ -119,7 +119,7 @@ public class ColorSettings {
         saveColorSchemes();
     }
 
-    public static void updateActiveColorScheme(ColorScheme colorScheme, int index){//TODO: change to index
+    public static void updateActiveColorScheme(ColorScheme colorScheme, int index){
         customColorSchemes.set(index - colorSchemes.size(), colorScheme);
         ColorSettings.saveColorSchemes();
         ColorSettings.setActiveColorScheme(colorScheme);

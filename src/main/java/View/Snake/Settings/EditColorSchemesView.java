@@ -16,7 +16,7 @@ import javafx.scene.text.TextAlignment;
 import static Controller.Controller.factor;
 import static Controller.Controller.windowHeight;
 
-public class EditColorSchemesView extends SettingsTabView {
+public class EditColorSchemesView extends SettingsPageView {
     private TextField colorSchemeName;
 
     public EditColorSchemesView() {
@@ -24,10 +24,8 @@ public class EditColorSchemesView extends SettingsTabView {
         repaint();
     }
 
-    @Override
     public void repaint() {
-        super.repaint();
-        super.backButton.setOnAction(e -> Controller.viewSettingsMenu());
+        super.repaint(backButtonAction -> Controller.viewSettingsMenu());
 
         //Color scheme picker
         super.gc.setFill(ColorSettings.getActiveColorScheme().getUI());

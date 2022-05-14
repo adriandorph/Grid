@@ -55,7 +55,7 @@ public class KeyBindingSettings {
 
         } catch (IOException | ClassNotFoundException e){
             var activeKeyBinding = getKeyBindings().get(0);
-           KeyBindingSettings.setActiveKeyBinding(activeKeyBinding);
+            KeyBindingSettings.setActiveKeyBinding(activeKeyBinding);
             return activeKeyBinding;
         }
     }

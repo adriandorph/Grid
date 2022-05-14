@@ -9,6 +9,7 @@ import Saves.Settings.StartUpSettings;
 import View.*;
 import View.Snake.*;
 import View.Snake.Settings.EditColorSchemesView;
+import View.Snake.Settings.EditKeyBindingsView;
 import View.Snake.Settings.SettingsMenuView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -91,6 +92,17 @@ public class Controller extends Application{
             EditColorSchemesView ecsv = new EditColorSchemesView();
             StackPane pane = new StackPane();
             pane.getChildren().add(ecsv);
+            view.setRoot(pane);
+            stage.show();
+        });
+    }
+
+    public static void viewEditKeyBindingsMenu(){
+        InputController.SettingsInput();
+        Platform.runLater(() -> {
+            EditKeyBindingsView ekbv = new EditKeyBindingsView();
+            StackPane pane = new StackPane();
+            pane.getChildren().add(ekbv);
             view.setRoot(pane);
             stage.show();
         });
