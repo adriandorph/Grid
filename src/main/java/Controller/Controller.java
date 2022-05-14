@@ -7,6 +7,7 @@ import Model.Snake.SnakeGameOverAnimation;
 import Saves.Settings;
 import View.*;
 import View.Snake.*;
+import View.Snake.Settings.EditColorSchemesView;
 import View.Snake.Settings.SettingsMenuView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -78,6 +79,17 @@ public class Controller extends Application{
             SettingsMenuView smv = new SettingsMenuView();
             StackPane pane = new StackPane();
             pane.getChildren().add(smv);
+            view.setRoot(pane);
+            stage.show();
+        });
+    }
+
+    public static void viewEditColorSchemesMenu(){
+        InputController.SettingsInput();
+        Platform.runLater(() -> {
+            EditColorSchemesView ecsv = new EditColorSchemesView();
+            StackPane pane = new StackPane();
+            pane.getChildren().add(ecsv);
             view.setRoot(pane);
             stage.show();
         });

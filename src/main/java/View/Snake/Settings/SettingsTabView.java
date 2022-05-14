@@ -44,7 +44,5 @@ public class SettingsTabView extends StackPane {
         this.backButton.setPrefHeight(windowHeight * 0.05);
         this.backButton.setTranslateX(factor * -450);
         this.backButton.setTranslateY(factor * -300);
-        this.backButton.setOnAction(e -> Controller.viewMainMenu());
-
     }
 }
