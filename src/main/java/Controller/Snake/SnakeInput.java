@@ -1,6 +1,8 @@
 package Controller.Snake;
 import Controller.DirectionController;
 import Model.Direction;
+import Model.Snake.KeyBinding;
+import Saves.Settings.KeyBindingSettings;
 import javafx.scene.input.KeyCode;
 import Controller.Controller;
 
@@ -50,49 +52,51 @@ public class SnakeInput {
 
     public static void keyInput(KeyCode key){
         if(isActive()) {
+            KeyBinding keyBinding = KeyBindingSettings.getActiveKeyBinding();
 
+            if (key == keyBinding.getLeft()) {
+                finaldirection = DirectionController.getLeftDirection(finaldirection);
+                directions.add(finaldirection);
 
-            switch (key) {
-                case A -> {
-                    finaldirection = DirectionController.getLeftDirection(finaldirection);
+            } else if (key == keyBinding.getRight()) {
+                finaldirection = DirectionController.getRightDirection(finaldirection);
+                directions.add(finaldirection);
+
+            } else if (key == keyBinding.getWest()){
+                if(DirectionController.getOpposite(Direction.WEST) != finaldirection){
+                    finaldirection = Direction.WEST;
                     directions.add(finaldirection);
                 }
-                case D -> {
-                    finaldirection = DirectionController.getRightDirection(finaldirection);
+
+            } else if (key == keyBinding.getEast()){
+                if (DirectionController.getOpposite(Direction.EAST) != finaldirection) {
+                    finaldirection = Direction.EAST;
                     directions.add(finaldirection);
                 }
-                case LEFT -> {
-                    if(DirectionController.getOpposite(Direction.WEST) != finaldirection){
-                        finaldirection = Direction.WEST;
-                        directions.add(finaldirection);
-                    }
+
+            } else if (key == keyBinding.getNorth()){
+                if (DirectionController.getOpposite(Direction.NORTH) != finaldirection) {
+                    finaldirection = Direction.NORTH;
+                    directions.add(finaldirection);
                 }
-                case RIGHT -> {
-                    if (DirectionController.getOpposite(Direction.EAST) != finaldirection) {
-                        finaldirection = Direction.EAST;
-                        directions.add(finaldirection);
-                    }
+
+            } else if (key == keyBinding.getSouth()) {
+                if (DirectionController.getOpposite(Direction.SOUTH) != finaldirection) {
+                    finaldirection = Direction.SOUTH;
+                    directions.add(finaldirection);
                 }
-                case UP -> {
-                    if (DirectionController.getOpposite(Direction.NORTH) != finaldirection) {
-                        finaldirection = Direction.NORTH;
-                        directions.add(finaldirection);
-                    }
-                }
-                case DOWN -> {
-                    if (DirectionController.getOpposite(Direction.SOUTH) != finaldirection) {
-                        finaldirection = Direction.SOUTH;
-                        directions.add(finaldirection);
-                    }
-                }
-                case P -> togglePause();
-                case R -> Controller.viewNewSnakeGame();
-                case ESCAPE -> {
-                    pause();
-                    Controller.viewEscapeMenu();
-                }
+
+            } else if (key == keyBinding.getPause()) {
+                togglePause();
+
+            } else if (key == keyBinding.getRestart()) {
+                Controller.viewNewSnakeGame();
+
+            } else if (key == KeyCode.ESCAPE) {
+                pause();
+                Controller.viewEscapeMenu();
+
             }
         }
     }
-
 }
