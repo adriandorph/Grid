@@ -167,6 +167,21 @@ public class KeyBinding implements Serializable {
     }
 
     @Override
+    public boolean equals(Object other){
+        if (!(other instanceof KeyBinding)) return false;
+        KeyBinding o = (KeyBinding) other;
+        return this.name.equals(o.name)
+                && this.isCustomizable == o.isCustomizable
+                && this.north == o.north
+                && this.east == o.east
+                && this.south == o.south
+                && this.west == o.west
+                && this.left == o.left
+                && this.right == o.right
+                && this.pause == o.pause
+                && this.restart == o.restart;
+    }
+    @Override
     public String toString(){
         return this.name;
     }

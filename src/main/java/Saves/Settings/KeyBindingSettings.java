@@ -79,7 +79,17 @@ public class KeyBindingSettings {
                         KeyCode.D,
                         KeyCode.P,
                         KeyCode.R
-                        )
+                ),
+                new KeyBinding("WASD",
+                        KeyCode.W,
+                        KeyCode.D,
+                        KeyCode.S,
+                        KeyCode.A,
+                        KeyCode.LEFT,
+                        KeyCode.RIGHT,
+                        KeyCode.P,
+                        KeyCode.R
+                )
         }));
     }
 
