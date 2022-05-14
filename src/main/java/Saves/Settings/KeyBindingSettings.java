@@ -2,6 +2,8 @@ package Saves.Settings;
 
 import Model.Snake.KeyBinding;
 import Saves.FilePath;
+import javafx.scene.input.KeyCode;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -68,7 +70,16 @@ public class KeyBindingSettings {
                 //right
                 //pause
                 //restart
-
+                new KeyBinding("Classic",
+                        KeyCode.UP,
+                        KeyCode.RIGHT,
+                        KeyCode.DOWN,
+                        KeyCode.LEFT,
+                        KeyCode.A,
+                        KeyCode.D,
+                        KeyCode.P,
+                        KeyCode.R
+                        )
         }));
     }
 
