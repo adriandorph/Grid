@@ -3,12 +3,11 @@ package View.Snake;
 import Controller.Controller;
 import Controller.Snake.SnakeInput;
 import Model.Snake.ColorScheme;
-import Saves.Settings;
+import Saves.Settings.ColorSettings;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class EscapeMenuView extends StackPane {
@@ -16,7 +15,7 @@ public class EscapeMenuView extends StackPane {
         //Background
         Canvas background = new Canvas(Controller.windowWidth, Controller.windowHeight);
         GraphicsContext gc = background.getGraphicsContext2D();
-        gc.setFill(Settings.getActiveColorScheme().getBackground());
+        gc.setFill(ColorSettings.getActiveColorScheme().getBackground());
         gc.fillRect(0,0, Controller.windowWidth, Controller.windowHeight);
 
         //Continue button
@@ -27,8 +26,8 @@ public class EscapeMenuView extends StackPane {
         continuebutton.setFont(new Font(Controller.factor * 30));
         continuebutton.setStyle(
                 "-fx-font-size: "+Controller.factor * 30+"px;" +
-                        "-fx-text-fill: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";"+
-                        "-fx-background-color:" + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI()) +";"
+                        "-fx-text-fill: "+ ColorScheme.toCssHexCode(ColorSettings.getActiveColorScheme().getBackground()) + ";"+
+                        "-fx-background-color:" + ColorScheme.toCssHexCode(ColorSettings.getActiveColorScheme().getUI()) +";"
         );
         continuebutton.setOnAction(e -> {
             Controller.viewExistingSnakeGame();
@@ -43,8 +42,8 @@ public class EscapeMenuView extends StackPane {
         exit.setFont(new Font(Controller.factor * 30));
         exit.setStyle(
                 "-fx-font-size: "+Controller.factor * 30+"px;" +
-                        "-fx-text-fill: "+ ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getBackground()) + ";"+
-                        "-fx-background-color:" + ColorScheme.toCssHexCode(Settings.getActiveColorScheme().getUI()) +";"
+                        "-fx-text-fill: "+ ColorScheme.toCssHexCode(ColorSettings.getActiveColorScheme().getBackground()) + ";"+
+                        "-fx-background-color:" + ColorScheme.toCssHexCode(ColorSettings.getActiveColorScheme().getUI()) +";"
         );
         exit.setOnAction(e -> Controller.viewMainMenu());
 

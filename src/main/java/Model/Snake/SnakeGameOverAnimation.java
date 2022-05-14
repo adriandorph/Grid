@@ -3,7 +3,7 @@ package Model.Snake;
 import Controller.Updatable;
 import Model.Matrix;
 import Model.Position;
-import Saves.Settings;
+import Saves.Settings.ColorSettings;
 import View.RenderGrid;
 import View.Snake.SnakeGameOverInfo;
 
@@ -48,8 +48,8 @@ public class SnakeGameOverAnimation implements Updatable<SnakeGameOverInfo> {
             return new RenderGrid(squares);
         }
 
-        squares.setColor(endOfSnake.x, endOfSnake.y, Settings.getActiveColorScheme().getBackground());
-        squares.setColor(head.x, head.y, Settings.getActiveColorScheme().getHead());
+        squares.setColor(endOfSnake.x, endOfSnake.y, ColorSettings.getActiveColorScheme().getBackground());
+        squares.setColor(head.x, head.y, ColorSettings.getActiveColorScheme().getHead());
         return new RenderGrid(squares);
     }
 

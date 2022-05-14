@@ -1,6 +1,5 @@
 package Model;
 
-import Saves.Settings;
 import javafx.scene.paint.Color;
 
 public class ColorFunctions {

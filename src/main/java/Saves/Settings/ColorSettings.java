@@ -1,29 +1,28 @@
-package Saves;
+package Saves.Settings;
 
 import Model.Snake.ColorScheme;
 import Model.Snake.SerializableColorScheme;
+import Saves.FilePath;
 import javafx.scene.paint.Color;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Settings {
+public class ColorSettings {
     private static final List<ColorScheme> colorSchemes = generateDefaultColorSchemes();
     private static List<ColorScheme> customColorSchemes = readColorSchemes();
     private static ColorScheme activeColorScheme = readActiveColorScheme();
 
     public static void setActiveColorScheme(ColorScheme colorScheme) {
-        Settings.activeColorScheme = colorScheme;
+        ColorSettings.activeColorScheme = colorScheme;
         saveActiveColorScheme();
     }
 
     public static ColorScheme getActiveColorScheme(){
-        return Settings.activeColorScheme;
+        return ColorSettings.activeColorScheme;
     }
 
     public static void saveActiveColorScheme(){
@@ -57,7 +56,7 @@ public class Settings {
 
         } catch (IOException | ClassNotFoundException e){
             var activeColorScheme = getColorSchemes().get(0);
-            Settings.setActiveColorScheme(activeColorScheme);
+            ColorSettings.setActiveColorScheme(activeColorScheme);
             return activeColorScheme;
         }
     }
@@ -116,14 +115,14 @@ public class Settings {
     }
 
     public static void setColorSchemes(List<ColorScheme> colorSchemes){
-        Settings.customColorSchemes = colorSchemes;
+        ColorSettings.customColorSchemes = colorSchemes;
         saveColorSchemes();
     }
 
     public static void updateActiveColorScheme(ColorScheme colorScheme, int index){//TODO: change to index
         customColorSchemes.set(index - colorSchemes.size(), colorScheme);
-        Settings.saveColorSchemes();
-        Settings.setActiveColorScheme(colorScheme);
+        ColorSettings.saveColorSchemes();
+        ColorSettings.setActiveColorScheme(colorScheme);
     }
 
     public static void deleteColorScheme(int index){
@@ -187,7 +186,7 @@ public class Settings {
     }
 
     public static String getNewColorSchemeName(){
-        String prefix = "new colorscheme";
+        String prefix = "colorscheme";
         String newColorSchemeName = prefix + " " + 1;
         boolean available = false;
         int count = 1;
@@ -205,30 +204,4 @@ public class Settings {
         return newColorSchemeName;
 
     }
-
-
-    public static void saveStartUpInGame(boolean startUpInGame) {
-        try{
-            Path path = FilePath.getFilePath("startUpInGame");
-
-            String stringToBytes = ""+startUpInGame;
-
-            Files.write(path, stringToBytes.getBytes());
-        } catch (IOException ignored){}
-
-    }
-
-    public static boolean getStartUpInGame() {
-        try {
-            Path path = FilePath.getFilePath("startUpInGame");
-            BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
-            String line = reader.readLine();
-            reader.close();
-            return line.equals(""+true);
-        } catch (Exception ignored) {
-            return false;
-        }
-    }
-
-
 }

@@ -4,7 +4,8 @@ import Controller.Snake.*;
 import Model.Matrix;
 import Model.Snake.SnakeGame;
 import Model.Snake.SnakeGameOverAnimation;
-import Saves.Settings;
+import Saves.Settings.ColorSettings;
+import Saves.Settings.StartUpSettings;
 import View.*;
 import View.Snake.*;
 import View.Snake.Settings.EditColorSchemesView;
@@ -54,11 +55,11 @@ public class Controller extends Application{
         gridPane.getChildren().add(grid);
 
         view = new View(gridPane);
-        view.setFill(Settings.getActiveColorScheme().getBackground());
+        view.setFill(ColorSettings.getActiveColorScheme().getBackground());
         Controller.stage.setScene(view);
         sizingAfterNewScene();
         setKeyInput();
-        if(Settings.getStartUpInGame()) viewNewSnakeGame();
+        if(StartUpSettings.getStartUpInGame()) viewNewSnakeGame();
         else viewMainMenu();
     }
 
