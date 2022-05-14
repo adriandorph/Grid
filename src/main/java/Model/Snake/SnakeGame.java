@@ -11,7 +11,6 @@ import Saves.SnakeHighScoreFile;
 import View.RenderGrid;
 import View.Snake.SnakeRender;
 import View.Snake.SnakeUIInfo;
-import javafx.scene.paint.Color;
 import java.util.LinkedList;
 import java.util.Queue;
 

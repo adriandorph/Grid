@@ -1,15 +1,16 @@
-package View.Snake;
+package View.Snake.Settings;
 
 import Controller.Controller;
 import Model.ColorFunctions;
 import Model.Snake.ColorScheme;
 import Saves.Settings;
+import View.Snake.ArrowCanvas;
+import View.Snake.ImageButton;
 import javafx.collections.ObservableList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
@@ -17,37 +18,21 @@ import static Controller.Controller.factor;
 import static Controller.Controller.windowHeight;
 import static Controller.Controller.windowWidth;
 
-public class SettingsMenuView extends StackPane {
+public class SettingsMenuView extends SettingsTabView {
     TextField colorSchemeName;
     public SettingsMenuView(){
+        super("Settings");
         repaint();
     }
 
+    @Override
     public void repaint() {
-        Canvas background = new Canvas(windowWidth, windowHeight);
-        GraphicsContext gc = background.getGraphicsContext2D();
-        gc.setFill(Settings.getActiveColorScheme().getBackground());
-        gc.fillRect(0, 0, windowWidth, windowHeight);
-
-        //Settings text
-        gc.setFill(Settings.getActiveColorScheme().getUI());
-        gc.setTextAlign(TextAlignment.CENTER);
-        gc.setFont(new Font("Roboto", 80 * factor));
-        gc.fillText("Settings", background.getWidth() / 2, 90 * factor);
-
-        //BackArrowButton
-        ImageButton backButton = new ImageButton(ArrowCanvas.getArrowCanvas((int) (80 * factor), (int) (50 * factor)));
-        backButton.setPrefWidth(windowWidth * 0.075);
-        backButton.setPrefHeight(windowHeight * 0.05);
-        backButton.setTranslateX(factor * -450);
-        backButton.setTranslateY(factor * -300);
-        backButton.setOnAction(e -> Controller.viewMainMenu());
-
+        super.repaint();
         //startUpInGame
-        gc.setFill(Settings.getActiveColorScheme().getUI());
-        gc.setTextAlign(TextAlignment.LEFT);
-        gc.setFont(new Font("Roboto", 35 * factor));
-        gc.fillText("Startup in-game", 300 * factor, 175 * factor);
+        super.gc.setFill(Settings.getActiveColorScheme().getUI());
+        super.gc.setTextAlign(TextAlignment.LEFT);
+        super.gc.setFont(new Font("Roboto", 35 * factor));
+        super.gc.fillText("Startup in-game", 300 * factor, 175 * factor);
 
         CheckBox startUpInGameBox = new CheckBox();
         boolean tooDark = Settings.getActiveColorScheme().getUI().getBrightness() <= 0.2;
@@ -62,10 +47,10 @@ public class SettingsMenuView extends StackPane {
         startUpInGameBox.setTranslateX(factor * 300);
 
         //Color scheme picker
-        gc.setFill(Settings.getActiveColorScheme().getUI());
-        gc.setTextAlign(TextAlignment.LEFT);
-        gc.setFont(new Font("Roboto", 35 * factor));
-        gc.fillText("Color Scheme", 300 * factor, 225 * factor);
+        super.gc.setFill(Settings.getActiveColorScheme().getUI());
+        super.gc.setTextAlign(TextAlignment.LEFT);
+        super.gc.setFont(new Font("Roboto", 35 * factor));
+        super.gc.fillText("Color Scheme", 300 * factor, 225 * factor);
 
         ComboBox<ColorScheme> colorSchemesDropDown = new ComboBox<>();
         ObservableList<ColorScheme> colorSchemesList = colorSchemesDropDown.getItems();
@@ -126,10 +111,10 @@ public class SettingsMenuView extends StackPane {
                 repaint();
             });
             //Color scheme name
-            gc.setFill(Settings.getActiveColorScheme().getUI());
-            gc.setTextAlign(TextAlignment.LEFT);
-            gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("Color scheme name", 300 * factor, 350 * factor);
+            super.gc.setFill(Settings.getActiveColorScheme().getUI());
+            super.gc.setTextAlign(TextAlignment.LEFT);
+            super.gc.setFont(new Font("Roboto", 35 * factor));
+            super.gc.fillText("Color scheme name", 300 * factor, 350 * factor);
 
             colorSchemeName = new TextField(Settings.getActiveColorScheme().getName());
             colorSchemeName.setStyle("-fx-font-size: " + factor * 20 + "px;");
@@ -158,10 +143,10 @@ public class SettingsMenuView extends StackPane {
 
 
             //UI
-            gc.setFill(Settings.getActiveColorScheme().getUI());
-            gc.setTextAlign(TextAlignment.LEFT);
-            gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("UI color", 300 * factor, 400 * factor);
+            super.gc.setFill(Settings.getActiveColorScheme().getUI());
+            super.gc.setTextAlign(TextAlignment.LEFT);
+            super.gc.setFont(new Font("Roboto", 35 * factor));
+            super.gc.fillText("UI color", 300 * factor, 400 * factor);
 
             ColorPicker UIPicker = new ColorPicker(Settings.getActiveColorScheme().getUI());
             UIPicker.setTranslateX(factor * 230);
@@ -177,10 +162,10 @@ public class SettingsMenuView extends StackPane {
             });
 
             //Background
-            gc.setFill(Settings.getActiveColorScheme().getUI());
-            gc.setTextAlign(TextAlignment.LEFT);
-            gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("Background color", 300 * factor, 450 * factor);
+            super.gc.setFill(Settings.getActiveColorScheme().getUI());
+            super.gc.setTextAlign(TextAlignment.LEFT);
+            super.gc.setFont(new Font("Roboto", 35 * factor));
+            super.gc.fillText("Background color", 300 * factor, 450 * factor);
 
             ColorPicker backgroundPicker = new ColorPicker(Settings.getActiveColorScheme().getBackground());
             backgroundPicker.setTranslateX(factor * 230);
@@ -196,10 +181,10 @@ public class SettingsMenuView extends StackPane {
             });
 
             //Head
-            gc.setFill(Settings.getActiveColorScheme().getUI());
-            gc.setTextAlign(TextAlignment.LEFT);
-            gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("Snake head color", 300 * factor, 500 * factor);
+            super.gc.setFill(Settings.getActiveColorScheme().getUI());
+            super.gc.setTextAlign(TextAlignment.LEFT);
+            super.gc.setFont(new Font("Roboto", 35 * factor));
+            super.gc.fillText("Snake head color", 300 * factor, 500 * factor);
 
             ColorPicker headPicker = new ColorPicker(Settings.getActiveColorScheme().getHead());
             headPicker.setTranslateX(factor * 230);
@@ -215,10 +200,10 @@ public class SettingsMenuView extends StackPane {
             });
 
             //Tail
-            gc.setFill(Settings.getActiveColorScheme().getUI());
-            gc.setTextAlign(TextAlignment.LEFT);
-            gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("Snake tail color", 300 * factor, 550 * factor);
+            super.gc.setFill(Settings.getActiveColorScheme().getUI());
+            super.gc.setTextAlign(TextAlignment.LEFT);
+            super.gc.setFont(new Font("Roboto", 35 * factor));
+            super.gc.fillText("Snake tail color", 300 * factor, 550 * factor);
 
             ColorPicker tailPicker = new ColorPicker(Settings.getActiveColorScheme().getTail());
             tailPicker.setTranslateX(factor * 230);
@@ -234,10 +219,10 @@ public class SettingsMenuView extends StackPane {
             });
 
             //Bits
-            gc.setFill(Settings.getActiveColorScheme().getUI());
-            gc.setTextAlign(TextAlignment.LEFT);
-            gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("Food color", 300 * factor, 600 * factor);
+            super.gc.setFill(Settings.getActiveColorScheme().getUI());
+            super.gc.setTextAlign(TextAlignment.LEFT);
+            super.gc.setFont(new Font("Roboto", 35 * factor));
+            super.gc.fillText("Food color", 300 * factor, 600 * factor);
 
             ColorPicker bitsPicker = new ColorPicker(Settings.getActiveColorScheme().getBits());
             bitsPicker.setTranslateX(factor * 230);
@@ -253,10 +238,10 @@ public class SettingsMenuView extends StackPane {
             });
 
             //Info
-            gc.setFill(Settings.getActiveColorScheme().getUI());
-            gc.setTextAlign(TextAlignment.LEFT);
-            gc.setFont(new Font("Roboto", 35 * factor));
-            gc.fillText("Info text color", 300 * factor, 650 * factor);
+            super.gc.setFill(Settings.getActiveColorScheme().getUI());
+            super.gc.setTextAlign(TextAlignment.LEFT);
+            super.gc.setFont(new Font("Roboto", 35 * factor));
+            super.gc.fillText("Info text color", 300 * factor, 650 * factor);
 
             ColorPicker infoPicker = new ColorPicker(Settings.getActiveColorScheme().getInfo());
             infoPicker.setTranslateX(factor * 230);
@@ -282,11 +267,11 @@ public class SettingsMenuView extends StackPane {
         }
 
         //Insert all
-        gc.restore();
+        super.gc.restore();
         getChildren().clear();
-        getChildren().add(background);
+        getChildren().add(super.background);
         if (Settings.getActiveColorScheme().isCustomizable()) getChildren().add(customizeColorscheme);
-        getChildren().add(backButton);
+        getChildren().add(super.backButton);
         getChildren().add(startUpInGameBox);
         getChildren().add(colorSchemesDropDown);
         getChildren().add(createNewColorSchemeButton);

@@ -7,6 +7,7 @@ import Model.Snake.SnakeGameOverAnimation;
 import Saves.Settings;
 import View.*;
 import View.Snake.*;
+import View.Snake.Settings.SettingsMenuView;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
