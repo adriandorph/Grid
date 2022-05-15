@@ -6,10 +6,14 @@ import Model.Snake.KeyBinding;
 import Saves.Settings.ColorSettings;
 import Saves.Settings.KeyBindingSettings;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import Controller.Controller;
@@ -128,6 +132,60 @@ public class EditKeyBindingsView extends SettingsPageView{
             customizeKeyBinding.getChildren().add(keyBindingName);
         }
 
+        //Assignments
+        KeyBindSettingComponent north = new KeyBindSettingComponent(
+                "North",
+                KeyBindingSettings.getActiveKeyBinding().getNorth(),
+                e -> {},
+                KeyBindingSettings.getActiveKeyBinding().isCustomizable()
+        );
+        KeyBindSettingComponent south = new KeyBindSettingComponent(
+                "South",
+                KeyBindingSettings.getActiveKeyBinding().getSouth(),
+                e -> {},
+                KeyBindingSettings.getActiveKeyBinding().isCustomizable()
+        );
+        KeyBindSettingComponent east = new KeyBindSettingComponent(
+                "East",
+                KeyBindingSettings.getActiveKeyBinding().getEast(),
+                e -> {},
+                KeyBindingSettings.getActiveKeyBinding().isCustomizable()
+        );
+        KeyBindSettingComponent west = new KeyBindSettingComponent(
+                "West",
+                KeyBindingSettings.getActiveKeyBinding().getWest(),
+                e -> {},
+                KeyBindingSettings.getActiveKeyBinding().isCustomizable()
+        );
+        KeyBindSettingComponent left = new KeyBindSettingComponent(
+                "Turn left",
+                KeyBindingSettings.getActiveKeyBinding().getLeft(),
+                e -> {},
+                KeyBindingSettings.getActiveKeyBinding().isCustomizable()
+        );
+        KeyBindSettingComponent right = new KeyBindSettingComponent(
+                "Turn right",
+                KeyBindingSettings.getActiveKeyBinding().getRight(),
+                e -> {},
+                KeyBindingSettings.getActiveKeyBinding().isCustomizable()
+        );
+        KeyBindSettingComponent pause = new KeyBindSettingComponent(
+                "Pause",
+                KeyBindingSettings.getActiveKeyBinding().getPause(),
+                e -> {},
+                KeyBindingSettings.getActiveKeyBinding().isCustomizable()
+        );
+        KeyBindSettingComponent restart = new KeyBindSettingComponent(
+                "Restart game",
+                KeyBindingSettings.getActiveKeyBinding().getRestart(),
+                e -> {},
+                KeyBindingSettings.getActiveKeyBinding().isCustomizable()
+        );
+
+        VBox assignmentsVBox = new VBox();
+        assignmentsVBox.getChildren().addAll(north, south, east, west, left, right, pause, restart);
+        assignmentsVBox.setTranslateY(factor * 350);
+
         //Insert all
         super.gc.restore();
         getChildren().clear();
@@ -136,9 +194,6 @@ public class EditKeyBindingsView extends SettingsPageView{
         getChildren().add(super.backButton);
         getChildren().add(keyBindingsDropDown);
         getChildren().add(createNewKeyBindingButton);
-    }
-
-    private void drawBinding(String labelText, int x, int y){
-
+        getChildren().add(assignmentsVBox);
     }
 }
