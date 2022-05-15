@@ -12,11 +12,10 @@ public class ColorScheme implements Serializable {
     private Color head;
     private Color tail;
     private Color bits;
-    private Color info;
 
 
 
-    public ColorScheme(String name, boolean customizable, Color UI, Color background, Color head, Color tail, Color bits, Color info){
+    public ColorScheme(String name, boolean customizable, Color UI, Color background, Color head, Color tail, Color bits){
         this.name = name;
         this.customizable = customizable;
         this.UI = UI;
@@ -24,7 +23,6 @@ public class ColorScheme implements Serializable {
         this.head = head;
         this.tail = tail;
         this.bits = bits;
-        this.info = info;
     }
 
     /**
@@ -35,10 +33,9 @@ public class ColorScheme implements Serializable {
      * @param head
      * @param tail
      * @param bits
-     * @param info
      */
-    public ColorScheme(String name, Color UI, Color background, Color head, Color tail, Color bits, Color info) {
-        this(name, false, UI, background, head, tail, bits, info);
+    public ColorScheme(String name, Color UI, Color background, Color head, Color tail, Color bits) {
+        this(name, false, UI, background, head, tail, bits);
     }
 
     /**
@@ -47,7 +44,7 @@ public class ColorScheme implements Serializable {
      * @param name - the name of the new customizable colorScheme
      */
     public ColorScheme(ColorScheme colorScheme, String name){
-        this(name, true, colorScheme.getUI(),  colorScheme.getBackground(), colorScheme.getHead(), colorScheme.getTail(), colorScheme.getBits(), colorScheme.getInfo());
+        this(name, true, colorScheme.getUI(),  colorScheme.getBackground(), colorScheme.getHead(), colorScheme.getTail(), colorScheme.getBits());
     }
 
 
@@ -88,9 +85,6 @@ public class ColorScheme implements Serializable {
         return bits;
     }
 
-    public Color getInfo() {
-        return info;
-    }
 
     public void setName(String name) {
         if (customizable) this.name = name;
@@ -122,11 +116,6 @@ public class ColorScheme implements Serializable {
         else throw new RuntimeException("The colorscheme is not customizable");
     }
 
-    public void setInfo(Color info) {
-        if(customizable) this.info = info;
-        else throw new RuntimeException("The colorscheme is not customizable");
-    }
-
     @Override
     public String toString(){
         return name;
@@ -142,7 +131,6 @@ public class ColorScheme implements Serializable {
                 && this.background.equals(other.background)
                 && this.head.equals(other.head)
                 && this.tail.equals(other.tail)
-                && this.bits.equals(other.bits)
-                && this.info.equals(other.info);
+                && this.bits.equals(other.bits);
     }
 }

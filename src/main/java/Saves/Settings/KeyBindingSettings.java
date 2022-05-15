@@ -2,6 +2,8 @@ package Saves.Settings;
 
 import Model.Snake.KeyBinding;
 import Saves.FilePath;
+import javafx.scene.input.KeyCode;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -53,7 +55,7 @@ public class KeyBindingSettings {
 
         } catch (IOException | ClassNotFoundException e){
             var activeKeyBinding = getKeyBindings().get(0);
-           KeyBindingSettings.setActiveKeyBinding(activeKeyBinding);
+            KeyBindingSettings.setActiveKeyBinding(activeKeyBinding);
             return activeKeyBinding;
         }
     }
@@ -68,7 +70,26 @@ public class KeyBindingSettings {
                 //right
                 //pause
                 //restart
-
+                new KeyBinding("Classic (Arrows)",
+                        KeyCode.UP,
+                        KeyCode.RIGHT,
+                        KeyCode.DOWN,
+                        KeyCode.LEFT,
+                        KeyCode.A,
+                        KeyCode.D,
+                        KeyCode.P,
+                        KeyCode.R
+                ),
+                new KeyBinding("WASD",
+                        KeyCode.W,
+                        KeyCode.D,
+                        KeyCode.S,
+                        KeyCode.A,
+                        KeyCode.LEFT,
+                        KeyCode.RIGHT,
+                        KeyCode.P,
+                        KeyCode.R
+                )
         }));
     }
 

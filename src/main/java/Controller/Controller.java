@@ -2,6 +2,7 @@ package Controller;
 
 import Controller.Snake.*;
 import Model.Matrix;
+import Model.Snake.KeyBindOption;
 import Model.Snake.SnakeGame;
 import Model.Snake.SnakeGameOverAnimation;
 import Saves.Settings.ColorSettings;
@@ -9,6 +10,8 @@ import Saves.Settings.StartUpSettings;
 import View.*;
 import View.Snake.*;
 import View.Snake.Settings.EditColorSchemesView;
+import View.Snake.Settings.EditKeyBindingsView;
+import View.Snake.Settings.KeyChangePromptPage;
 import View.Snake.Settings.SettingsMenuView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -31,7 +34,7 @@ public class Controller extends Application{
     private static SnakeGameOverAnimationEngine snakeGameOverAnimationEngine;
     private static StackPane snakeGamePane;
     private static Grid grid;
-    private static View view;
+    public static View view;
 
 
     public static void main(String[] args) {
@@ -91,6 +94,29 @@ public class Controller extends Application{
             EditColorSchemesView ecsv = new EditColorSchemesView();
             StackPane pane = new StackPane();
             pane.getChildren().add(ecsv);
+            view.setRoot(pane);
+            stage.show();
+        });
+    }
+
+    public static void viewEditKeyBindingsMenu(){
+        InputController.SettingsInput();
+        Platform.runLater(() -> {
+            EditKeyBindingsView ekbv = new EditKeyBindingsView();
+            StackPane pane = new StackPane();
+            pane.getChildren().add(ekbv);
+            view.setRoot(pane);
+            stage.show();
+        });
+    }
+
+    public static void viewKeyBindAssignScene(String displayedAction, int keyBindIndex, KeyBindOption keyBind){
+        InputController.deactivateAll();
+        Platform.runLater(() -> {
+            KeyChangePromptPage kcpp = new KeyChangePromptPage(displayedAction);
+            InputController.keyBindChangeInput(keyBind, keyBindIndex, kcpp);
+            StackPane pane = new StackPane();
+            pane.getChildren().add(kcpp);
             view.setRoot(pane);
             stage.show();
         });
@@ -223,6 +249,7 @@ public class Controller extends Application{
             else if(MainMenuInput.isActive()) MainMenuInput.keyInput(key);
             else if(SnakeInput.isActive()) SnakeInput.keyInput(key);
             else if(SettingsInput.isActive()) SettingsInput.keyInput(key);
+            else if(KeyBindChangeInput.isActive()) KeyBindChangeInput.keyInput(key);
         });
     }
 }

@@ -1,9 +1,8 @@
 package Controller;
 
-import Controller.Snake.EscapeMenuInput;
-import Controller.Snake.MainMenuInput;
-import Controller.Snake.SettingsInput;
-import Controller.Snake.SnakeInput;
+import Controller.Snake.*;
+import Model.Snake.KeyBindOption;
+import View.Snake.Settings.KeyChangePromptPage;
 
 public class InputController {
     public static void deactivateAll(){
@@ -11,6 +10,7 @@ public class InputController {
         MainMenuInput.deactivate();
         EscapeMenuInput.deactivate();
         SettingsInput.deactivate();
+        KeyBindChangeInput.deactivate();
     }
 
     public static void SnakeInput(){
@@ -31,5 +31,10 @@ public class InputController {
     public static void SettingsInput(){
         deactivateAll();
         SettingsInput.activate();
+    }
+
+    public static void keyBindChangeInput(KeyBindOption keyBindChange, int keyBindingIndex, KeyChangePromptPage kap){
+        deactivateAll();
+        KeyBindChangeInput.activate(keyBindChange, keyBindingIndex, kap);
     }
 }

@@ -23,7 +23,7 @@ public class SnakeGame implements Updatable<SnakeRender> {
     private final Queue<Position> snake;
     private Position headPosition;
     private final RandomBits randomBits;
-    private Direction direction;
+    private static Direction direction;
     private int score;
     private int highscore;
     private final int originalHighscore;
@@ -145,7 +145,7 @@ public class SnakeGame implements Updatable<SnakeRender> {
         return score > originalHighscore;
     }
 
-    public boolean hasStarted(){
+    public static boolean hasStarted(){
         return direction != null;
     }
 

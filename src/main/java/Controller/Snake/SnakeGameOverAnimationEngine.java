@@ -3,8 +3,6 @@ package Controller.Snake;
 import Controller.Controller;
 import Controller.Engine;
 import Model.Snake.SnakeGameOverAnimation;
-import View.Grid;
-import View.RenderGrid;
 import View.Snake.SnakeGameOverInfo;
 import View.Snake.SnakeGameOverView;
 

@@ -16,7 +16,7 @@ import javafx.scene.text.TextAlignment;
 import static Controller.Controller.factor;
 import static Controller.Controller.windowHeight;
 
-public class EditColorSchemesView extends SettingsTabView {
+public class EditColorSchemesView extends SettingsPageView {
     private TextField colorSchemeName;
 
     public EditColorSchemesView() {
@@ -24,10 +24,8 @@ public class EditColorSchemesView extends SettingsTabView {
         repaint();
     }
 
-    @Override
     public void repaint() {
-        super.repaint();
-        super.backButton.setOnAction(e -> Controller.viewSettingsMenu());
+        super.repaint(backButtonAction -> Controller.viewSettingsMenu());
 
         //Color scheme picker
         super.gc.setFill(ColorSettings.getActiveColorScheme().getUI());
@@ -219,25 +217,6 @@ public class EditColorSchemesView extends SettingsTabView {
                 repaint();
             });
 
-            //Info
-            super.gc.setFill(ColorSettings.getActiveColorScheme().getUI());
-            super.gc.setTextAlign(TextAlignment.LEFT);
-            super.gc.setFont(new Font("Roboto", 35 * factor));
-            super.gc.fillText("Info text color", 300 * factor, 600 * factor);
-
-            ColorPicker infoPicker = new ColorPicker(ColorSettings.getActiveColorScheme().getInfo());
-            infoPicker.setTranslateX(factor * 230);
-            infoPicker.setTranslateY(factor * 230);
-            infoPicker.setStyle("-fx-font-size: " + factor * 20 + "px; -fx-color-rect-width: " + 20 * factor + "px; -fx-color-rect-height: " + 20 * factor + "px;");
-            infoPicker.setPrefWidth(187.5 * factor);
-            infoPicker.setPrefHeight(40 * factor);
-            infoPicker.setOnAction(updateInfoColor -> {
-                ColorScheme colorScheme = ColorSettings.getActiveColorScheme();
-                colorScheme.setInfo(infoPicker.getValue());
-                ColorSettings.updateActiveColorScheme(colorScheme, colorSchemesDropDown.getSelectionModel().getSelectedIndex());
-                repaint();
-            });
-
             customizeColorscheme.getChildren().add(deleteColorScheme);
             customizeColorscheme.getChildren().add(colorSchemeName);
             customizeColorscheme.getChildren().add(UIPicker);
@@ -245,7 +224,6 @@ public class EditColorSchemesView extends SettingsTabView {
             customizeColorscheme.getChildren().add(headPicker);
             customizeColorscheme.getChildren().add(tailPicker);
             customizeColorscheme.getChildren().add(bitsPicker);
-            customizeColorscheme.getChildren().add(infoPicker);
 
         }
 

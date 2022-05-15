@@ -1,8 +1,12 @@
 package View.Snake.Settings;
 
+import Controller.Controller;
 import Saves.Settings.ColorSettings;
 import View.Snake.ArrowCanvas;
 import View.Snake.ImageButton;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -13,13 +17,13 @@ import javafx.scene.text.TextAlignment;
 import static Controller.Controller.*;
 import static Controller.Controller.factor;
 
-public class SettingsTabView extends StackPane {
+public class SettingsPageView extends StackPane {
 
     protected String title;
     protected Canvas background;
     protected GraphicsContext gc;
     protected Button backButton;
-    public SettingsTabView(String title){
+    public SettingsPageView(String title){
         this.title = title;
         this.background = new Canvas(windowWidth, windowHeight);
         this.gc = background.getGraphicsContext2D();
@@ -27,7 +31,7 @@ public class SettingsTabView extends StackPane {
 
     }
 
-    public void repaint(){
+    public void repaint(EventHandler<ActionEvent> backButtonAction){
         this.gc.setFill(ColorSettings.getActiveColorScheme().getBackground());
         this.gc.fillRect(0, 0, windowWidth, windowHeight);
 
@@ -43,5 +47,6 @@ public class SettingsTabView extends StackPane {
         this.backButton.setPrefHeight(windowHeight * 0.05);
         this.backButton.setTranslateX(factor * -450);
         this.backButton.setTranslateY(factor * -300);
+        this.backButton.setOnAction(backButtonAction);
     }
 }

@@ -8,6 +8,7 @@ public class KeyBinding implements Serializable {
     private static final KeyCode[] illegalKeys = {KeyCode.ESCAPE};
 
     private String name;
+    private final boolean isCustomizable;
     private KeyCode north;
     private KeyCode east;
     private KeyCode south;
@@ -17,7 +18,9 @@ public class KeyBinding implements Serializable {
     private KeyCode pause;
     private KeyCode restart;
 
-    public KeyBinding(String name, KeyCode north, KeyCode east, KeyCode south, KeyCode west, KeyCode left, KeyCode right, KeyCode pause, KeyCode restart) {
+    public KeyBinding(String name, boolean isCustomizable, KeyCode north, KeyCode east, KeyCode south, KeyCode west, KeyCode left, KeyCode right, KeyCode pause, KeyCode restart) {
+        this.name = name;
+        this.isCustomizable = isCustomizable;
         this.north = north;
         this.east = east;
         this.south = south;
@@ -28,8 +31,48 @@ public class KeyBinding implements Serializable {
         this.restart = restart;
     }
 
+    /**
+     * Creates a KeyBinding that is not customizable
+     */
+    public KeyBinding(String name, KeyCode north, KeyCode east, KeyCode south, KeyCode west, KeyCode left, KeyCode right, KeyCode pause, KeyCode restart){
+        this(name,
+                false,
+                north,
+                east,
+                south,
+                west,
+                left,
+                right,
+                pause,
+                restart
+        );
+    }
+
+    /**
+     * Creates a new KeyBinding that is customizable
+     * @param defaultBinding - the KeyBinding that is copied
+     * @param name - the name of the new customizable KeyBinding
+     */
+    public KeyBinding(KeyBinding defaultBinding, String name) {
+        this(name,
+                true,
+                defaultBinding.getNorth(),
+                defaultBinding.getEast(),
+                defaultBinding.getSouth(),
+                defaultBinding.getWest(),
+                defaultBinding.getLeft(),
+                defaultBinding.getRight(),
+                defaultBinding.getPause(),
+                defaultBinding.getRestart()
+        );
+    }
+
     public String getName(){
         return name;
+    }
+
+    public boolean isCustomizable() {
+        return isCustomizable;
     }
 
     public KeyCode getNorth() {
@@ -65,52 +108,93 @@ public class KeyBinding implements Serializable {
     }
 
     public void setName(String name){
-        this.name = name;
+        if(isCustomizable) this.name = name;
+        else throw new RuntimeException("The KeyBinding is not customizable");
     }
 
     public void setNorth(KeyCode north) throws IllegalKeyException {
         validateKey(north, illegalKeys);
-        this.north = north;
+        if (isCustomizable) this.north = north;
+        else throw new RuntimeException("The KeyBinding is not customizable");
     }
 
     public void setEast(KeyCode east) throws IllegalKeyException {
         validateKey(east, illegalKeys);
-        this.east = east;
+        if(isCustomizable)this.east = east;
+        else throw new RuntimeException("The KeyBinding is not customizable");
     }
 
     public void setSouth(KeyCode south) throws IllegalKeyException {
         validateKey(south, illegalKeys);
-        this.south = south;
+        if(isCustomizable)this.south = south;
+        else throw new RuntimeException("The KeyBinding is not customizable");
     }
 
     public void setWest(KeyCode west) throws IllegalKeyException {
         validateKey(west, illegalKeys);
-        this.west = west;
+        if(isCustomizable)this.west = west;
+        else throw new RuntimeException("The KeyBinding is not customizable");
     }
 
     public void setLeft(KeyCode left) throws IllegalKeyException {
         validateKey(left, illegalKeys);
-        this.left = left;
+        if(isCustomizable)this.left = left;
+        else throw new RuntimeException("The KeyBinding is not customizable");
     }
 
     public void setRight(KeyCode right) throws IllegalKeyException {
         validateKey(right, illegalKeys);
-        this.right = right;
+        if(isCustomizable)this.right = right;
+        else throw new RuntimeException("The KeyBinding is not customizable");
     }
 
     public void setPause(KeyCode pause) throws IllegalKeyException {
         validateKey(pause, illegalKeys);
-        this.pause = pause;
+        if(isCustomizable)this.pause = pause;
+        else throw new RuntimeException("The KeyBinding is not customizable");
     }
 
     public void setRestart(KeyCode restart) throws IllegalKeyException {
         validateKey(restart, illegalKeys);
-        this.restart = restart;
+        if(isCustomizable)this.restart = restart;
+        else throw new RuntimeException("The KeyBinding is not customizable");
     }
 
-    public static void validateKey(KeyCode key, KeyCode[] illegalKeys) throws IllegalKeyException {
+    private void validateKey(KeyCode key, KeyCode[] illegalKeys) throws IllegalKeyException {
         for (KeyCode illegalKey: illegalKeys){
             if (key == illegalKey) throw new IllegalKeyException(key);
         }
+        removeDuplicate(key);
+    }
+
+    private void removeDuplicate(KeyCode key) {
+        if(north == key) north = null;
+        if(south == key) south = null;
+        if(east == key) east = null;
+        if(west == key) west = null;
+        if(left == key) left = null;
+        if(right == key) right = null;
+        if(pause == key) pause = null;
+        if(restart == key) restart = null;
+    }
+
+    @Override
+    public boolean equals(Object other){
+        if (!(other instanceof KeyBinding)) return false;
+        KeyBinding o = (KeyBinding) other;
+        return this.name.equals(o.name)
+                && this.isCustomizable == o.isCustomizable
+                && this.north == o.north
+                && this.east == o.east
+                && this.south == o.south
+                && this.west == o.west
+                && this.left == o.left
+                && this.right == o.right
+                && this.pause == o.pause
+                && this.restart == o.restart;
+    }
+    @Override
+    public String toString(){
+        return this.name;
     }
 }
