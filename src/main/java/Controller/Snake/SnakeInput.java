@@ -2,6 +2,7 @@ package Controller.Snake;
 import Controller.DirectionController;
 import Model.Direction;
 import Model.Snake.KeyBinding;
+import Model.Snake.SnakeGame;
 import Saves.Settings.KeyBindingSettings;
 import javafx.scene.input.KeyCode;
 import Controller.Controller;
@@ -55,33 +56,33 @@ public class SnakeInput {
             KeyBinding keyBinding = KeyBindingSettings.getActiveKeyBinding();
 
             if (key == keyBinding.getLeft()) {
-                finaldirection = DirectionController.getLeftDirection(finaldirection);
+                finaldirection = DirectionController.getLeftDirection(finaldirection, SnakeGame.hasStarted());
                 directions.add(finaldirection);
 
             } else if (key == keyBinding.getRight()) {
-                finaldirection = DirectionController.getRightDirection(finaldirection);
+                finaldirection = DirectionController.getRightDirection(finaldirection, SnakeGame.hasStarted());
                 directions.add(finaldirection);
 
             } else if (key == keyBinding.getWest()){
-                if(DirectionController.getOpposite(Direction.WEST) != finaldirection){
+                if((DirectionController.getOpposite(Direction.WEST) != finaldirection) || !SnakeGame.hasStarted()){
                     finaldirection = Direction.WEST;
                     directions.add(finaldirection);
                 }
 
             } else if (key == keyBinding.getEast()){
-                if (DirectionController.getOpposite(Direction.EAST) != finaldirection) {
+                if ((DirectionController.getOpposite(Direction.EAST) != finaldirection) || !SnakeGame.hasStarted()) {
                     finaldirection = Direction.EAST;
                     directions.add(finaldirection);
                 }
 
             } else if (key == keyBinding.getNorth()){
-                if (DirectionController.getOpposite(Direction.NORTH) != finaldirection) {
+                if ((DirectionController.getOpposite(Direction.NORTH) != finaldirection) || !SnakeGame.hasStarted()) {
                     finaldirection = Direction.NORTH;
                     directions.add(finaldirection);
                 }
 
             } else if (key == keyBinding.getSouth()) {
-                if (DirectionController.getOpposite(Direction.SOUTH) != finaldirection) {
+                if ((DirectionController.getOpposite(Direction.SOUTH) != finaldirection) || !SnakeGame.hasStarted()) {
                     finaldirection = Direction.SOUTH;
                     directions.add(finaldirection);
                 }
