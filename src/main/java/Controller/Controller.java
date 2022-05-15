@@ -11,7 +11,7 @@ import View.*;
 import View.Snake.*;
 import View.Snake.Settings.EditColorSchemesView;
 import View.Snake.Settings.EditKeyBindingsView;
-import View.Snake.Settings.KeyAssignmentPane;
+import View.Snake.Settings.KeyChangePromptPage;
 import View.Snake.Settings.SettingsMenuView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -21,8 +21,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import java.util.Stack;
 
 public class Controller extends Application{
 
@@ -115,10 +113,10 @@ public class Controller extends Application{
     public static void viewKeyBindAssignScene(String displayedAction, int keyBindIndex, KeyBindOption keyBind){
         InputController.deactivateAll();
         Platform.runLater(() -> {
-            KeyAssignmentPane kap = new KeyAssignmentPane(displayedAction);
-            InputController.keyBindChangeInput(keyBind, keyBindIndex, kap);
+            KeyChangePromptPage kcpp = new KeyChangePromptPage(displayedAction);
+            InputController.keyBindChangeInput(keyBind, keyBindIndex, kcpp);
             StackPane pane = new StackPane();
-            pane.getChildren().add(kap);
+            pane.getChildren().add(kcpp);
             view.setRoot(pane);
             stage.show();
         });

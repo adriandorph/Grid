@@ -22,6 +22,9 @@ public class EscapeMenuInput {
         if(isActive()){
             if (key == KeyCode.ESCAPE) {
                 Controller.viewMainMenu();
+            } else if (key == KeyCode.ENTER) {
+                Controller.viewExistingSnakeGame();
+                SnakeInput.unpause();
             }
         }
     }

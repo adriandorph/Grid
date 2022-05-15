@@ -2,7 +2,7 @@ package Controller;
 
 import Controller.Snake.*;
 import Model.Snake.KeyBindOption;
-import View.Snake.Settings.KeyAssignmentPane;
+import View.Snake.Settings.KeyChangePromptPage;
 
 public class InputController {
     public static void deactivateAll(){
@@ -33,7 +33,7 @@ public class InputController {
         SettingsInput.activate();
     }
 
-    public static void keyBindChangeInput(KeyBindOption keyBindChange, int keyBindingIndex, KeyAssignmentPane kap){
+    public static void keyBindChangeInput(KeyBindOption keyBindChange, int keyBindingIndex, KeyChangePromptPage kap){
         deactivateAll();
         KeyBindChangeInput.activate(keyBindChange, keyBindingIndex, kap);
     }

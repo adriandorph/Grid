@@ -160,10 +160,22 @@ public class KeyBinding implements Serializable {
         else throw new RuntimeException("The KeyBinding is not customizable");
     }
 
-    public static void validateKey(KeyCode key, KeyCode[] illegalKeys) throws IllegalKeyException {
+    private void validateKey(KeyCode key, KeyCode[] illegalKeys) throws IllegalKeyException {
         for (KeyCode illegalKey: illegalKeys){
             if (key == illegalKey) throw new IllegalKeyException(key);
         }
+        removeDuplicate(key);
+    }
+
+    private void removeDuplicate(KeyCode key) {
+        if(north == key) north = null;
+        if(south == key) south = null;
+        if(east == key) east = null;
+        if(west == key) west = null;
+        if(left == key) left = null;
+        if(right == key) right = null;
+        if(pause == key) pause = null;
+        if(restart == key) restart = null;
     }
 
     @Override

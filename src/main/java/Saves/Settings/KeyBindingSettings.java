@@ -70,7 +70,7 @@ public class KeyBindingSettings {
                 //right
                 //pause
                 //restart
-                new KeyBinding("Classic",
+                new KeyBinding("Classic (Arrows)",
                         KeyCode.UP,
                         KeyCode.RIGHT,
                         KeyCode.DOWN,

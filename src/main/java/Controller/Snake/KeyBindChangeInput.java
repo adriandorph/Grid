@@ -5,7 +5,7 @@ import Model.Snake.IllegalKeyException;
 import Model.Snake.KeyBindOption;
 import Model.Snake.KeyBinding;
 import Saves.Settings.KeyBindingSettings;
-import View.Snake.Settings.KeyAssignmentPane;
+import View.Snake.Settings.KeyChangePromptPage;
 import javafx.scene.input.KeyCode;
 
 public class KeyBindChangeInput {
@@ -13,12 +13,12 @@ public class KeyBindChangeInput {
     private static KeyBindOption keyBind;
     private static int keyBindingIndex;
 
-    private static KeyAssignmentPane kap;
+    private static KeyChangePromptPage kap;
     public static boolean isActive() {
         return isActive;
     }
 
-    public static void activate(KeyBindOption keyBind, int keyBindingIndex, KeyAssignmentPane kap) {
+    public static void activate(KeyBindOption keyBind, int keyBindingIndex, KeyChangePromptPage kap) {
         isActive = true;
         KeyBindChangeInput.keyBind = keyBind;
         KeyBindChangeInput.keyBindingIndex = keyBindingIndex;

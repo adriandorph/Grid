@@ -21,7 +21,7 @@ public class SnakeGameOverView extends StackPane implements Renderable<SnakeGame
 
     @Override
     public void render(SnakeGameOverInfo info) {
-        this.grid.render(info.getRenderGrid());
-        this.scoreCanvas.render(info.getScore());
+        this.grid.render(info.renderGrid());
+        this.scoreCanvas.render(info.score());
     }
 }

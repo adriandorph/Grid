@@ -2,7 +2,6 @@ package View.Snake.Settings;
 
 import Model.ColorFunctions;
 import Model.Snake.ColorScheme;
-import Model.Snake.IllegalKeyException;
 import Model.Snake.KeyBindOption;
 import Model.Snake.KeyBinding;
 import Saves.Settings.ColorSettings;
@@ -152,7 +151,7 @@ public class EditKeyBindingsView extends SettingsPageView{
         KeyBindSettingComponent east = new KeyBindSettingComponent(
                 "East",
                 KeyBindingSettings.getActiveKeyBinding().getEast(),
-                event -> Controller.viewKeyBindAssignScene("EAST", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.EAST),
+                event -> Controller.viewKeyBindAssignScene("East", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.EAST),
                 KeyBindingSettings.getActiveKeyBinding().isCustomizable()
         );
         KeyBindSettingComponent west = new KeyBindSettingComponent(
@@ -164,13 +163,13 @@ public class EditKeyBindingsView extends SettingsPageView{
         KeyBindSettingComponent left = new KeyBindSettingComponent(
                 "Turn left",
                 KeyBindingSettings.getActiveKeyBinding().getLeft(),
-                event -> Controller.viewKeyBindAssignScene("Left", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.LEFT),
+                event -> Controller.viewKeyBindAssignScene("Turn left", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.LEFT),
                 KeyBindingSettings.getActiveKeyBinding().isCustomizable()
         );
         KeyBindSettingComponent right = new KeyBindSettingComponent(
                 "Turn right",
                 KeyBindingSettings.getActiveKeyBinding().getRight(),
-                event -> Controller.viewKeyBindAssignScene("Right", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.RIGHT),
+                event -> Controller.viewKeyBindAssignScene("Turn right", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.RIGHT),
                 KeyBindingSettings.getActiveKeyBinding().isCustomizable()
         );
         KeyBindSettingComponent pause = new KeyBindSettingComponent(

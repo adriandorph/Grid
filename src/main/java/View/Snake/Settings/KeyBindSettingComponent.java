@@ -28,7 +28,8 @@ public class KeyBindSettingComponent extends StackPane {
 
         gc.setFont(new Font("Roboto", 25));
         gc.setTextAlign(TextAlignment.RIGHT);
-        gc.fillText(currentBinding.toString(), isCustomizable? factor * 550 : factor * 660, 30);
+        String currentBindingText = currentBinding == null? "Not Assigned" : currentBinding.toString();
+        gc.fillText(currentBindingText, isCustomizable? factor * 550 : factor * 660, 30);
         canvasForText.setTranslateX(factor * 10);
 
         gc.save();
