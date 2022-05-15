@@ -2,13 +2,12 @@ package View.Snake.Settings;
 
 import Model.ColorFunctions;
 import Model.Snake.ColorScheme;
+import Model.Snake.IllegalKeyException;
+import Model.Snake.KeyBindOption;
 import Model.Snake.KeyBinding;
 import Saves.Settings.ColorSettings;
 import Saves.Settings.KeyBindingSettings;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -16,13 +15,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-import Controller.Controller;
+import Controller.*;
 
 import static Controller.Controller.factor;
 import static Controller.Controller.windowHeight;
 
 public class EditKeyBindingsView extends SettingsPageView{
-
     private TextField keyBindingName;
 
     public EditKeyBindingsView() {
@@ -130,60 +128,66 @@ public class EditKeyBindingsView extends SettingsPageView{
 
             customizeKeyBinding.getChildren().add(deleteKeyBinding);
             customizeKeyBinding.getChildren().add(keyBindingName);
+        } else {
+            //KeyBinding name
+            super.gc.setFill(ColorSettings.getActiveColorScheme().getUI());
+            super.gc.setTextAlign(TextAlignment.LEFT);
+            super.gc.setFont(new Font("Roboto", 35 * factor));
+            super.gc.fillText("Key Assignments", 300 * factor, 300 * factor);
         }
 
         //Assignments
         KeyBindSettingComponent north = new KeyBindSettingComponent(
                 "North",
                 KeyBindingSettings.getActiveKeyBinding().getNorth(),
-                e -> {},
+                event -> Controller.viewKeyBindAssignScene("North", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.NORTH),
                 KeyBindingSettings.getActiveKeyBinding().isCustomizable()
         );
         KeyBindSettingComponent south = new KeyBindSettingComponent(
                 "South",
                 KeyBindingSettings.getActiveKeyBinding().getSouth(),
-                e -> {},
+                event -> Controller.viewKeyBindAssignScene("South", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.SOUTH),
                 KeyBindingSettings.getActiveKeyBinding().isCustomizable()
         );
         KeyBindSettingComponent east = new KeyBindSettingComponent(
                 "East",
                 KeyBindingSettings.getActiveKeyBinding().getEast(),
-                e -> {},
+                event -> Controller.viewKeyBindAssignScene("EAST", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.EAST),
                 KeyBindingSettings.getActiveKeyBinding().isCustomizable()
         );
         KeyBindSettingComponent west = new KeyBindSettingComponent(
                 "West",
                 KeyBindingSettings.getActiveKeyBinding().getWest(),
-                e -> {},
+                event -> Controller.viewKeyBindAssignScene("West", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.WEST),
                 KeyBindingSettings.getActiveKeyBinding().isCustomizable()
         );
         KeyBindSettingComponent left = new KeyBindSettingComponent(
                 "Turn left",
                 KeyBindingSettings.getActiveKeyBinding().getLeft(),
-                e -> {},
+                event -> Controller.viewKeyBindAssignScene("Left", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.LEFT),
                 KeyBindingSettings.getActiveKeyBinding().isCustomizable()
         );
         KeyBindSettingComponent right = new KeyBindSettingComponent(
                 "Turn right",
                 KeyBindingSettings.getActiveKeyBinding().getRight(),
-                e -> {},
+                event -> Controller.viewKeyBindAssignScene("Right", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.RIGHT),
                 KeyBindingSettings.getActiveKeyBinding().isCustomizable()
         );
         KeyBindSettingComponent pause = new KeyBindSettingComponent(
                 "Pause",
                 KeyBindingSettings.getActiveKeyBinding().getPause(),
-                e -> {},
+                event -> Controller.viewKeyBindAssignScene("Pause", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.PAUSE),
                 KeyBindingSettings.getActiveKeyBinding().isCustomizable()
         );
         KeyBindSettingComponent restart = new KeyBindSettingComponent(
                 "Restart game",
                 KeyBindingSettings.getActiveKeyBinding().getRestart(),
-                e -> {},
+                event -> Controller.viewKeyBindAssignScene("Restart", keyBindingsDropDown.getSelectionModel().getSelectedIndex(), KeyBindOption.RESTART),
                 KeyBindingSettings.getActiveKeyBinding().isCustomizable()
         );
 
         VBox assignmentsVBox = new VBox();
-        assignmentsVBox.getChildren().addAll(north, south, east, west, left, right, pause, restart);
+        assignmentsVBox.getChildren().addAll(north, west, south, east, left, right, pause, restart);
         assignmentsVBox.setTranslateY(factor * 350);
 
         //Insert all

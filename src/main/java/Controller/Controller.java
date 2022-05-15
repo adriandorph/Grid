@@ -2,6 +2,7 @@ package Controller;
 
 import Controller.Snake.*;
 import Model.Matrix;
+import Model.Snake.KeyBindOption;
 import Model.Snake.SnakeGame;
 import Model.Snake.SnakeGameOverAnimation;
 import Saves.Settings.ColorSettings;
@@ -10,6 +11,7 @@ import View.*;
 import View.Snake.*;
 import View.Snake.Settings.EditColorSchemesView;
 import View.Snake.Settings.EditKeyBindingsView;
+import View.Snake.Settings.KeyAssignmentPane;
 import View.Snake.Settings.SettingsMenuView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -19,6 +21,8 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.util.Stack;
 
 public class Controller extends Application{
 
@@ -32,7 +36,7 @@ public class Controller extends Application{
     private static SnakeGameOverAnimationEngine snakeGameOverAnimationEngine;
     private static StackPane snakeGamePane;
     private static Grid grid;
-    private static View view;
+    public static View view;
 
 
     public static void main(String[] args) {
@@ -103,6 +107,18 @@ public class Controller extends Application{
             EditKeyBindingsView ekbv = new EditKeyBindingsView();
             StackPane pane = new StackPane();
             pane.getChildren().add(ekbv);
+            view.setRoot(pane);
+            stage.show();
+        });
+    }
+
+    public static void viewKeyBindAssignScene(String displayedAction, int keyBindIndex, KeyBindOption keyBind){
+        InputController.deactivateAll();
+        Platform.runLater(() -> {
+            KeyAssignmentPane kap = new KeyAssignmentPane(displayedAction);
+            InputController.keyBindChangeInput(keyBind, keyBindIndex, kap);
+            StackPane pane = new StackPane();
+            pane.getChildren().add(kap);
             view.setRoot(pane);
             stage.show();
         });
@@ -235,6 +251,7 @@ public class Controller extends Application{
             else if(MainMenuInput.isActive()) MainMenuInput.keyInput(key);
             else if(SnakeInput.isActive()) SnakeInput.keyInput(key);
             else if(SettingsInput.isActive()) SettingsInput.keyInput(key);
+            else if(KeyBindChangeInput.isActive()) KeyBindChangeInput.keyInput(key);
         });
     }
 }
