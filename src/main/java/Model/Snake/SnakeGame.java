@@ -128,7 +128,7 @@ public class SnakeGame implements Updatable<SnakeRender> {
         squares.setColor(headPosition.x, headPosition.y, ColorFunctions.opacityOnBackground(ColorSettings.getActiveColorScheme().getHead(), ColorSettings.getActiveColorScheme().getBackground(), getOpacity()));
 
         for(Position pos: randomBits.getBits()){
-            squares.setColor(pos.x, pos.y, shouldDisplayStartHelp()? ColorFunctions.opacityOnBackground(ColorSettings.getActiveColorScheme().getBits(), ColorSettings.getActiveColorScheme().getBackground(), 0.5): ColorSettings.getActiveColorScheme().getBits());
+            squares.setColor(pos.x, pos.y, ColorSettings.getActiveColorScheme().getBits());
         }
         return new RenderGrid(squares);
     }
@@ -154,11 +154,7 @@ public class SnakeGame implements Updatable<SnakeRender> {
         else return (Math.cos(beforeStartSeconds * 10) + 1) / 8 * 3 + 0.25;
     }
 
-    private boolean shouldDisplayStartHelp(){
-        return !hasStarted() && beforeStartSeconds > 5;
-    }
-
     public SnakeUIInfo getSnakeUIInfo(){
-        return new SnakeUIInfo(score, originalHighscore, shouldDisplayStartHelp());
+        return new SnakeUIInfo(score, originalHighscore);
     }
 }
