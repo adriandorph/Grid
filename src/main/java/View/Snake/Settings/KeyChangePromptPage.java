@@ -44,15 +44,15 @@ public class KeyChangePromptPage extends StackPane {
         keyBindActionLabel.setStyle(
                 "-fx-text-fill: " + ColorScheme.toCssHexCode(ColorSettings.getActiveColorScheme().getUI()) + ";"
         );
-        keyBindActionLabel.setFont(new Font("Roboto", 80));
-        keyBindActionLabel.setTranslateY(-100);
+        keyBindActionLabel.setFont(new Font("Roboto", 80 * Controller.factor));
+        keyBindActionLabel.setTranslateY(-100 * Controller.factor);
 
         Label textLabel = new Label(text);
         textLabel.setTextAlignment(TextAlignment.CENTER);
         textLabel.setStyle(
                 "-fx-text-fill: " + ColorScheme.toCssHexCode(ColorSettings.getActiveColorScheme().getUI()) + ";"
         );
-        textLabel.setFont(new Font("Roboto", 50));
+        textLabel.setFont(new Font("Roboto", 50 * Controller.factor));
         getChildren().add(keyBindActionLabel);
         getChildren().add(textLabel);
     }

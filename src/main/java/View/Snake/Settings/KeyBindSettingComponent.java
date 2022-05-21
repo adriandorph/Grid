@@ -22,14 +22,14 @@ public class KeyBindSettingComponent extends StackPane {
         Canvas canvasForText = new Canvas(factor * 700, factor * 40);
         GraphicsContext gc = canvasForText.getGraphicsContext2D();
         gc.setFill(ColorSettings.getActiveColorScheme().getUI());
-        gc.setFont(new Font("Roboto", 30));
+        gc.setFont(new Font("Roboto", 30 * factor));
         gc.setTextAlign(TextAlignment.LEFT);
-        gc.fillText(text, factor * 0, 30);
+        gc.fillText(text, factor * 0, 30 * factor);
 
-        gc.setFont(new Font("Roboto", 25));
+        gc.setFont(new Font("Roboto", 25 * factor));
         gc.setTextAlign(TextAlignment.RIGHT);
         String currentBindingText = currentBinding == null? "Not Assigned" : currentBinding.toString();
-        gc.fillText(currentBindingText, isCustomizable? factor * 550 : factor * 660, 30);
+        gc.fillText(currentBindingText, isCustomizable? factor * 550 : factor * 660, 30 * factor);
         canvasForText.setTranslateX(factor * 10);
 
         gc.save();
